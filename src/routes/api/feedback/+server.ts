@@ -1,5 +1,5 @@
-import { fail, json } from '@sveltejs/kit';
-import { supabase_service } from '$lib/supabase-service';
+import { json } from '@sveltejs/kit';
+import { supabase_client } from '$lib/supabase-client';
 
 const RATE_LIMIT_MINUTES = 0;
 
@@ -7,24 +7,24 @@ export const POST = async (event) => {
 	const ip_address = event.getClientAddress(); // ✅ SvelteKit provides this
 
 	// --- RATE LIMIT LOGIC ---
-	const { data: limit_data } = await supabase_service
+	const { data: limit_data } = await supabase_client
 		.from('feedback_rate_limits')
 		.select('last_submitted_at')
 		.eq('ip_address', ip_address)
 		.single();
 
-	// if (limit_data) {
-	// 	const last_submit = new Date(limit_data.last_submitted_at);
-	// 	const now = new Date();
-	// 	const diff_minutes = (now.getTime() - last_submit.getTime()) / (1000 * 60);
+	if (limit_data) {
+		const last_submit = new Date(limit_data.last_submitted_at);
+		const now = new Date();
+		const diff_minutes = (now.getTime() - last_submit.getTime()) / (1000 * 60);
 
-	// 	if (diff_minutes < RATE_LIMIT_MINUTES) {
-	// 		return json(
-	// 			{ error: 'You are submitting feedback too quickly. Please wait.' },
-	// 			{ status: 429 } // 429 = Too Many Requests
-	// 		);
-	// 	}
-	// }
+		if (diff_minutes < RATE_LIMIT_MINUTES) {
+			return json(
+				{ error: 'You are submitting feedback too quickly. Please wait.' },
+				{ status: 429 } // 429 = Too Many Requests
+			);
+		}
+	}
 
 	const { body, author_name, author_email } = await event.request.json();
 
@@ -36,7 +36,7 @@ export const POST = async (event) => {
 	}
 
 	// --- INSERT INTO SUPABASE ---
-	const { error: insert_error } = await supabase_service.from('feedback').insert({
+	const { error: insert_error } = await supabase_client.from('feedback').insert({
 		body,
 		author_name,
 		author_email,
@@ -52,7 +52,7 @@ export const POST = async (event) => {
 	}
 
 	// --- UPDATE RATE LIMIT TABLE ---
-	await supabase_service.from('feedback_rate_limits').upsert(
+	await supabase_client.from('feedback_rate_limits').upsert(
 		{
 			ip_address,
 			last_submitted_at: new Date().toISOString()
