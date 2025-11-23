@@ -1,0 +1,78 @@
+@import 'tailwindcss';
+
+@theme {
+	--color-bg: white;
+	--color-text: black;
+
+	--breakpoint-sm: 40rem;
+	--breakpoint-md: 48rem;
+	--breakpoint-lg: 64rem;
+	--breakpoint-xl: 80rem;
+	--breakpoint-2xl: 80rem;
+}
+
+html {
+	--theme: 'white';
+
+	/* background-color: rgb(202, 202, 202); */
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	font-size: 16px;
+	font-weight: 600;
+	font-family: 'Manrope', sans-serif;
+	line-height: 1.3;
+}
+
+.font-serif {
+	font-family: 'Instrument Serif';
+}
+/* @screen lg {
+	html {
+		font-size: 24px;
+	}
+} */
+@media (max-width: 96rem) {
+	html {
+		font-size: 15px;
+	}
+}
+@media (max-width: 48rem) {
+	html {
+		font-size: 13px;
+	}
+}
+/* @media (max-width: 800px) {
+	html {
+		font-size: 14px;
+	}
+} */
+
+.grid-12 {
+	display: grid;
+	grid-template-columns: repeat(12, minmax(0, 1fr));
+	gap: calc(2.5 * var(--spacing));
+}
+
+@keyframes rainbow-bg {
+	0% {
+		background-color: red;
+	}
+	16% {
+		background-color: orange;
+	}
+	32% {
+		background-color: yellow;
+	}
+	48% {
+		background-color: green;
+	}
+	64% {
+		background-color: blue;
+	}
+	80% {
+		background-color: indigo;
+	}
+	100% {
+		background-color: violet;
+	}
+}

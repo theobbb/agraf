@@ -1,11 +1,16 @@
-<div class="space-y-8">
-	<div>AGRAF</div>
+<script>
+	import Logo from '$lib/logo.svelte';
+</script>
 
-	<div>ASSOCIATION ÉTUDIANTE DU PROGRAMME DE DESIGN GRAPHIQUE DE L’UQAM</div>
-	<div>
-		L’AGRAF est l’association étudiante du programme de design graphique. Par défaut, toutes les
-		personnes qui sont inscrites au programme de design graphique sont membres de L’AGRAF et de
-		l’AFÉA. Les associations sont des syndicats étudiants qui ont pour mission d’agir collectivement
-		sur les conditions étudiantes, sociales, économiques, écologiques et politiques.
+<div class="space-y-24">
+	<div class="mt-[20svh] max-w-250 font-serif text-6xl/16">
+		ASSOCIATION ÉTUDIANTE DU PROGRAMME DE DESIGN GRAPHIQUE DE L’<span class="italic">UQAM</span>
+	</div>
+	<div class="mb-4 max-w-120">
+		L’AGRAF rassemble et représente l’ensemble des étudiant·e·s en design graphique. Elle agit pour
+		améliorer les conditions d’études et soutient les initiatives sociales, culturelles et
+		collectives au sein du programme.
 	</div>
 </div>
+
+<Logo />
