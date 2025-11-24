@@ -1,4 +1,5 @@
 <script>
+	import Emoji from '$lib/emoji.svelte';
 	import Explosion from './explosion.svelte';
 </script>
 

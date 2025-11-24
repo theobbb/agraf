@@ -1,11 +1,13 @@
 <script>
+	import Emoji from '$lib/emoji.svelte';
 	import { dummy } from './dummy';
 </script>
 
-<div>
+<Emoji>🧻</Emoji>
+<!-- <div>
 	<div class="mt-24 max-w-250 font-serif text-6xl/16">TOUT CHAUD TOUT FRAIS 🧻</div>
 	<div></div>
-</div>
+</div> -->
 <div class=" grid grid-cols-4 gap-2.5">
 	{#each dummy as post}
 		<div>

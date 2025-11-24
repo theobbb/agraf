@@ -5,7 +5,7 @@
 	const current = $derived(page.url.pathname);
 </script>
 
-<header class="sticky top-0 z-100">
+<header class="top-0 z-100">
 	<div class="grid-12 pt-1.5">
 		{#each links as { name, description, href }, i}
 			<a

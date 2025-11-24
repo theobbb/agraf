@@ -1,5 +1,8 @@
-<div class="text-9xl">🕺</div>
+<script>
+	import Emoji from '$lib/emoji.svelte';
+</script>
 
+<Emoji>🕺</Emoji>
 <svelte:head>
 	<style>
 		html {
