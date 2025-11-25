@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 	import Emoji from '$lib/emoji.svelte';
 
 	const form: {
@@ -15,10 +16,28 @@
 		const form_data = new FormData(event.currentTarget, event.submitter);
 		const { name, email, body } = Object.fromEntries(form_data.entries());
 
-		console.log(name, email, body);
 		if (!body) {
 			form.error = 'body';
 			return;
+		}
+
+		const data = {
+			author_name: name,
+			author_email: email,
+			body
+		};
+
+		try {
+			await fetch(PUBLIC_POCKETBASE_URL + '/api/collections/feedback/records', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(data)
+			});
+		} catch (error) {
+			console.error(error);
+			form.error = 'Désolé, une erreur est survenu';
 		}
 
 		// POST
@@ -27,6 +46,8 @@
 
 		form.error = null;
 		form.sucess = true;
+
+		alert('Merci pour ton feedback!');
 	}
 </script>
 
@@ -70,7 +91,7 @@
 		tolérée, et les réponses de cette nature ne seront pas prises en compte.
 	</div>
 </div> -->
-<div class="mb-44 font-serif">Boîte de commentaires</div>
+<div class="mb-24 font-serif text-6xl/16">Boîte de commentaires</div>
 <div class="grid-12">
 	<div class="col-span-3">
 		<div class="">
@@ -87,33 +108,28 @@
 			</div>
 		</div>
 	</div>
-	<form class="col-span-8 col-start-5 gap-2.5" {onsubmit}>
-		<!-- <div class="col-span-3">
-			(optionnel, tu peux envoyer ton message de manière anonyme et ultra mystérieuse si tu veux)
-		</div> -->
-		<div class="col-span-5 col-start-5 flex gap-5">
-			<div class="flex flex-col gap-2.5">
-				<input
-					name="name"
-					type="text"
-					class="col-span-4 col-start-6 px-4 font-serif text-text ring outline-none focus:ring-3"
-					placeholder="Nom"
-				/>
-				<input
-					name="email"
-					type="email"
-					class="col-span-4 col-start-6 w-full px-4 font-serif text-text ring outline-none focus:ring-3"
-					placeholder="Email"
-				/>
-			</div>
-			<div class="max-w-80 text-balance">
-				<div>
-					Optionnel, tu peux envoyer ton message de manière anonyme et ultra mystérieuse si tu veux.
-				</div>
+	<form class="grid-12 col-span-8 col-start-5" {onsubmit}>
+		<div class="col-span-6 flex flex-col gap-2.5">
+			<input
+				name="name"
+				type="text"
+				class="col-span-4 col-start-6 px-4 font-serif text-text ring outline-none focus:ring-3"
+				placeholder="Nom"
+			/>
+			<input
+				name="email"
+				type="email"
+				class="col-span-4 col-start-6 w-full px-4 font-serif text-text ring outline-none focus:ring-3"
+				placeholder="Email"
+			/>
+		</div>
+		<div class="col-span-6 max-w-80 text-balance">
+			<div>
+				Optionnel, tu peux envoyer ton message de manière anonyme et ultra mystérieuse si tu veux.
 			</div>
 		</div>
 
-		<div class="col-span-8 col-start-5 mt-12 mb-12">
+		<div class="col-span-full mt-10">
 			<textarea
 				class="w-full px-4 font-serif text-text ring ring-text outline-none focus:ring-3"
 				name="body"
@@ -128,13 +144,12 @@
 			{/if}
 		</div>
 
-		<button type="submit" class="col-span-3 col-start-9 bg-text py-4 font-serif text-bg"
+		<button type="submit" class="col-span-6 bg-text px-2 py-4 font-serif text-bg"
 			>🦅<span class="italic">Envoyer </span>🦅</button
 		>
 	</form>
 </div>
 
-<div class="font-serif">Merci pour ton feedback!</div>
 <svelte:head>
 	<style>
 		html {
