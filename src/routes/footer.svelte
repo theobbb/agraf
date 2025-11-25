@@ -3,9 +3,9 @@
 	import Explosion from './explosion.svelte';
 </script>
 
-<footer class=" mt-24 mb-1.5">
+<footer class="mt-64 mb-1.5">
 	<div class="grid-12">
-		<div class="col-span-3 border-t pt-0.5">
+		<div class="col-span-full border-t pt-0.5 md:col-span-3">
 			<div>Bibliothèque LU</div>
 			<div class="opacity-50">
 				Située au 3ᵉ étage du pavillon de design de l’UQAM, cette bibliothèque rassemble des livres
@@ -13,7 +13,7 @@
 				sur place afin que les étudiant.e.s puissent s'informer, s'inspirer et se divertir.
 			</div>
 		</div>
-		<div class="col-span-3 col-start-5 border-t pt-0.5">
+		<div class="col-span-full col-start-1 border-t pt-0.5 md:col-span-3 md:col-start-5">
 			<div class="max-w-100">
 				<div>Annuel de Design</div>
 				<div class="opacity-50">
@@ -22,7 +22,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-span-3 col-start-9 border-t pt-0.5">
+		<div class="col-span-full col-start-1 border-t pt-0.5 md:col-span-3 md:col-start-9">
 			<div class="max-w-135">
 				<div>Pica</div>
 				<div class="opacity-50">
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 
-	<div class="grid-12 mt-64">
+	<div class="grid-12 mt-32">
 		<div class="col-span-6 flex font-normal" style="font-family: 'Comic', sans-serif;">
 			<div>© 1983–2983 AGRAF ❤️ Tous droits réservés 😡🤬</div>
 			<div></div>

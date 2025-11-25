@@ -20,7 +20,7 @@
 					<div class="absolute inset-0 bg-white/5"></div>
 				{/if}
 			</div>
-			<div class="mb-0.5">{post.title}</div>
+			<div class="mb-0.5-">{post.title}</div>
 			<div class="text-white/50">{post.body}</div>
 			<div class="invisible">*</div>
 		</div>

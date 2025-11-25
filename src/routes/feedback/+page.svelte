@@ -91,7 +91,7 @@
 		tolérée, et les réponses de cette nature ne seront pas prises en compte.
 	</div>
 </div> -->
-<div class="mb-24 font-serif text-6xl/16">Boîte de commentaires</div>
+<div class="mb-24 font-serif text-6xl/16 uppercase">Boîte de commentaires</div>
 <div class="grid-12">
 	<div class="col-span-3">
 		<div class="">
@@ -144,7 +144,7 @@
 			{/if}
 		</div>
 
-		<button type="submit" class="col-span-6 bg-text px-2 py-4 font-serif text-bg"
+		<button type="submit" class="col-span-6 bg-text px-2 py-4 font-serif text-bg uppercase"
 			>🦅<span class="italic">Envoyer </span>🦅</button
 		>
 	</form>

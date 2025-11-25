@@ -2,16 +2,15 @@
 
 @theme {
 	--color-bg: white;
-	--color-text: black;
+	--color-text: rgb(47, 47, 47);
 
 	--spacing-line-height: 1.3em;
 }
 
 html {
 	--theme: 'white';
-
-	/* background-color: rgb(202, 202, 202); */
 	background-color: var(--color-bg);
+
 	color: var(--color-text);
 	font-size: 16px;
 	font-weight: 600;
@@ -27,6 +26,7 @@ html {
 	font-family: 'Instrument Serif';
 	font-size: 3.2rem;
 	line-height: 1.1;
+
 	/* font-size: 3.75rem;
 	line-height: 1.1; */
 }
