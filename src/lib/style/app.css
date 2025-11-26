@@ -16,6 +16,8 @@ html {
 	font-weight: 600;
 	font-family: 'Manrope', sans-serif;
 	line-height: var(--spacing-line-height);
+
+	-webkit-tap-highlight-color: unset;
 }
 
 .text-2 {
