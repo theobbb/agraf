@@ -1,39 +1,62 @@
-<script>
+<script lang="ts">
 	import Emoji from '$lib/emoji.svelte';
+	import { get_image_url } from '$lib/utils/get-image-url';
 	import { dummy } from './dummy';
+
+	const { data } = $props();
+
+	const { posters } = $derived(data);
+
+	const indexes: Record<string, number> = $state({});
+	$inspect(posters);
 </script>
 
 <Emoji>🧻</Emoji>
-<!-- <div>
-	<div class="mt-24 max-w-250 font-serif text-6xl/16">TOUT CHAUD TOUT FRAIS 🧻</div>
-	<div></div>
-</div> -->
-<div class=" grid grid-cols-4 gap-2.5">
-	{#each dummy as post}
-		<div>
-			<div style="aspect-ratio: 4/5;" class="relative mb-2.5 overflow-hidden">
-				{#if post.images?.length}
-					{#each post.images as src}
-						<img class="absolute inset-0 object-cover" {src} />
-					{/each}
-				{:else}
-					<div class="absolute inset-0 bg-white/5"></div>
-				{/if}
-			</div>
-			<div class="mb-0.5-">{post.title}</div>
-			<div class="text-white/50">{post.body}</div>
-			<div class="invisible">*</div>
+
+<div class="grid-12">
+	{#each posters.items as poster}
+		<div class="col-span-6 md:col-span-4 lg:col-span-3">
+			{#if poster.images?.length > 1}
+				<button
+					onclick={() =>
+						(indexes[poster.id] =
+							(indexes[poster.id] == null ? 1 : indexes[poster.id] + 1) % poster.images?.length)}
+				>
+					{indexes[poster.id] ? indexes[poster.id] + 1 : 1} / {poster.images?.length}
+				</button>
+			{:else}
+				<div aria-hidden="true" class="invisible">*</div>
+			{/if}
+
+			<a href="/affichorama/{poster.id}">
+				<div class="relative mb-2.5">
+					{#if poster.images?.length}
+						<img
+							loading="lazy"
+							class="object-contain"
+							src={get_image_url(
+								poster.collectionId,
+								poster.id,
+								poster.images[indexes[poster.id] || 0]
+							)}
+							alt="{poster.title} - 0"
+						/>
+					{:else}
+						<div class="absolute inset-0 bg-white/5"></div>
+					{/if}
+				</div>
+				<div class="mb-0.5-">{poster.title}</div>
+				<div
+					class="relative line-clamp-6 overflow-hidden text-ellipsis whitespace-pre-line text-white/50"
+				>
+					{poster.body}
+				</div>
+				<div class="invisible">*</div>
+			</a>
 		</div>
 	{/each}
 </div>
 
 <svelte:head>
 	<title>AGRAF 🧻 Affichorama</title>
-
-	<style>
-		html {
-			--color-bg: black;
-			--color-text: #f0f0f0;
-		}
-	</style>
 </svelte:head>

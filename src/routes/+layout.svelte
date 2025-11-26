@@ -4,6 +4,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from './header.svelte';
 	import Footer from './footer.svelte';
+	import { page } from '$app/state';
 
 	let { children } = $props();
 
@@ -15,7 +16,11 @@
 </svelte:head>
 
 <div class="mx-2.5">
-	<Header />
+	{#if !page.params.id}
+		<Header />
+	{/if}
 	{@render children()}
-	<Footer />
+	{#if !page.params.id}
+		<Footer />
+	{/if}
 </div>

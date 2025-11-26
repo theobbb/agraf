@@ -13,7 +13,7 @@
 				class={[
 					'group col-span-6 flex flex-col justify-between border-b pb-1 sm:col-span-4 md:col-span-3 xl:col-span-2',
 					page.url.pathname == href
-						? 'flex-col-reverse border-b-current bg-text text-bg ring-3 ring-text'
+						? 'flex-col-reverse border-b-current max-xl:bg-text max-xl:text-bg max-xl:ring-3 max-xl:ring-text'
 						: 'flex-col border-b-transparent hover:border-b-current'
 				]}
 			>
