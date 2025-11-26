@@ -5,6 +5,7 @@
 <Emoji>🦖</Emoji>
 
 <svelte:head>
+	<title>AGRAF 🦖 L'association</title>
 	<style>
 		html {
 			--color-bg: #bdde71;

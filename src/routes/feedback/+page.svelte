@@ -151,6 +151,7 @@
 </div>
 
 <svelte:head>
+	<title>AGRAF 🦋 Feedback</title>
 	<style>
 		html {
 			--color-bg: #363636;

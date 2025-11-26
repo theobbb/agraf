@@ -148,6 +148,7 @@
 </div> -->
 
 <svelte:head>
+	<title>AGRAF 🤓 Informations</title>
 	<style>
 		html {
 			--color-bg: #da5c58;

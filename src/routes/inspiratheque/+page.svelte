@@ -61,6 +61,7 @@
 <div>Yo!</div>
 
 <svelte:head>
+	<title>AGRAF 🕺 Inspirathèque</title>
 	<style>
 		html {
 			--color-bg: #3c294b;

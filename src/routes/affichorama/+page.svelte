@@ -28,6 +28,8 @@
 </div>
 
 <svelte:head>
+	<title>AGRAF 🧻 Affichorama</title>
+
 	<style>
 		html {
 			--color-bg: black;
