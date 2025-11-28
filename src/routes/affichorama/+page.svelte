@@ -28,7 +28,7 @@
 				<div aria-hidden="true" class="invisible">*</div>
 			{/if}
 
-			<a href="/affichorama/{poster.id}">
+			<a href="/affichorama/{poster.slug}">
 				<div class="relative mb-2.5">
 					{#if poster.images?.length}
 						<img

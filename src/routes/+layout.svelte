@@ -16,11 +16,11 @@
 </svelte:head>
 
 <div class="mx-2.5">
-	{#if !page.params.id}
+	{#if !page.params.slug}
 		<Header />
 	{/if}
 	{@render children()}
-	{#if !page.params.id}
+	{#if !page.params.slug}
 		<Footer />
 	{/if}
 </div>
