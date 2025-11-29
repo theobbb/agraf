@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { pocketbase } from '$lib/pocketbase';
 	import { get_image_url } from '$lib/utils/get-image-url';
 	import type { PageProps } from './$types';
 
@@ -16,9 +17,16 @@
 	<div class="col-span-full lg:col-span-8 lg:col-start-6 lg:row-span-2 lg:row-start-2">
 		<div class="relative flex gap-2.5 overflow-x-auto md:h-[calc(100svh-9rem)]">
 			{#each poster.images as image}
-				<img
+				<!-- <img
 					class="md:mb-2.5- max-h-full object-contain"
 					src={get_image_url(poster.collectionId, poster.id, image)}
+					alt=""
+				/> -->
+				<img
+					class="md:mb-2.5- max-h-full object-contain"
+					src={pocketbase.files.getURL(poster, image, {
+						format: 'webp'
+					})}
 					alt=""
 				/>
 			{/each}
@@ -34,3 +42,7 @@
 	> -->
 	<a class="col-span-full flex items-end justify-end font-serif italic">Suivant</a>
 </div>
+
+<svelte:head>
+	<title>AGRAF 🧻 {poster.title}</title>
+</svelte:head>
