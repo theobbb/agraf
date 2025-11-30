@@ -51,7 +51,7 @@
 
 <Emoji>🦖</Emoji>
 
-<div class="text-2xl">
+<div class="text-xl lg:text-2xl">
 	<div class="grid-12 mb-16">
 		<div
 			class="col-span-full grid grid-cols-7 gap-2.5 rounded bg-text px-2.5 py-2.5 text-bg lg:col-span-7 lg:col-start-2"
@@ -76,9 +76,9 @@
 		</div>
 	</div>
 
-	<div class="grid-12 mb-96 font-serif text-3xl lg:text-[2.9vw]! break:text-6xl!">
+	<div class="grid-12 mb-96 font-serif text-2xl/7! lg:text-[2.9vw]/[3vw]! break:text-6xl!">
 		<div class="col-span-full italic xl:col-span-2">Objectifs →</div>
-		<div class="col-span-full col-start-2 text-balance xl:col-span-10 xl:col-start-3">
+		<div class="col-span-full text-balance lg:col-start-2 xl:col-span-10 xl:col-start-3">
 			{#each objectives as objective, i}
 				<span class="inline-flex w-14 items-center justify-center rounded-full bg-text px-6 text-bg"
 					>{i + 1}</span
@@ -104,14 +104,14 @@
 	<div class="grid-12 gap-y-0!">
 		{#each grouped as { role, entries }}
 			<div
-				class="col-span-4 mb-1 border-t"
+				class="col-span-6 mb-1 border-t lg:col-span-4"
 				style="grid-row: span {entries.length} / span {entries.length};"
 			>
 				{role.name}
 			</div>
 
 			{#each entries as member, i}
-				<div class={['col-span-6 mb-1 whitespace-nowrap', i == 0 && 'border-t']}>
+				<div class={['whitespace-nowrap- col-span-6 mb-1', i == 0 && 'border-t']}>
 					{member.expand?.member?.name}
 				</div>
 			{/each}

@@ -10,7 +10,7 @@
 			Association étudiante du programme de design graphique de l'<span class="italic">UQAM</span>
 		</div>
 	</div>
-	<div class="mb-4 max-w-120">
+	<div class="mb-6 max-w-120">
 		L’AGRAF rassemble et représente l’ensemble des étudiant·e·s en design graphique. Elle agit pour
 		améliorer les conditions d’études et soutient les initiatives sociales, culturelles et
 		collectives au sein du programme.

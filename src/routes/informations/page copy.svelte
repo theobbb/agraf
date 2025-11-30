@@ -1,6 +1,22 @@
-<script lang="ts">
+<script>
 	import Emoji from '$lib/emoji.svelte';
-	import Dialog from '$lib/ui/skeleton/dialog.svelte';
+
+	const links = [
+		{
+			name: 'ATELIERS DE L’ÉCOLE',
+			href: '/ateliers-ecole',
+			emoji: '🏫'
+		},
+		{
+			name: 'ATELIERS GÉRÉS PAR LES ÉTUDIANT·E·S',
+			href: '/ateliers-ecole',
+			emoji: '👩‍🎓'
+		},
+		{
+			name: 'ATELIERS DE L’ÉCOLE',
+			href: '/ateliers-ecole'
+		}
+	];
 
 	const data = {
 		ressources: [
@@ -30,34 +46,18 @@
 			}
 		]
 	};
-
-	type Dialog = 'entente';
-
-	const dialog: {
-		open: Boolean;
-		name: Dialog | null;
-	} = $state({
-		open: false,
-		name: 'entente'
-	});
 </script>
 
 <Emoji>🤓</Emoji>
 
-<div class="text-2xl- space-y-2">
-	<div class="grid-12 border-t- border-b pt-1 pb-32">
-		<div class="col-span-6 mb-3 font-serif">RESSOURCES 🗿</div>
+<div class="space-y-24">
+	<div>
+		<div class="mb-3 font-serif">RESSOURCES 🗿</div>
 
-		<div class="grid-12 col-span-6 gap-y-0!">
+		<div class="grid-12">
 			{#each data.ressources as ressource}
-				<div class="col-span-6 flex items-center gap-4">
-					<div class="size-3 rounded-full bg-text"></div>
-					<div>
-						<div>{ressource.name}</div>
-						<!-- <div class="text-2">{ressource.body}</div> -->
-					</div>
-				</div>
-				<div class="col-span-6">
+				<div class="col-span-6 min-h-32 border px-2 py-1.5 md:col-span-4 lg:col-span-3">
+					<div>{ressource.name}</div>
 					<div class="text-2">{ressource.body}</div>
 				</div>
 			{/each}
@@ -65,36 +65,28 @@
 	</div>
 
 	<div>
-		<div class="grid-12 text-balance">
-			<div class="col-span-6 mb-12 font-serif">
-				<span class="italic">ENTENTE D’ÉVALUATION</span> 🌼
-			</div>
-			<div class="col-span-6">
-				<div class="mb-8">
-					L’entente d’évaluation est une démarche obligatoire, propre à l’UQAM, et prévue dans ses
-					règlements. Il s’agit d’une entente qui intervient entre l’enseignant.e ou responsable
-					d’un groupe-cours, d’une part, et les étudiant.e.s inscrit.e.s à ce groupe-cours, d’autre
-					part. Elle statue sur :
-				</div>
-
-				<div class="mb-64">
-					<div class="flex items-center gap-4">
-						<div class="size-3 rounded-full bg-text"></div>
-						le nombre d’évaluations prévues au cours du trimestre;
-					</div>
-					<div class="flex items-center gap-4">
-						<div class="size-3 rounded-full bg-text"></div>
-						les échéances de ces évaluations;
-					</div>
-					<div class="flex items-center gap-4">
-						<div class="size-3 rounded-full bg-text"></div>
-						la pondération respective des contenus ou objets d’évaluation.
-					</div>
-				</div>
-			</div>
-
+		<div class="mb-3 font-serif"><span class="italic">ENTENTE D’ÉVALUATION</span> 🌼</div>
+		<div class="grid-12 border px-2 py-3 text-balance">
 			<div
-				class=" col-span-full col-start-1 max-md:mb-16 md:col-span-6 xl:col-span-5 xl:col-start-2"
+				class="col-span-full mb-16 sm:col-span-10 sm:col-start-2 md:col-span-8 md:col-start-3 lg:col-span-6 lg:col-start-4 xl:col-span-4 xl:col-start-5"
+			>
+				<div class="max-w-150 space-y-4">
+					<div>
+						L’entente d’évaluation est une démarche obligatoire, propre à l’UQAM, et prévue dans ses
+						règlements. Il s’agit d’une entente qui intervient entre l’enseignant.e ou responsable
+						d’un groupe-cours, d’une part, et les étudiant.e.s inscrit.e.s à ce groupe-cours,
+						d’autre part. Elle statue sur :
+					</div>
+
+					<div class="ml-3.5">
+						<li>le nombre d’évaluations prévues au cours du trimestre;</li>
+						<li>les échéances de ces évaluations;</li>
+						<li>la pondération respective des contenus ou objets d’évaluation.</li>
+					</div>
+				</div>
+			</div>
+			<div
+				class="text-2 col-span-full col-start-1 max-md:mb-16 md:col-span-6 xl:col-span-5 xl:col-start-2"
 			>
 				L’entente d’évaluation est un gain historique issu des luttes étudiantes et vise à
 				démocratiser l’enseignement. Elle donne aux étudiant.e.s de chaque groupe-cours le droit de
@@ -110,7 +102,7 @@
 				par consensus ou par vote, l’enseignant.e est invité.e à réintégrer la salle de cours et un.e
 				porte-parole lui fait connaître les demandes du groupe.
 			</div>
-			<div class=" col-span-full md:col-span-6 md:col-start-7 xl:col-span-5">
+			<div class="text-2 col-span-full md:col-span-6 md:col-start-7 xl:col-span-5">
 				N’hésitez pas à vous montrer ferme lors de la négociation. Lorsque l'enseignant.e se montre
 				réticent.e face à vos demandes, expliquez-lui calmement que ce processus important est issu
 				des règlements 5 et 8. Si vous constatez que les négociations n’avancent pas adressez-vous à
@@ -128,18 +120,16 @@
 				la réouverture n’est pas proposée, il est de votre devoir d’en faire la demande.
 			</div>
 
-			<div class="col-span-full mt-32 max-w-130 xl:col-span-3 xl:col-start-10">
+			<div class="col-span-full mt-32 max-w-130 xl:col-span-3 xl:col-start-5">
 				Pour toute question, veuillez communiquer avec l’AGRAF ou avec l’AFÉA.
 			</div>
 		</div>
 	</div>
 	<div>
-		<div class="mb-3 border-t pt-1 font-serif">
-			<span class="italic">ASSURANCE COLLECTIVE</span> 💰
-		</div>
+		<div class="mb-3 font-serif"><span class="italic">ASSURANCE COLLECTIVE</span> 💰</div>
 		<div class="grid-12">
-			<div class="col-span-full pt-12 lg:col-span-6 lg:col-start-2">
-				<div class="mb-6 max-w-150">
+			<div class="col-span-full border px-3 py-2 lg:col-span-6">
+				<div class="mb-24 max-w-150">
 					Les étudiants membres de l'AFÉA  sont automatiquement inscrits au Régime collectif de
 					soins de santé et dentaires de l’ASEQ.  Le Régime étudiant de l'ASEQ offre une couverture
 					de soins de santé, dentaire, de vision, de voyage et juridique. Il est possible de se
