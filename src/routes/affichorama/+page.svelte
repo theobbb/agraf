@@ -42,14 +42,19 @@
 							)}
 							alt="{poster.title} - 0"
 						/> -->
-						<img
-							loading="lazy"
-							class="object-contain"
-							src={pocketbase.files.getURL(poster, poster.images[indexes[poster.id] || 0], {
-								format: 'webp'
-							})}
-							alt="{poster.title} - 0"
-						/>
+						{#if poster.images[indexes[poster.id] || 0].endsWith('.mp4')}
+							<video src={pocketbase.files.getURL(poster, poster.images[indexes[poster.id] || 0])}
+							></video>
+						{:else}
+							<img
+								loading="lazy"
+								class="object-contain"
+								src={pocketbase.files.getURL(poster, poster.images[indexes[poster.id] || 0], {
+									format: 'webp'
+								})}
+								alt="{poster.title} - 0"
+							/>
+						{/if}
 					{:else}
 						<div class="absolute inset-0 bg-white/5"></div>
 					{/if}

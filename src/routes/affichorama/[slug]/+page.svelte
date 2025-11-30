@@ -6,6 +6,8 @@
 	const { data }: PageProps = $props();
 
 	const { poster } = $derived(data);
+
+	$inspect(poster);
 </script>
 
 <div class="grid-12 md:h-svh">
@@ -22,13 +24,17 @@
 					src={get_image_url(poster.collectionId, poster.id, image)}
 					alt=""
 				/> -->
-				<img
-					class="md:mb-2.5- max-h-full object-contain"
-					src={pocketbase.files.getURL(poster, image, {
-						format: 'webp'
-					})}
-					alt=""
-				/>
+				{#if image.endsWith('.mp4')}
+					<video autoplay muted src={pocketbase.files.getURL(poster, image)}></video>
+				{:else}
+					<img
+						class="md:mb-2.5- max-h-full object-contain"
+						src={pocketbase.files.getURL(poster, image, {
+							format: 'webp'
+						})}
+						alt=""
+					/>
+				{/if}
 			{/each}
 		</div>
 	</div>

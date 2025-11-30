@@ -53,12 +53,12 @@
 
 <Emoji>🕺</Emoji>
 
-<form {onsubmit}>
+<!-- <form {onsubmit}>
 	<input name="url" type="text" placeholder="url" />
 	<button type="button">Vérifier</button>
 	<button disabled type="submit">Soumettre</button>
 </form>
-<div>Yo!</div>
+<div>Yo!</div> -->
 
 <svelte:head>
 	<title>AGRAF 🕺 Inspirathèque</title>

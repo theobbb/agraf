@@ -5,6 +5,8 @@
 	--color-text: rgb(47, 47, 47);
 
 	--spacing-line-height: 1.25em;
+
+	--breakpoint-break: 130rem;
 }
 
 html {

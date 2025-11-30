@@ -5,7 +5,7 @@ import type { PaginationResult } from '$lib/types';
 export async function load() {
 	const posters: PaginationResult<PostersRecord> = await pocketbase
 		.collection('posters')
-		.getList(1, 50);
+		.getList(1, 50, { sort: '-date' });
 
 	return { posters };
 }

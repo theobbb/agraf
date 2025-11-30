@@ -6,7 +6,7 @@
 <Emoji>🦑</Emoji>
 <div class="space-y-24">
 	<div class="mt-[20svh]- ml-12- flex items-center gap-4 font-serif text-6xl/16">
-		<div class="max-w-250 uppercase">
+		<div class="max-w-210 uppercase">
 			Association étudiante du programme de design graphique de l'<span class="italic">UQAM</span>
 		</div>
 	</div>

@@ -49,19 +49,13 @@
 
 		alert('Merci pour ton feedback!');
 	}
-
-	const cx = {
-		serif: 'font-serif text-6xl/16 uppercase',
-		input:
-			'w-full border-2 border-dashed px-4 font-serif text-6xl text-text outline-none focus:border-transparent! focus:ring-3'
-	};
 </script>
 
 <Emoji>🦋</Emoji>
 
-<div class={['mb-24 border-b-2', cx.serif]}>Boîte de commentaires</div>
+<div class="mb-24 font-serif text-6xl/16 uppercase">Boîte de commentaires</div>
 <div class="grid-12">
-	<div class="col-start col-span-6 text-2xl">
+	<div class="col-span-3">
 		<div class="">
 			<div class="col-span-3">
 				Pour bien représenter les étudiant·es du programme et pour créer une vie étudiante à votre
@@ -69,45 +63,54 @@
 				préoccupations et idées. Cette boîte est ouverte en tout temps. On t'invite aussi à nous
 				envoyer un courriel (agraf.uqam@gmail.com) pour un contact plus direct.
 			</div>
-
+			<div class="col-span-3 col-start-5"></div>
 			<div class="text-2 col-span-3 col-start-9">
 				Toute forme de violence ou de haine envers un individu ou un groupe ne sera en aucun cas
 				tolérée, et les réponses de cette nature ne seront pas prises en compte.
 			</div>
 		</div>
 	</div>
-</div>
-<form class="grid-12 my-24" {onsubmit}>
-	<div class="col-span-6 col-start-5 flex flex-col gap-2.5">
-		<input name="name" type="text" class={[cx.input, 'col-span-4 col-start-6']} placeholder="Nom" />
-		<input
-			name="email"
-			type="email"
-			class={[cx.input, 'col-span-4 col-start-6']}
-			placeholder="Email"
-		/>
-	</div>
-	<div class="col-span-2 col-start-11 max-w-80 text-balance">
-		<div>
-			Optionnel, tu peux envoyer ton message de manière anonyme et ultra mystérieuse si tu veux.
+	<form class="grid-12 col-span-8 col-start-5" {onsubmit}>
+		<div class="col-span-6 flex flex-col gap-2.5">
+			<input
+				name="name"
+				type="text"
+				class="col-span-4 col-start-6 px-4 font-serif text-text ring outline-none focus:ring-3"
+				placeholder="Nom"
+			/>
+			<input
+				name="email"
+				type="email"
+				class="col-span-4 col-start-6 w-full px-4 font-serif text-text ring outline-none focus:ring-3"
+				placeholder="Email"
+			/>
 		</div>
-	</div>
-	<div class="col-span-10 col-start-2 mt-24">
-		<textarea class={[cx.input, '']} name="body" placeholder="Message" rows={6}></textarea>
-		{#if form.error == 'body'}
-			<div class="mt-3 max-w-110 text-red-500">
-				Wow, quel beau message! Ça va nous prendre un bon moment à lire tout ça mais on te répond
-				dès qu'on a finit.
+		<div class="col-span-6 max-w-80 text-balance">
+			<div>
+				Optionnel, tu peux envoyer ton message de manière anonyme et ultra mystérieuse si tu veux.
 			</div>
-		{/if}
-	</div>
+		</div>
 
-	<button
-		type="submit"
-		class="col-start-9- col-span-10 col-start-2 bg-text px-2 py-4 font-serif text-6xl text-bg uppercase"
-		>🦅<span class="italic">Envoyer </span>🦅</button
-	>
-</form>
+		<div class="col-span-full mt-10">
+			<textarea
+				class="w-full px-4 font-serif text-text ring ring-text outline-none focus:ring-3"
+				name="body"
+				placeholder="Message"
+				rows={6}
+			></textarea>
+			{#if form.error == 'body'}
+				<div class="mt-3 max-w-110 text-red-500">
+					Wow, quel beau message! Ça va nous prendre un bon moment à lire tout ça mais on te répond
+					dès qu'on a finit.
+				</div>
+			{/if}
+		</div>
+
+		<button type="submit" class="col-span-6 bg-text px-2 py-4 font-serif text-bg uppercase"
+			>🦅<span class="italic">Envoyer </span>🦅</button
+		>
+	</form>
+</div>
 
 <svelte:head>
 	<title>AGRAF 🦋 Feedback</title>
