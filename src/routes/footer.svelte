@@ -1,5 +1,6 @@
 <script>
 	import Emoji from '$lib/emoji.svelte';
+	import Logo from '$lib/logo.svelte';
 	import Explosion from './explosion.svelte';
 </script>
 

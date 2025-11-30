@@ -11,16 +11,19 @@ export enum Collections {
 	Mfas = '_mfas',
 	Otps = '_otps',
 	Superusers = '_superusers',
-	Builds = 'builds',
 	Comments = 'comments',
 	Feedback = 'feedback',
+	LinkTags = 'link_tags',
 	Links = 'links',
+	MemberEntries = 'member_entries',
+	Members = 'members',
 	Notifications = 'notifications',
 	Posters = 'posters',
 	Roles = 'roles',
-	Tags = 'tags',
+	Settings = 'settings',
 	Tickets = 'tickets',
-	Users = 'users'
+	Users = 'users',
+	Years = 'years'
 }
 
 // Alias types for improved usability
@@ -101,23 +104,11 @@ export type SuperusersRecord = {
 	verified?: boolean;
 };
 
-export type BuildsRecord = {
-	branch?: string;
-	commiter?: RecordIdString;
-	created: IsoAutoDateString;
-	deploy_id?: string;
-	deploy_time?: string;
-	deploy_url?: string;
-	error_message?: string;
-	id: string;
-	status?: string;
-	updated: IsoAutoDateString;
-};
-
 export enum CommentsEventTypeOptions {
 	'user_comment' = 'user_comment',
 	'status_change' = 'status_change',
-	'ticket_moved' = 'ticket_moved'
+	'ticket_moved' = 'ticket_moved',
+	'renamed' = 'renamed'
 }
 export type CommentsRecord = {
 	author_id: RecordIdString;
@@ -140,6 +131,13 @@ export type FeedbackRecord = {
 	updated: IsoAutoDateString;
 };
 
+export type LinkTagsRecord = {
+	created: IsoAutoDateString;
+	id: string;
+	name?: string;
+	updated: IsoAutoDateString;
+};
+
 export type LinksRecord = {
 	approved?: boolean;
 	created: IsoAutoDateString;
@@ -153,17 +151,42 @@ export type LinksRecord = {
 	url: string;
 };
 
-export type NotificationsRecord = {
+export type MemberEntriesRecord = {
 	created: IsoAutoDateString;
 	id: string;
+	member?: RecordIdString;
+	role?: RecordIdString;
 	updated: IsoAutoDateString;
+	year?: RecordIdString;
+};
+
+export type MembersRecord = {
+	code?: string;
+	created: IsoAutoDateString;
+	email?: string;
+	id: string;
+	name?: string;
+	phone?: number;
+	updated: IsoAutoDateString;
+	user?: RecordIdString;
+};
+
+export type NotificationsRecord = {
+	body?: string;
+	created: IsoAutoDateString;
+	id: string;
+	status_code?: number;
+	title?: string;
+	user?: RecordIdString;
 };
 
 export type PostersRecord = {
 	body?: string;
 	created: IsoAutoDateString;
+	date?: IsoDateString;
 	id: string;
 	images: FileNameString[];
+	slug?: string;
 	title?: string;
 	updated: IsoAutoDateString;
 };
@@ -177,11 +200,9 @@ export type RolesRecord = {
 	updated: IsoAutoDateString;
 };
 
-export type TagsRecord = {
-	created: IsoAutoDateString;
+export type SettingsRecord<Tvalue = unknown> = {
 	id: string;
-	name?: string;
-	updated: IsoAutoDateString;
+	value?: null | Tvalue;
 };
 
 export enum TicketsStatusOptions {
@@ -206,6 +227,7 @@ export type TicketsRecord = {
 	created: IsoAutoDateString;
 	created_by: RecordIdString;
 	due_date?: IsoDateString;
+	file?: FileNameString;
 	id: string;
 	parent_id?: RecordIdString;
 	priority?: TicketsPriorityOptions;
@@ -215,7 +237,6 @@ export type TicketsRecord = {
 };
 
 export type UsersRecord = {
-	archived?: boolean;
 	avatar?: FileNameString;
 	created: IsoAutoDateString;
 	email: string;
@@ -223,11 +244,14 @@ export type UsersRecord = {
 	id: string;
 	name?: string;
 	password: string;
-	role?: RecordIdString;
 	tokenKey: string;
 	updated: IsoAutoDateString;
 	username?: string;
 	verified?: boolean;
+};
+
+export type YearsRecord = {
+	id: string;
 };
 
 // Response types include system fields and match responses from the PocketBase API
@@ -239,21 +263,30 @@ export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemF
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>;
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> &
 	AuthSystemFields<Texpand>;
-export type BuildsResponse<Texpand = unknown> = Required<BuildsRecord> & BaseSystemFields<Texpand>;
 export type CommentsResponse<Texpand = unknown> = Required<CommentsRecord> &
 	BaseSystemFields<Texpand>;
 export type FeedbackResponse<Texpand = unknown> = Required<FeedbackRecord> &
 	BaseSystemFields<Texpand>;
+export type LinkTagsResponse<Texpand = unknown> = Required<LinkTagsRecord> &
+	BaseSystemFields<Texpand>;
 export type LinksResponse<Texpand = unknown> = Required<LinksRecord> & BaseSystemFields<Texpand>;
+export type MemberEntriesResponse<Texpand = unknown> = Required<MemberEntriesRecord> &
+	BaseSystemFields<Texpand>;
+export type MembersResponse<Texpand = unknown> = Required<MembersRecord> &
+	BaseSystemFields<Texpand>;
 export type NotificationsResponse<Texpand = unknown> = Required<NotificationsRecord> &
 	BaseSystemFields<Texpand>;
 export type PostersResponse<Texpand = unknown> = Required<PostersRecord> &
 	BaseSystemFields<Texpand>;
 export type RolesResponse<Texpand = unknown> = Required<RolesRecord> & BaseSystemFields<Texpand>;
-export type TagsResponse<Texpand = unknown> = Required<TagsRecord> & BaseSystemFields<Texpand>;
+export type SettingsResponse<Tvalue = unknown, Texpand = unknown> = Required<
+	SettingsRecord<Tvalue>
+> &
+	BaseSystemFields<Texpand>;
 export type TicketsResponse<Texpand = unknown> = Required<TicketsRecord> &
 	BaseSystemFields<Texpand>;
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>;
+export type YearsResponse<Texpand = unknown> = Required<YearsRecord> & BaseSystemFields<Texpand>;
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
@@ -263,16 +296,19 @@ export type CollectionRecords = {
 	_mfas: MfasRecord;
 	_otps: OtpsRecord;
 	_superusers: SuperusersRecord;
-	builds: BuildsRecord;
 	comments: CommentsRecord;
 	feedback: FeedbackRecord;
+	link_tags: LinkTagsRecord;
 	links: LinksRecord;
+	member_entries: MemberEntriesRecord;
+	members: MembersRecord;
 	notifications: NotificationsRecord;
 	posters: PostersRecord;
 	roles: RolesRecord;
-	tags: TagsRecord;
+	settings: SettingsRecord;
 	tickets: TicketsRecord;
 	users: UsersRecord;
+	years: YearsRecord;
 };
 
 export type CollectionResponses = {
@@ -281,16 +317,19 @@ export type CollectionResponses = {
 	_mfas: MfasResponse;
 	_otps: OtpsResponse;
 	_superusers: SuperusersResponse;
-	builds: BuildsResponse;
 	comments: CommentsResponse;
 	feedback: FeedbackResponse;
+	link_tags: LinkTagsResponse;
 	links: LinksResponse;
+	member_entries: MemberEntriesResponse;
+	members: MembersResponse;
 	notifications: NotificationsResponse;
 	posters: PostersResponse;
 	roles: RolesResponse;
-	tags: TagsResponse;
+	settings: SettingsResponse;
 	tickets: TicketsResponse;
 	users: UsersResponse;
+	years: YearsResponse;
 };
 
 // Utility types for create/update operations
