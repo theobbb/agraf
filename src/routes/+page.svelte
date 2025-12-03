@@ -85,14 +85,15 @@
 		id="map"
 		{windows}
 		name="Adresse"
-		class="col-span-4 col-start-1 row-span-4 row-start-13 max-h-96"
+		class="col-span-4 col-start-1 row-span-4 row-start-13 max-h-96 overflow-hidden!"
 	>
-		<div class="-mx-2.5">
+		<div class="relative -mx-2.5 h-[calc(100%-2rem)]">
 			<iframe
+				class="absolute inset-0 object-cover"
 				title="Google Maps - Pavillon de design de l'UQAM"
 				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.855569266736!2d-73.56197!3d45.512986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91a4d108e6bd9%3A0xb31a88b71600ec4c!2s%C3%89cole%20de%20design%20de%20l&#39;UQAM!5e0!3m2!1sen!2sca!4v1764772767790!5m2!1sen!2sca"
-				width="600"
-				height="450"
+				width="100%"
+				height="100%"
 				style="border:0;"
 				allowfullscreen={false}
 				loading="lazy"

@@ -90,13 +90,11 @@
 		<Window
 			name="Ceci est un bouton"
 			{windows}
-			id="notice"
+			id="submit"
 			class="absolute lg:col-span-2 lg:col-start-4"
 		>
 			<div class="-mx-2.5">
-				<button
-					type="submit"
-					class="w-full bg-text px-2 py-4 font-serif text-3xl! text-bg uppercase"
+				<button type="submit" class="w-full bg-text px-2 py-4 font-serif text-3xl! text-bg"
 					>🦅<span class="italic">Envoyer </span>🦅</button
 				>
 			</div>
@@ -125,6 +123,9 @@
 		</Window>
 	</div>
 </div>
+<a class="fixed bottom-12 left-2.5 font-serif">
+	WTF !!? <br /> Laissez-moi écrire mon commentaire normalement svp
+</a>
 <!-- 	<button
 		type="submit"
 		class=" col-span-6 col-start-4 bg-text px-2 py-4 font-serif text-6xl text-bg uppercase"

@@ -51,7 +51,7 @@
 
 <Emoji>🦖</Emoji>
 
-<div class="text-xl lg:text-2xl">
+<div class="mb-64 text-xl lg:text-2xl">
 	<div class="grid-12 mb-24">
 		<div
 			class="col-span-full grid grid-cols-7 gap-2.5 bg-text px-2.5 py-2.5 text-bg lg:col-span-7 lg:col-start-2"
@@ -101,7 +101,7 @@
 		{/each}
 	</div>
 
-	<div class="grid-12 gap-y-0!">
+	<div class="grid-12 mb-24 gap-y-0!">
 		{#each grouped as { role, entries }}
 			<div
 				class="col-span-6 mb-1 border-t lg:col-span-4"
@@ -117,6 +117,13 @@
 			{/each}
 		{/each}
 	</div>
+	<div>Description des postes</div>
+	<div>Status et Règlements</div>
+	<div>Procédés verbaux</div>
+	<div>Budget</div>
+	<div>Procès verbaux</div>
+	<div>Demandes de subvention</div>
+	<div>Download pdf</div>
 
 	{#if dialog.open}
 		<Dialog {dialog} class="mr-[calc(100vw/12)] mb-5 w-[calc(5*100vw/12)]">
