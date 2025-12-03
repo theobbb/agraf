@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Emoji from '$lib/emoji.svelte';
+	import Markdown from '$lib/markdown.svelte';
 	import Media from '$lib/media.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import { get_image_url } from '$lib/utils/get-image-url';
@@ -10,12 +11,11 @@
 	const { posters } = $derived(data);
 
 	const indexes: Record<string, number> = $state({});
-	$inspect(posters);
 </script>
 
 <Emoji>🧻</Emoji>
 
-<div class="grid-12">
+<div class="grid-12 mb-24">
 	{#each posters.items as poster}
 		<div class="col-span-6 md:col-span-4 lg:col-span-3">
 			{#if poster.images?.length > 1}
@@ -42,10 +42,8 @@
 					{/if}
 				</div>
 				<div class="mb-0.5-">{poster.title}</div>
-				<div
-					class="relative line-clamp-6 overflow-hidden text-ellipsis whitespace-pre-line text-white/50"
-				>
-					{poster.body}
+				<div class="relative line-clamp-6 overflow-hidden text-ellipsis text-white/50">
+					<Markdown content={poster.body || ''} />
 				</div>
 				<div class="invisible">*</div>
 			</a>

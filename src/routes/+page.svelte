@@ -1,12 +1,13 @@
 <script lang="ts">
-	import Emoji from '$lib/emoji.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Media from '$lib/media.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import { format_date } from '$lib/utils/format-date';
-	import { SvelteMap } from 'svelte/reactivity';
 	import Window from '../lib/window.svelte';
 	import type { Windows } from '$lib/types';
+	import { marked } from 'marked';
+	import Markdown from '$lib/markdown.svelte';
+	import Weather from './weather.svelte';
 
 	const { data } = $props();
 
@@ -17,27 +18,26 @@
 	const windows: Windows = $state({});
 </script>
 
-<div class="grid-12 h-[calc(100svh-40rem)]- relative mt-24 grid-rows-12">
+<div class="grid-12 relative mt-24 mb-24 grid-rows-16">
 	<Window
 		id="featured"
 		{windows}
 		name="En vedette!"
 		class="col-span-3 col-start-9 row-span-6 row-start-1"
 	>
-		<div class="lg:col-start-5">
+		<div class="">
 			<Media
 				autoplay={false}
 				src={pocketbase.files.getURL(featured, featured.images[0])}
 				alt="featured media - {featured.title}"
 			/>
 		</div>
-		<div class="pb-12- py-1">
+		<div class="py-1">
 			<div>{featured?.title}</div>
 
-			<div class="text-black/50">{format_date(featured.date)}</div>
+			<div class="text-2">{format_date(featured.date)}</div>
 			<br />
 			<br />
-			<!-- <div aria-hidden={true} class="invisible">*</div> -->
 			<div>Anonyme</div>
 		</div>
 	</Window>
@@ -50,7 +50,7 @@
 		name="Description"
 		class="col-span-5 col-start-3 row-span-3 row-start-4"
 	>
-		<div class="mb-4 font-serif">
+		<div class="mt-1 mb-4 font-serif">
 			Association étudiante du programme de design graphique de l'<span class="italic">UQAM</span>
 		</div>
 	</Window>
@@ -75,15 +75,32 @@
 		<div class="py-1">
 			{#each links as link}
 				<div>
-					<a
-						href={link.url}
-						class="visited:text-[VisitedText]! hover:underline"
-						style="color: LinkText;">{link.icon} {link.name}</a
-					>
+					<a href={link.url} class="og-link">{link.icon} {link.name}</a>
 				</div>
 			{/each}
 		</div>
 	</Window>
+
+	<Window
+		id="map"
+		{windows}
+		name="Adresse"
+		class="col-span-4 col-start-1 row-span-4 row-start-13 max-h-96"
+	>
+		<div class="-mx-2.5">
+			<iframe
+				title="Google Maps - Pavillon de design de l'UQAM"
+				src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.855569266736!2d-73.56197!3d45.512986!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91a4d108e6bd9%3A0xb31a88b71600ec4c!2s%C3%89cole%20de%20design%20de%20l&#39;UQAM!5e0!3m2!1sen!2sca!4v1764772767790!5m2!1sen!2sca"
+				width="600"
+				height="450"
+				style="border:0;"
+				allowfullscreen={false}
+				loading="lazy"
+				referrerpolicy="no-referrer-when-downgrade"
+			></iframe>
+		</div>
+	</Window>
+
 	<Window
 		id="related"
 		{windows}
@@ -103,21 +120,25 @@
 					>
 						{item.name}
 					</button>
-
-					<!-- <a
-							href={link.url}
-							class="visited:text-[VisitedText]! hover:underline"
-							style="color: LinkText;">{link.icon} {item.name}</a
-						> -->
 				{/each}
 			</div>
 			<div class="mt-1">
-				{related[active_tab]?.body}
+				<Markdown content={related[active_tab]?.body || ''} />
 			</div>
 		</div>
 	</Window>
-	<!-- <div class="sticky right-0 bottom-0">sds</div> -->
+	<Window
+		id="weather"
+		{windows}
+		name="Température à Montréal"
+		class="col-span-2 col-start-6 row-span-2 row-start-13 max-h-96"
+	>
+		<div class="mt-1">
+			<Weather />
+		</div>
+	</Window>
 </div>
+
 <div class=""></div>
 <svelte:head>
 	<title>AGRAF</title>

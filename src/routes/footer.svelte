@@ -1,5 +1,4 @@
 <script>
-	import Logo from '$lib/logo.svelte';
 	import Explosion from './explosion.svelte';
 </script>
 
@@ -56,11 +55,13 @@
 		<div class="col-span-4 max-lg:col-start-8 max-lg:row-start-3 lg:col-span-1">
 			<Explosion />
 		</div>
-		<a
+		<div
 			class="col-span-4 max-lg:col-start-8 max-lg:row-start-2 lg:col-span-1"
 			target="_blank"
-			href="https://www.facebook.com/agraf.uqam/">Crédits</a
+			href=""
 		>
+			Crédits
+		</div>
 		<div
 			class="col-span-full flex font-normal max-lg:mt-16 max-lg:text-sm lg:col-span-6 lg:col-start-1 lg:row-start-1"
 			style="font-family: 'Comic', sans-serif;"

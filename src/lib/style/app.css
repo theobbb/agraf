@@ -4,12 +4,14 @@
 	--color-bg: white;
 	--color-text: rgb(36, 36, 36);
 
+	--color-link: LinkText;
+	--color-link-visited: VisitedText;
+
 	--spacing-line-height: 1.25em;
 	--breakpoint-break: 130rem;
 }
 
 html {
-	--theme: 'white';
 	background-color: var(--color-bg);
 
 	color: var(--color-text);
@@ -19,10 +21,13 @@ html {
 	line-height: var(--spacing-line-height);
 
 	-webkit-tap-highlight-color: unset;
+
+	/* --link-color: LinkText;
+	--link-visited-color: VisitedText; */
 }
 
 .text-2 {
-	color: rgb(from var(--color-text) r g b / 50%);
+	color: rgb(from var(--color-text) r g b / 60%);
 }
 
 .font-serif {
@@ -46,4 +51,15 @@ html {
 	display: grid;
 	grid-template-columns: repeat(12, minmax(0, 1fr));
 	gap: calc(2.5 * var(--spacing));
+}
+
+.og-link {
+	color: var(--color-link);
+	text-decoration: underline;
+}
+.og-link:visited {
+	color: var(--color-link-visited);
+}
+.og-link:hover {
+	text-decoration: none;
 }

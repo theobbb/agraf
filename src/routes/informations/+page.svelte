@@ -62,6 +62,10 @@
 	});
 
 	const windows: Windows = $state({});
+
+	const cx = {
+		text: 'text-2xl/6.5'
+	};
 </script>
 
 <div class="relative">
@@ -69,7 +73,7 @@
 
 	<div class="max-w-30">Ressources pour l'étudiant</div>
 
-	<div class="relative pt-1 pb-32">
+	<div class="relative pt-1">
 		<div class="text-2xl/7">
 			{#each data.ressources as { name, emoji }}
 				<button
@@ -106,20 +110,20 @@
 	</div>
 </div>
 
-<div>
+<div class="mt-32 border-b">
 	<div class="grid-12 text-balance">
 		<div class="col-span-6 mb-12 font-serif">
-			<span class="italic">ENTENTE D’ÉVALUATION</span> 🌼
+			🌼 <span class=""> Entente d'évaluation</span> 🌼
 		</div>
 		<div class="col-span-6 text-2xl/6.5">
-			<div class="mb-8">
+			<div class="mt-2.5 mb-8">
 				L’entente d’évaluation est une démarche obligatoire, propre à l’UQAM, et prévue dans ses
 				règlements. Il s’agit d’une entente qui intervient entre l’enseignant.e ou responsable d’un
 				groupe-cours, d’une part, et les étudiant.e.s inscrit.e.s à ce groupe-cours, d’autre part.
 				Elle statue sur :
 			</div>
 
-			<div class="mb-32">
+			<div class="mb-48">
 				<div class="flex items-center gap-4">
 					<div class="size-3 rounded-full bg-text"></div>
 					le nombre d’évaluations prévues au cours du trimestre;
@@ -136,7 +140,7 @@
 		</div>
 
 		<div
-			class=" col-span-full col-start-1 max-md:mb-16 md:col-span-6 xl:col-span-5 xl:col-start-2 xl:mr-4"
+			class="col-span-full col-start-1 max-md:mb-16 md:col-span-6 xl:col-span-5 xl:col-start-2 xl:mr-8"
 		>
 			L’entente d’évaluation est un gain historique issu des luttes étudiantes et vise à
 			démocratiser l’enseignement. Elle donne aux étudiant.e.s de chaque groupe-cours le droit de
@@ -154,7 +158,7 @@
 			fait connaître les demandes du groupe.
 		</div>
 		<div
-			class="col-span-full col-start-1 max-md:mb-16 md:col-span-6 xl:col-span-5 xl:col-start-7 xl:mr-4"
+			class="col-span-full col-start-1 max-md:mb-16 md:col-span-6 xl:col-span-5 xl:col-start-7 xl:mr-8"
 		>
 			N’hésitez pas à vous montrer ferme lors de la négociation. Lorsque l'enseignant.e se montre
 			réticent.e face à vos demandes, expliquez-lui calmement que ce processus important est issu
@@ -171,35 +175,36 @@
 			réouverture sera proposée par l’enseignant.e après deux périodes de cours non dispensées. Si la
 			réouverture n’est pas proposée, il est de votre devoir d’en faire la demande.
 		</div>
-		<div class=" col-span-full md:col-span-6 md:col-start-7 xl:col-span-5"></div>
 
-		<div class="col-span-full mt-32 max-w-130 xl:col-span-3 xl:col-start-10">
-			Pour toute question, veuillez communiquer avec l’AGRAF ou avec l’AFÉA.
+		<div class="col-span-full mt-24 mb-1.5 max-w-130 xl:col-span-3 xl:col-start-10">
+			Pour toute question, veuillez communiquer avec <a href="/feedback" class="og-link">l’AGRAF</a>
+			ou avec
+			<a class="og-link" target="_blank" href="https://www.afea.uqam.ca/contact">l’AFÉA</a>.
 		</div>
 	</div>
 </div>
-<div>
-	<div class="mb-3 border-t pt-1 font-serif">
-		<span class="italic">ASSURANCE COLLECTIVE</span> 💰
-	</div>
-	<div class="grid-12">
-		<div class="col-span-full pt-12 text-2xl/7 lg:col-span-6 lg:col-start-2">
-			<div class="mb-6 max-w-200">
-				Les étudiants membres de l'AFÉA  sont automatiquement inscrits au Régime collectif de soins
-				de santé et dentaires de l’ASEQ.  Le Régime étudiant de l'ASEQ offre une couverture de soins
-				de santé, dentaire, de vision, de voyage et juridique. Il est possible de se désinscrire au
-				début de l’année.
-			</div>
-			<div>Voir toutes les informations</div>
+<div class="grid-12 mt-32">
+	<div class="mb-3 pt-1 font-serif lg:col-span-6">💰 Assurance collective 💰</div>
+
+	<div class="col-span-full mt-2.5 lg:col-span-6 lg:col-start-7">
+		<div class={[cx.text, 'max-w-200']}>
+			Les étudiants membres de l'<a class="og-link" href="https://www.afea.uqam.ca/" target="_blank"
+				>AFÉA</a
+			>
+			sont automatiquement inscrits au Régime collectif de soins de santé et dentaires de l’<a
+				class="og-link"
+				href="https://aseq.ca/rte/fr/wwwsanteetudiantecom_UQAM_Home"
+				target="_blank">ASEQ</a
+			>.  Le Régime étudiant de l'ASEQ offre une couverture de soins de santé, dentaire, de vision,
+			de voyage et juridique. Il est possible de se désinscrire au début de l’année.
 		</div>
 	</div>
+	<div class="mt-24 mb-1.5 lg:col-span-3 lg:col-start-10">
+		<a class="og-link" href="https://aseq.ca/rte/fr/wwwsanteetudiantecom_UQAM_Home" target="_blank"
+			>Voir toutes les informations</a
+		>
+	</div>
 </div>
-
-<!-- <div class=" mt-60 max-w-6xl font-serif text-5xl/14">
-	1. ATELIERS DE L’ÉCOLE 🏫 2. ATELIERS GÉRÉS PAR LES ÉTUDIANT·E·S 👩‍🎓 3. PRÊT DE MATÉRIEL 🗿 4.
-	IMPRESSION 🖨️ <span class="italic">5. ENTENTE D’ÉVALUATION</span> 🌼
-	<span class="italic">6. ASSURANCE COLLECTIVE</span> 💰
-</div> -->
 
 <svelte:head>
 	<title>AGRAF 🤓 Informations</title>

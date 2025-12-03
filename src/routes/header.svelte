@@ -49,29 +49,29 @@
 				<div class="invisible" aria-hidden="true">*</div>
 
 				<!-- <div class={[page.url.pathname != href && 'opacity-0 group-hover:opacity-100']}>
-					{i}
-				</div> -->
+						{i}
+					</div> -->
 			</a>
 		{/each}
 	</div>
 	<div bind:this={sentinel}></div>
-	<header class={['sticky top-0 z-100 bg-bg', scrolled && 'border-b']}>
-		<div class="grid-12 sticky top-0 -mt-1.5 self-start pt-1.5">
-			{#each links as { name, description, href }, i}
-				<a
-					{href}
-					class={[
-						'group  col-span-6 flex flex-col justify-between border-b pb-1 sm:col-span-4 md:col-span-3 xl:col-span-2',
-						(href == '/' ? page.url.pathname === href : page.url.pathname.startsWith(href))
-							? 'flex-col-reverse border-b-text  max-xl:bg-text max-xl:text-bg max-xl:ring-3 max-xl:ring-text'
-							: 'flex-col border-b-transparent hover:border-b-current'
-					]}
-				>
-					<div class=" max-w-60 pr-4">
-						<div class="">{name}</div>
-					</div>
-				</a>
-			{/each}
-		</div>
-	</header>
 </div>
+<header class={['sticky top-0 z-100 bg-bg', scrolled && 'border-b']}>
+	<div class="grid-12 self-start pt-1.5">
+		{#each links as { name, description, href }, i}
+			<a
+				{href}
+				class={[
+					'group  col-span-6 flex flex-col justify-between border-b pb-1 sm:col-span-4 md:col-span-3 xl:col-span-2',
+					(href == '/' ? page.url.pathname === href : page.url.pathname.startsWith(href))
+						? 'flex-col-reverse border-b-text  max-xl:bg-text max-xl:text-bg max-xl:ring-3 max-xl:ring-text'
+						: 'flex-col border-b-transparent hover:border-b-current'
+				]}
+			>
+				<div class=" max-w-60 pr-4">
+					<div class="">{name}</div>
+				</div>
+			</a>
+		{/each}
+	</div>
+</header>
