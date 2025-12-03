@@ -2,10 +2,9 @@
 
 @theme {
 	--color-bg: white;
-	--color-text: rgb(47, 47, 47);
+	--color-text: rgb(36, 36, 36);
 
 	--spacing-line-height: 1.25em;
-
 	--breakpoint-break: 130rem;
 }
 
@@ -30,15 +29,8 @@ html {
 	font-family: 'Instrument Serif';
 	font-size: 3.2rem;
 	line-height: 1.1;
-
-	/* font-size: 3.75rem;
-	line-height: 1.1; */
 }
-/* @screen lg {
-	html {
-		font-size: 24px;
-	}
-} */
+
 @media (max-width: 96rem) {
 	html {
 		font-size: 15px;
@@ -49,38 +41,9 @@ html {
 		font-size: 13px;
 	}
 }
-/* @media (max-width: 800px) {
-	html {
-		font-size: 14px;
-	}
-} */
 
 .grid-12 {
 	display: grid;
 	grid-template-columns: repeat(12, minmax(0, 1fr));
 	gap: calc(2.5 * var(--spacing));
-}
-
-@keyframes rainbow-bg {
-	0% {
-		background-color: red;
-	}
-	16% {
-		background-color: orange;
-	}
-	32% {
-		background-color: yellow;
-	}
-	48% {
-		background-color: green;
-	}
-	64% {
-		background-color: blue;
-	}
-	80% {
-		background-color: indigo;
-	}
-	100% {
-		background-color: violet;
-	}
 }

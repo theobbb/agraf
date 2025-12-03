@@ -11,5 +11,12 @@ export async function load({ params }) {
 		const current_year = await pocketbase.collection('settings').getOne('currentyear');
 		redirect(307, `/association/${current_year.value}`);
 	}
-	return { member_entries };
+
+	const settings_featured = await pocketbase.collection('settings').getOne('featured');
+
+	const { collection, id } = settings_featured.value;
+
+	const featured = settings_featured ? await pocketbase.collection(collection).getOne(id) : null;
+
+	return { member_entries, featured };
 }

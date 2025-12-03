@@ -1,11 +1,10 @@
 <script>
-	import Emoji from '$lib/emoji.svelte';
 	import Logo from '$lib/logo.svelte';
 	import Explosion from './explosion.svelte';
 </script>
 
-<footer class="mt-64 mb-1.5">
-	<div class="grid-12">
+<footer class="mt-64- pb-2.5">
+	<!-- <div class="grid-12">
 		<div class="col-span-full border-t pt-0.5 md:col-span-3">
 			<div>Bibliothèque LU</div>
 			<div class="opacity-50">
@@ -35,9 +34,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
-	<div class="grid-12 mt-32">
+	<div class="grid-12 border-t pt-1.5">
 		<a
 			target="_blank"
 			class="lg:col-start col-span-6 lg:col-span-2"
@@ -53,14 +52,20 @@
 			target="_blank"
 			href="https://www.facebook.com/agraf.uqam/">Facebook</a
 		>
+
 		<div class="col-span-4 max-lg:col-start-8 max-lg:row-start-3 lg:col-span-1">
 			<Explosion />
 		</div>
+		<a
+			class="col-span-4 max-lg:col-start-8 max-lg:row-start-2 lg:col-span-1"
+			target="_blank"
+			href="https://www.facebook.com/agraf.uqam/">Crédits</a
+		>
 		<div
 			class="col-span-full flex font-normal max-lg:mt-16 max-lg:text-sm lg:col-span-6 lg:col-start-1 lg:row-start-1"
 			style="font-family: 'Comic', sans-serif;"
 		>
-			<div>© 1983–2983 AGRAF ❤️ Tous droits réservés 😡🤬</div>
+			<div>© 2025 AGRAF ❤️ Tous droits réservés 😡🤬</div>
 			<div></div>
 		</div>
 	</div>

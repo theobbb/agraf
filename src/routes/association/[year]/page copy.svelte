@@ -49,10 +49,24 @@
 	}
 </script>
 
-<Emoji>🦖</Emoji>
+<Emoji>🦑</Emoji>
+<div class="space-y-24">
+	<div class="mt-[20svh]- ml-12- flex items-center gap-4 font-serif text-6xl/16">
+		<div class="max-w-210 uppercase">
+			Association étudiante du programme de design graphique de l'<span class="italic">UQAM</span>
+		</div>
+	</div>
+	<!-- <div class="mb-6 max-w-120">
+		L’AGRAF rassemble et représente l’ensemble des étudiant·e·s en design graphique. Elle agit pour
+		améliorer les conditions d’études et soutient les initiatives sociales, culturelles et
+		collectives au sein du programme.
+	</div> -->
+</div>
+
+<div class="mt-12 mb-24"><Logo /></div>
 
 <div class="text-xl lg:text-2xl">
-	<div class="grid-12 mb-24">
+	<div class="grid-12 mb-16">
 		<div
 			class="col-span-full grid grid-cols-7 gap-2.5 bg-text px-2.5 py-2.5 text-bg lg:col-span-7 lg:col-start-2"
 		>
@@ -76,7 +90,7 @@
 		</div>
 	</div>
 
-	<div class="grid-12 mb-64 font-serif text-2xl/7! lg:text-[2.9vw]/[3vw]! break:text-6xl!">
+	<div class="grid-12 mb-96 font-serif text-2xl/7! lg:text-[2.9vw]/[3vw]! break:text-6xl!">
 		<div class="col-span-full italic xl:col-span-2">Objectifs →</div>
 		<div class="col-span-full text-balance lg:col-start-2 xl:col-span-10 xl:col-start-3">
 			{#each objectives as objective, i}
@@ -145,10 +159,10 @@
 
 <svelte:head>
 	<title>AGRAF 🦖 L'association</title>
-	<style>
+	<!-- <style>
 		html {
 			--color-bg: #bdde71;
 			--color-text: #5f4769;
 		}
-	</style>
+	</style> -->
 </svelte:head>

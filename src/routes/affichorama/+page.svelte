@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Emoji from '$lib/emoji.svelte';
+	import Media from '$lib/media.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import { get_image_url } from '$lib/utils/get-image-url';
 	import { dummy } from './dummy';
@@ -32,29 +33,10 @@
 			<a href="/affichorama/{poster.slug}">
 				<div class="relative mb-2.5">
 					{#if poster.images?.length}
-						<!-- <img
-							loading="lazy"
-							class="object-contain"
-							src={get_image_url(
-								poster.collectionId,
-								poster.id,
-								poster.images[indexes[poster.id] || 0]
-							)}
-							alt="{poster.title} - 0"
-						/> -->
-						{#if poster.images[indexes[poster.id] || 0].endsWith('.mp4')}
-							<video src={pocketbase.files.getURL(poster, poster.images[indexes[poster.id] || 0])}
-							></video>
-						{:else}
-							<img
-								loading="lazy"
-								class="object-contain"
-								src={pocketbase.files.getURL(poster, poster.images[indexes[poster.id] || 0], {
-									format: 'webp'
-								})}
-								alt="{poster.title} - 0"
-							/>
-						{/if}
+						<Media
+							src={pocketbase.files.getURL(poster, poster.images[indexes[poster.id] || 0])}
+							alt="{poster.title} - image"
+						/>
 					{:else}
 						<div class="absolute inset-0 bg-white/5"></div>
 					{/if}

@@ -66,8 +66,9 @@
 
 <div class="relative">
 	<Emoji>🤓</Emoji>
-
-	<div class="max-w-30">Ressources pour l'étudiant</div>
+	<div class="grid-12">
+		<div>Ressources pour l'étudiant</div>
+	</div>
 
 	<div class="relative pt-1 pb-32">
 		<div class="text-2xl/7">
@@ -88,15 +89,9 @@
 			{/each}
 		</div>
 	</div>
-	<div class="grid-12 pointer-events-none absolute inset-0 grid-rows-6">
+	<div class="grid-12 pointer-events-none absolute inset-0">
 		{#each data.ressources as { name, body, window_cx, emoji }}
-			<Window
-				hidden
-				id={name}
-				{windows}
-				{name}
-				class="col-span-4 col-start-9 row-span-2 row-start-1"
-			>
+			<Window hidden id={name} {windows} {name} class={window_cx}>
 				<div class="my-2">
 					<div>{body}</div>
 					<div class="text-4xl">{emoji}</div>
@@ -135,9 +130,7 @@
 			</div>
 		</div>
 
-		<div
-			class=" col-span-full col-start-1 max-md:mb-16 md:col-span-6 xl:col-span-5 xl:col-start-2 xl:mr-4"
-		>
+		<div class=" col-span-full col-start-1 max-md:mb-16 md:col-span-6 xl:col-span-6 xl:col-start-4">
 			L’entente d’évaluation est un gain historique issu des luttes étudiantes et vise à
 			démocratiser l’enseignement. Elle donne aux étudiant.e.s de chaque groupe-cours le droit de
 			s’entendre, avec l’enseignant.e, sur le déroulement du cours, la charge de travail, les
@@ -145,31 +138,26 @@
 			dispose de deux semaines afin de faire signer l’entente d’évaluation par deux étudiant.e.s du
 			groupe.
 			<br />
-			<br />
 			Il est important que le groupe prenne un moment pour discuter du syllabus et de l’entente d’évaluation.
 			Cela signifie qu’il ne faut pas hésiter à demander à l’enseignant.e de vous laisser le temps nécessaire
 			afin d’avoir une conversation. Il est  préférable de demander à celui-ci ou celle-ci de quitter
 			le local un moment afin que vous puissiez discuter. Lorsque le groupe fait un choix, par consensus
 			ou par vote, l’enseignant.e est invité.e à réintégrer la salle de cours et un.e porte-parole lui
 			fait connaître les demandes du groupe.
-		</div>
-		<div
-			class="col-span-full col-start-1 max-md:mb-16 md:col-span-6 xl:col-span-5 xl:col-start-7 xl:mr-4"
-		>
-			N’hésitez pas à vous montrer ferme lors de la négociation. Lorsque l'enseignant.e se montre
-			réticent.e face à vos demandes, expliquez-lui calmement que ce processus important est issu
-			des règlements 5 et 8. Si vous constatez que les négociations n’avancent pas adressez-vous à
-			votre association étudiante afin qu’une personne puisse agir à titre de médiatrice.Dans le cas
-			où l’enseignant.e et le groupe ne parviennent toujours pas à s’entendre et donc, que le litige
-			touche l’établissement de cette entente, sa modification ou son interprétation, le dossier est
-			transmis à la direction du département qui tranchera le litige. La décision prise à cette
-			étape est finale.
-			<br /><br /> Il peut arriver que des circonstances majeures empêchent la tenue d’une ou plusieurs
-			périodes de cours donnés. Les raisons sont diverses: une grève étudiante, un.e enseignant.e malade
-			ou ayant des empêchements personnels, etc. Avec l’accord d’au moins le 2/3 du groupe, il est alors
-			possible de rouvrir l’entente et de la modifier en fonction des cours manqués. En général, cette
-			réouverture sera proposée par l’enseignant.e après deux périodes de cours non dispensées. Si la
-			réouverture n’est pas proposée, il est de votre devoir d’en faire la demande.
+			<br /><br />
+			N’hésitez pas à vous montrer ferme lors de la négociation. Lorsque l'enseignant.e se montre réticent.e
+			face à vos demandes, expliquez-lui calmement que ce processus important est issu des règlements
+			5 et 8. Si vous constatez que les négociations n’avancent pas adressez-vous à votre association
+			étudiante afin qu’une personne puisse agir à titre de médiatrice.Dans le cas où l’enseignant.e
+			et le groupe ne parviennent toujours pas à s’entendre et donc, que le litige touche l’établissement
+			de cette entente, sa modification ou son interprétation, le dossier est transmis à la direction
+			du département qui tranchera le litige. La décision prise à cette étape est finale.
+			<br /> Il peut arriver que des circonstances majeures empêchent la tenue d’une ou plusieurs périodes
+			de cours donnés. Les raisons sont diverses: une grève étudiante, un.e enseignant.e malade ou ayant
+			des empêchements personnels, etc. Avec l’accord d’au moins le 2/3 du groupe, il est alors possible
+			de rouvrir l’entente et de la modifier en fonction des cours manqués. En général, cette réouverture
+			sera proposée par l’enseignant.e après deux périodes de cours non dispensées. Si la réouverture
+			n’est pas proposée, il est de votre devoir d’en faire la demande.
 		</div>
 		<div class=" col-span-full md:col-span-6 md:col-start-7 xl:col-span-5"></div>
 

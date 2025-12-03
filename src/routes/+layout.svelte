@@ -17,11 +17,14 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class="mx-auto px-2.5 break:px-30" style="max-width: var(--breakpoint-break);">
+<div
+	class={['mx-auto min-h-svh px-2.5 break:px-30', !clean_ui && 'grid grid-rows-[auto_1fr_auto]']}
+	style="max-width: var(--breakpoint-break);"
+>
 	{#if !clean_ui}
 		<Header />
 	{/if}
-	{@render children()}
+	<div>{@render children()}</div>
 	{#if !clean_ui}
 		<Footer />
 	{/if}
