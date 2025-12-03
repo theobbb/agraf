@@ -8,7 +8,7 @@
 
 	let scrolled = $state(false);
 
-	let hovered_link = $state('');
+	let hovered: string | null = $state('');
 
 	function handle_intersect(entry: IntersectionObserverEntry) {
 		if (entry.isIntersecting) {
@@ -30,15 +30,17 @@
 </script>
 
 <div>
-	<div class="grid-12 pt-1.5">
+	<div class="grid-12 -mb-1.5 pt-1.5">
 		{#each links as { description, href }, i}
 			<a
+				onpointerenter={() => (hovered = href)}
+				onpointerleave={() => (hovered = null)}
 				{href}
 				class={[
 					'group col-span-6 flex flex-col justify-between sm:col-span-4 md:col-span-3 xl:col-span-2',
 					(href == '/' ? page.url.pathname === href : page.url.pathname.startsWith(href))
-						? '  max-xl:bg-text max-xl:text-bg max-xl:ring-3 max-xl:ring-text'
-						: 'flex-col border-b-transparent hover:border-b-current'
+						? ''
+						: 'border-b-transparent hover:border-b-current'
 				]}
 			>
 				<div class="max-w-60 pr-4">
@@ -56,20 +58,34 @@
 	</div>
 	<div bind:this={sentinel}></div>
 </div>
-<header class={['sticky top-0 z-100 bg-bg', scrolled && 'border-b']}>
-	<div class="grid-12 self-start pt-1.5">
-		{#each links as { name, description, href }, i}
+<header class={['-mt-1.5- sticky top-0 z-100 bg-bg', scrolled && 'border-b']}>
+	<div class="grid-12 self-start">
+		{#each links as { name, href }, i}
 			<a
 				{href}
 				class={[
-					'group  col-span-6 flex flex-col justify-between border-b pb-1 sm:col-span-4 md:col-span-3 xl:col-span-2',
+					'group col-span-6 flex flex-col justify-between border-b pt-1.5 pb-1 sm:col-span-4 md:col-span-3 xl:col-span-2',
 					(href == '/' ? page.url.pathname === href : page.url.pathname.startsWith(href))
-						? 'flex-col-reverse border-b-text  max-xl:bg-text max-xl:text-bg max-xl:ring-3 max-xl:ring-text'
-						: 'flex-col border-b-transparent hover:border-b-current'
+						? scrolled && 'border-b-transparent'
+						: scrolled
+							? 'border-b-transparent'
+							: hovered == href
+								? ''
+								: 'border-b-transparent hover:border-b-current'
 				]}
 			>
-				<div class=" max-w-60 pr-4">
-					<div class="">{name}</div>
+				<div class="pr-4">
+					{name}
+
+					<span
+						class={[
+							href == '/'
+								? page.url.pathname === href
+								: page.url.pathname.startsWith(href)
+									? ''
+									: 'hidden'
+						]}>*</span
+					>
 				</div>
 			</a>
 		{/each}

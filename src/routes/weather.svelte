@@ -62,8 +62,6 @@
 	onMount(() => {
 		get_weather();
 	});
-
-	$inspect(weather);
 </script>
 
 <div>

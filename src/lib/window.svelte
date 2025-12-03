@@ -27,8 +27,6 @@
 
 	let is_dragging = false;
 
-	$inspect(is_dragging);
-
 	function onpointermove(ev: PointerEvent) {
 		if (!el || !is_dragging) return;
 
@@ -104,15 +102,15 @@
 	onpointerdown={focus}
 	class={[
 		cx,
-		'window pointer-events-auto overflow-y-auto border bg-bg px-2.5',
+		'window shadow-lg- pointer-events-auto overflow-y-auto border bg-bg px-2.5 ',
 		!windows[id]?.hidden ? '' : 'invisible'
 	]}
-	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px);"
+	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px); box-shadow: 0.6rem 0.6rem 0 0 rgba(0, 0, 0, 0.3);"
 >
 	<div
 		onpointerdown={start_drag}
 		class={[
-			'sticky top-0 flex cursor-grab items-center justify-between gap-1 border-b bg-bg py-1.5'
+			'sticky top-0 flex cursor-grab items-center justify-between gap-1 border-b bg-bg py-1.5 '
 		]}
 	>
 		<div class="">{name}</div>

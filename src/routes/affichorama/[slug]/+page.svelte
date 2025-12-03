@@ -2,11 +2,10 @@
 	import Markdown from '$lib/markdown.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import type { PageProps } from './$types';
-	import { marked } from 'marked';
 
 	const { data }: PageProps = $props();
 
-	const { poster } = $derived(data);
+	const { poster, next_slug } = $derived(data);
 </script>
 
 <div class="grid-12">
@@ -38,7 +37,11 @@
 		class="col-span-full flex items-end justify-end font-serif italic lg:col-span-4 lg:col-start-1 lg:row-start-3 lg:justify-start"
 		>Suivant</a
 	> -->
-	<a class="col-span-full flex items-end justify-end font-serif italic">Suivant</a>
+	<div class="col-span-full flex items-end justify-end font-serif italic">
+		{#if next_slug}
+			<a class="" href="/affichorama/{next_slug}">Suivant</a>
+		{/if}
+	</div>
 </div>
 
 <svelte:head>

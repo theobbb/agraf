@@ -183,7 +183,7 @@
 		</div>
 	</div>
 </div>
-<div class="grid-12 mt-32">
+<div class="grid-12 mt-32 mb-64">
 	<div class="mb-3 pt-1 font-serif lg:col-span-6">💰 Assurance collective 💰</div>
 
 	<div class="col-span-full mt-2.5 lg:col-span-6 lg:col-start-7">
