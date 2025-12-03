@@ -119,11 +119,11 @@
 	</div>
 	<div>Description des postes</div>
 	<div>Status et Règlements</div>
-	<div>Procédés verbaux</div>
+
 	<div>Budget</div>
 	<div>Procès verbaux</div>
 	<div>Demandes de subvention</div>
-	<div>Download pdf</div>
+	<div>Download data pdf</div>
 
 	{#if dialog.open}
 		<Dialog {dialog} class="mr-[calc(100vw/12)] mb-5 w-[calc(5*100vw/12)]">

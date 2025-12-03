@@ -18,12 +18,12 @@
 	const windows: Windows = $state({});
 </script>
 
-<div class="grid-12 relative mt-24 mb-24 grid-rows-16">
+<div class="grid-12 grid-rows-10- relative mt-24 mb-24 lg:grid-rows-16">
 	<Window
 		id="featured"
 		{windows}
 		name="En vedette!"
-		class="col-span-3 col-start-9 row-span-6 row-start-1"
+		class="col-span-8 lg:col-span-3 lg:col-start-9 lg:row-span-6 lg:row-start-1"
 	>
 		<div class="">
 			<Media
@@ -41,24 +41,30 @@
 			<div>Anonyme</div>
 		</div>
 	</Window>
-	<Window id="logo" {windows} name="Logo" class="col-span-4 col-start-1 row-span-3 row-start-2">
+	<Window
+		id="logo"
+		{windows}
+		name="Logo"
+		class="col-span-full lg:col-span-4 lg:col-start-1 lg:row-span-3 lg:row-start-2"
+	>
 		<div class="my-2"><Logo /></div>
 	</Window>
 	<Window
 		id="desc"
 		{windows}
 		name="Description"
-		class="col-span-5 col-start-3 row-span-3 row-start-4"
+		class="col-span-full col-start-1 lg:col-span-5 lg:col-start-3 lg:row-span-3 lg:row-start-4"
 	>
 		<div class="mt-1 mb-4 font-serif">
 			Association étudiante du programme de design graphique de l'<span class="italic">UQAM</span>
 		</div>
 	</Window>
+
 	<Window
 		id="desc_long"
 		{windows}
 		name="Description mais plus précise"
-		class="col-span-4 col-start-2 row-span-3 row-start-6"
+		class="col-span-full lg:col-span-4 lg:col-start-2 lg:row-span-3 lg:row-start-6"
 	>
 		<div class="mb-32 pt-1">
 			L’AGRAF rassemble et représente l’ensemble des étudiant·e·s en design graphique. Elle agit
@@ -66,13 +72,14 @@
 			collectives au sein du programme.
 		</div>
 	</Window>
+
 	<Window
 		id="linktree"
 		{windows}
 		name="Linktree fait maison"
-		class="col-span-3 col-start-7 row-span-4 row-start-8"
+		class="col-span-7 col-start-5 row-span-2 lg:col-span-3 lg:col-start-7 lg:row-span-4 lg:row-start-8"
 	>
-		<div class="py-1">
+		<div class="py-1 pb-24 lg:pb-12">
 			{#each links as link}
 				<div>
 					<a href={link.url} class="og-link">{link.icon} {link.name}</a>
@@ -85,9 +92,9 @@
 		id="map"
 		{windows}
 		name="Adresse"
-		class="col-span-4 col-start-1 row-span-4 row-start-13 max-h-96 overflow-hidden!"
+		class="order-last col-span-full row-span-2 max-h-96 overflow-hidden! lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-13"
 	>
-		<div class="relative -mx-2.5 h-[calc(100%-2rem)]">
+		<div class="relative -mx-2.5 h-64 lg:h-[calc(100%-2rem)]">
 			<iframe
 				class="absolute inset-0 object-cover"
 				title="Google Maps - Pavillon de design de l'UQAM"
@@ -106,14 +113,14 @@
 		id="related"
 		{windows}
 		name="Projets reliés"
-		class="col-span-7 col-start-4 row-span-4 row-start-10 max-h-96"
+		class="col-span-full row-span-2 max-h-96 lg:col-span-7 lg:col-start-4 lg:row-span-4 lg:row-start-10"
 	>
-		<div class="">
+		<div class="pb-24 lg:pb-12">
 			<div class="flex border-b">
 				{#each related as item, i}
 					<button
 						class={[
-							'-mb-px cursor-pointer border-r border-b border-x-transparent bg-bg px-3 py-1.5 first:border-l',
+							'-mb-px cursor-pointer border-r border-b border-x-transparent bg-bg px-3 py-1.5 text-left first:border-l',
 							active_tab == i && 'border-r-text border-b-transparent first:border-l-text',
 							active_tab == i + 1 && 'border-r-text'
 						]}
@@ -128,13 +135,14 @@
 			</div>
 		</div>
 	</Window>
+
 	<Window
 		id="weather"
 		{windows}
 		name="Température à Montréal"
-		class="col-span-2 col-start-6 row-span-2 row-start-13 max-h-96"
+		class="col-span-8 col-start-2 max-h-96 lg:col-span-2 lg:col-start-6 lg:row-span-2 lg:row-start-13"
 	>
-		<div class="mt-1">
+		<div class="mt-1 pb-24 lg:pb-12">
 			<Weather />
 		</div>
 	</Window>

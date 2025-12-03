@@ -124,7 +124,7 @@
 	</div>
 </div>
 <a class="fixed bottom-12 left-2.5 font-serif">
-	WTF !!? <br /> Laissez-moi écrire mon commentaire normalement svp
+	WTF !!? Laissez-moi écrire mon commentaire normalement svp →
 </a>
 <!-- 	<button
 		type="submit"
