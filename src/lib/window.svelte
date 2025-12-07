@@ -22,19 +22,23 @@
 
 	let el: HTMLDivElement | null = null;
 
+	const z_index = $derived(windows[id]?.z_index);
+
 	const translate = $state({ x: 0, y: 0 });
 	const start = { cursor: { x: 0, y: 0 }, window: { x: 0, y: 0 } };
 
+	const size = $state({ width: 0, height: 0 });
+
 	let is_dragging = false;
 
-	function onpointermove(ev: PointerEvent) {
+	function onmove(ev: MouseEvent) {
 		if (!el || !is_dragging) return;
 
 		translate.x = start.window.x + (ev.clientX - start.cursor.x);
 		translate.y = start.window.y + (ev.clientY - start.cursor.y);
 	}
 
-	function start_drag(ev: PointerEvent) {
+	function start_drag(ev: MouseEvent) {
 		if ((ev.target as HTMLElement).closest('button')) return;
 
 		if (!el) return;
@@ -52,18 +56,20 @@
 
 		is_dragging = true;
 
-		window.addEventListener('pointermove', onpointermove);
-
-		el.setPointerCapture(ev.pointerId);
+		window.addEventListener('mousemove', onmove);
+		window.addEventListener('mouseup', end_drag);
+		//el.setPointerCapture(ev.pointerId);
 	}
 
-	function endDrag(ev: PointerEvent) {
+	function end_drag() {
 		if (!is_dragging) return;
 
-		window.removeEventListener('pointermove', onpointermove);
-		if (el) {
-			el.releasePointerCapture(ev.pointerId);
-		}
+		window.removeEventListener('mousemove', onmove);
+		window.removeEventListener('mouseup', end_drag);
+		// window.removeEventListener('pointermove', onmove);
+		// if (el) {
+		// 	el.releasePointerCapture(ev.pointerId);
+		// }
 		document.documentElement.style.cursor = 'auto';
 		document.documentElement.style.userSelect = 'auto';
 		is_dragging = false;
@@ -75,7 +81,28 @@
 		windows[id].z_index = max_z_index + 1;
 	}
 
-	const z_index = $derived(windows[id]?.z_index);
+	function minimize() {
+		console.log(el);
+		if (!el) return;
+		el.style.width = '1000px';
+	}
+
+	function position_absolute() {
+		if (!el) return;
+
+		// 1. Get the current, rendered position and size from the grid layout
+		const rect = el.getBoundingClientRect();
+
+		// 2. Store the position as state for absolute positioning
+		translate.x = rect.left;
+		translate.y = rect.top;
+
+		// 3. Store the size for resizing logic
+		size.width = rect.width;
+		size.height = rect.height;
+
+		//el.style.position = 'absolute';
+	}
 
 	onMount(() => {
 		if (!el) return;
@@ -88,39 +115,42 @@
 		};
 
 		// Attach the cleanup handler to the window to catch releases anywhere
-		window.addEventListener('pointerup', endDrag);
+		//window.addEventListener('pointerup', end_drag);
 
 		// Cleanup window event listener on component destroy
-		return () => {
-			window.removeEventListener('pointerup', endDrag);
-		};
+		// return () => {
+		// 	window.removeEventListener('pointerup', end_drag);
+
+		// 	end_drag()
+		// };
 	});
 </script>
 
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
 	bind:this={el}
-	onpointerdown={focus}
+	onmousedown={focus}
 	class={[
 		cx,
-		'window shadow-lg- pointer-events-auto overflow-y-auto border bg-bg px-2.5 ',
+		'window pointer-events-auto overflow-y-auto border bg-bg px-2.5 shadow',
 		!windows[id]?.hidden ? '' : 'invisible'
 	]}
-	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px); box-shadow: 0.6rem 0.6rem 0 0 rgba(0, 0, 0, 0.3);"
+	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px); "
 >
-	<div
-		onpointerdown={start_drag}
+	<header
+		onmousedown={start_drag}
 		class={[
 			'sticky top-0 flex cursor-grab items-center justify-between gap-1 border-b bg-bg py-1.5 '
 		]}
 	>
 		<div class="">{name}</div>
 		<div class="flex gap-1">
-			<button class="hover:bg-text hover:text-bg"><IconSubstract /></button>
+			<button onclick={minimize} class="hover:bg-text hover:text-bg"><IconSubstract /></button>
 			<button onclick={() => (windows[id].hidden = true)} class="hover:bg-text hover:text-bg"
 				><IconClose /></button
 			>
 		</div>
-	</div>
+	</header>
 
 	{@render children()}
 </div>

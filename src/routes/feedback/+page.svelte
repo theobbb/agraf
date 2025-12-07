@@ -91,11 +91,13 @@
 			name="Ceci est un bouton"
 			{windows}
 			id="submit"
-			class="absolute lg:col-span-2 lg:col-start-4"
+			class="absolute lg:col-span-2 lg:col-start-3 lg:row-start-3"
 		>
-			<div class="-mx-2.5">
-				<button type="submit" class="w-full bg-text px-2 py-4 font-serif text-3xl! text-bg"
-					>🦅<span class="italic">Envoyer </span>🦅</button
+			<div class="-mx-2.5 -mt-px">
+				<button
+					type="submit"
+					class="flex w-full cursor-pointer justify-between bg-text px-2 py-4 font-serif text-3xl! text-bg"
+					><span>🦅</span><span class="italic">Envoyer </span><span>🦅</span></button
 				>
 			</div>
 		</Window>
@@ -123,6 +125,22 @@
 		</Window>
 	</div>
 </div>
+{#if form.error == 'body'}
+	<div>
+		<div class="grid-12 absolute top-0 right-0 left-0">
+			<Window name="Erreur" {windows} id="error" class="lg:col-span-3 lg:col-start-2">
+				<div class="mt-1 mb-12">
+					{#if form.error == 'body'}
+						<div class="mt-3 max-w-110 text-red-500">
+							Wow, quel beau message! Ça va nous prendre un bon moment à lire tout ça mais on te
+							répond dès qu'on a finit.
+						</div>
+					{/if}
+				</div>
+			</Window>
+		</div>
+	</div>
+{/if}
 <a class="fixed bottom-12 left-2.5 font-serif">
 	WTF !!? Laissez-moi écrire mon commentaire normalement svp →
 </a>
@@ -135,8 +153,9 @@
 	<title>AGRAF 🦋 Feedback</title>
 	<style>
 		html {
-			--color-bg: #363636;
-			--color-text: #dd7575;
+			--color-bg: black;
+			--color-text: #c95b5b;
+			--color-text-2: rgb(from var(--color-text) r g b / 55%);
 		}
 	</style>
 </svelte:head>

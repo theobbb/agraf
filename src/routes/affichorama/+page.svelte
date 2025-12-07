@@ -3,8 +3,6 @@
 	import Markdown from '$lib/markdown.svelte';
 	import Media from '$lib/media.svelte';
 	import { pocketbase } from '$lib/pocketbase';
-	import { get_image_url } from '$lib/utils/get-image-url';
-	import { dummy } from './dummy';
 
 	const { data } = $props();
 
@@ -31,7 +29,7 @@
 			{/if}
 
 			<a href="/affichorama/{poster.slug}">
-				<div class="relative mb-2.5">
+				<div class="relative mb-1">
 					{#if poster.images?.length}
 						<Media
 							src={pocketbase.files.getURL(poster, poster.images[indexes[poster.id] || 0])}
@@ -42,7 +40,7 @@
 					{/if}
 				</div>
 				<div class="mb-0.5-">{poster.title}</div>
-				<div class="relative line-clamp-6 overflow-hidden text-ellipsis text-white/50">
+				<div class="text-2 relative line-clamp-3 overflow-hidden text-ellipsis">
 					<Markdown content={poster.body || ''} />
 				</div>
 				<div class="invisible">*</div>

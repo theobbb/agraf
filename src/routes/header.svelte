@@ -44,7 +44,7 @@
 				]}
 			>
 				<div class="max-w-60 pr-4">
-					<div class="whitespace-pre opacity-50">
+					<div class="text-2 whitespace-pre">
 						{description}
 					</div>
 				</div>

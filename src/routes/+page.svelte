@@ -5,7 +5,6 @@
 	import { format_date } from '$lib/utils/format-date';
 	import Window from '../lib/window.svelte';
 	import type { Windows } from '$lib/types';
-	import { marked } from 'marked';
 	import Markdown from '$lib/markdown.svelte';
 	import Weather from './weather.svelte';
 
@@ -148,7 +147,10 @@
 	</Window>
 </div>
 
-<div class=""></div>
+<!-- <div class="grid-12 fixed right-gap bottom-8 left-gap z-200">
+	<div class="col-span-10 col-start-2 border bg-bg shadow">fwe</div>
+</div> -->
+
 <svelte:head>
 	<title>AGRAF</title>
 	<meta

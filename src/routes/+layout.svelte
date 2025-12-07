@@ -21,7 +21,7 @@
 
 <div
 	class={[
-		'mx-auto min-h-svh px-2.5 break:px-30',
+		'mx-auto min-h-svh px-gap break:px-30',
 		!clean_ui && 'grid grid-rows-[auto_auto_1fr_auto]'
 	]}
 	style="max-width: var(--breakpoint-break);"

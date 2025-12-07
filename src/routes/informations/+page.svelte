@@ -112,9 +112,7 @@
 
 <div class="mt-32 border-b">
 	<div class="grid-12 text-balance">
-		<div class="col-span-6 mb-12 font-serif">
-			🌼 <span class=""> Entente d'évaluation</span> 🌼
-		</div>
+		<div class="col-span-6 mb-12 font-serif">🤝 Entente d'évaluation 🫶</div>
 		<div class="col-span-6 text-2xl/6.5">
 			<div class="mt-2.5 mb-8">
 				L’entente d’évaluation est une démarche obligatoire, propre à l’UQAM, et prévue dans ses
@@ -204,6 +202,7 @@
 			>Voir toutes les informations</a
 		>
 	</div>
+	<div class="col-span-full text-6xl">🧾🤕🦷🪥🥶🩺💊🩼💵📉🚑❤️‍🩹👓👁️🩴✈️🧑‍⚖️⚖️👮🥺</div>
 </div>
 
 <svelte:head>

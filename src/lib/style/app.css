@@ -3,9 +3,12 @@
 @theme {
 	--color-bg: white;
 	--color-text: rgb(36, 36, 36);
+	--color-text-2: rgb(from var(--color-text) r g b / 50%);
 
 	--color-link: LinkText;
 	--color-link-visited: VisitedText;
+
+	--spacing-gap: 0.625rem;
 
 	--spacing-line-height: 1.25em;
 	--breakpoint-break: 130rem;
@@ -27,7 +30,7 @@ html {
 }
 
 .text-2 {
-	color: rgb(from var(--color-text) r g b / 60%);
+	color: var(--color-text-2);
 }
 
 .font-serif {
@@ -62,4 +65,8 @@ html {
 }
 .og-link:hover {
 	text-decoration: none;
+}
+
+.shadow {
+	box-shadow: 0.6rem 0.6rem 0 0 rgb(from var(--color-text) r g b / 30%);
 }
