@@ -7,6 +7,7 @@
 	import type { Windows } from '$lib/types';
 	import Markdown from '$lib/markdown.svelte';
 	import Weather from './weather.svelte';
+	import { dev } from '$app/environment';
 
 	const { data } = $props();
 
@@ -24,21 +25,23 @@
 		name="En vedette!"
 		class="col-span-8 lg:col-span-3 lg:col-start-9 lg:row-span-6 lg:row-start-1"
 	>
-		<div class="">
-			<Media
-				autoplay={false}
-				src={pocketbase.files.getURL(featured, featured.images[0])}
-				alt="featured media - {featured.title}"
-			/>
-		</div>
-		<div class="py-1">
-			<div>{featured?.title}</div>
+		<a href="/affichorama/{featured.slug}">
+			<div class="">
+				<Media
+					autoplay={!dev}
+					src={pocketbase.files.getURL(featured, featured.images[0])}
+					alt="featured media - {featured.title}"
+				/>
+			</div>
+			<div class="py-1">
+				<div>{featured?.title}</div>
 
-			<div class="text-2">{format_date(featured.date)}</div>
-			<br />
-			<br />
-			<div>Anonyme</div>
-		</div>
+				<div class="text-2">{format_date(featured.date)}</div>
+				<br />
+				<br />
+				<div>Anonyme</div>
+			</div>
+		</a>
 	</Window>
 	<Window
 		id="logo"
