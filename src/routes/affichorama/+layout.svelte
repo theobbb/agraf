@@ -9,8 +9,8 @@
 <svelte:head>
 	<style>
 		html {
-			--color-bg: #919190;
-			--color-text: black;
+			--color-bg: black;
+			--color-text: white;
 			--color-text-2: rgb(from var(--color-text) r g b / 40%);
 
 			--color-link: #90caf9;
