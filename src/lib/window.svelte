@@ -10,19 +10,24 @@
 		name,
 		class: cx,
 		hidden = false,
+		dialog,
+		onclose,
 		children
 	}: {
 		id: string;
-		windows: Windows;
+		windows?: Windows;
 		name: string;
-		class: string;
-		hidden?: Boolean;
+		class?: string;
+		hidden?: boolean;
+		dialog?: boolean;
+		onclose?: () => void;
 		children: Snippet;
 	} = $props();
 
-	let el: HTMLDivElement | null = null;
+	let el: HTMLDialogElement | HTMLDivElement | null = null;
 
-	const z_index = $derived(windows[id]?.z_index);
+	const z_index = $derived(windows?.[id]?.z_index || 100);
+	const is_hidden = $derived(windows && windows[id]?.hidden);
 
 	const translate = $state({ x: 0, y: 0 });
 	const start = { cursor: { x: 0, y: 0 }, window: { x: 0, y: 0 } };
@@ -42,7 +47,7 @@
 		if ((ev.target as HTMLElement).closest('button')) return;
 
 		if (!el) return;
-		if (windows[id].hidden) return;
+		if (windows?.[id].hidden) return;
 
 		document.documentElement.style.cursor = 'grabbing';
 		document.documentElement.style.userSelect = 'none';
@@ -77,42 +82,39 @@
 
 	// Your existing focus logic
 	function focus() {
+		if (!windows) return;
 		const max_z_index = Math.max(...Object.values(windows).map((w) => Number(w.z_index)));
 		windows[id].z_index = max_z_index + 1;
 	}
 
+	function hide() {
+		if (dialog) {
+			if (typeof onclose == 'function') onclose();
+			return;
+		}
+		if (!windows) return;
+		windows[id].hidden = true;
+	}
+
 	function minimize() {
-		console.log(el);
 		if (!el) return;
 		el.style.width = '1000px';
 	}
 
-	function position_absolute() {
-		if (!el) return;
-
-		// 1. Get the current, rendered position and size from the grid layout
-		const rect = el.getBoundingClientRect();
-
-		// 2. Store the position as state for absolute positioning
-		translate.x = rect.left;
-		translate.y = rect.top;
-
-		// 3. Store the size for resizing logic
-		size.width = rect.width;
-		size.height = rect.height;
-
-		//el.style.position = 'absolute';
-	}
+	const dialog_props = dialog ? { onclose, closedby: 'any' } : {};
 
 	onMount(() => {
 		if (!el) return;
 
-		windows[id] = {
-			el,
-			z_index: 200,
-			hidden,
-			minimized: false
-		};
+		if (windows) {
+			windows[id] = {
+				el,
+				z_index: 200,
+				hidden,
+				minimized: false
+			};
+		}
+		if (dialog) el.showModal();
 
 		// Attach the cleanup handler to the window to catch releases anywhere
 		//window.addEventListener('pointerup', end_drag);
@@ -127,13 +129,15 @@
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div
+<svelte:element
+	this={dialog ? 'dialog' : 'div'}
 	bind:this={el}
+	{...dialog_props}
 	onmousedown={focus}
 	class={[
 		cx,
 		'window pointer-events-auto overflow-y-auto border bg-bg px-2.5 shadow',
-		!windows[id]?.hidden ? '' : 'invisible'
+		is_hidden ? 'invisible' : ''
 	]}
 	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px); "
 >
@@ -146,11 +150,16 @@
 		<div class="">{name}</div>
 		<div class="flex gap-1">
 			<button onclick={minimize} class="hover:bg-text hover:text-bg"><IconSubstract /></button>
-			<button onclick={() => (windows[id].hidden = true)} class="hover:bg-text hover:text-bg"
-				><IconClose /></button
-			>
+			<button onclick={() => hide()} class="hover:bg-text hover:text-bg"><IconClose /></button>
 		</div>
 	</header>
 
 	{@render children()}
-</div>
+</svelte:element>
+
+<style>
+	dialog::backdrop {
+		background-color: rgba(0, 0, 0, 0.3);
+		/* background-color: rgb(from var(--color-text) r g b / 80%); */
+	}
+</style>

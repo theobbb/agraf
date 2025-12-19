@@ -18,6 +18,7 @@
 		<div class="col-span-6 md:col-span-4 lg:col-span-3">
 			{#if poster.images?.length > 1}
 				<button
+					class="cursor-pointer"
 					onclick={() =>
 						(indexes[poster.id] =
 							(indexes[poster.id] == null ? 1 : indexes[poster.id] + 1) % poster.images?.length)}
