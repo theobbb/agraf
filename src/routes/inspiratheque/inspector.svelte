@@ -3,20 +3,18 @@
 	import Window from '$lib/components/windows/window.svelte';
 	import Markdown from '$lib/markdown.svelte';
 	import { pocketbase } from '$lib/pocketbase';
+	import Button from '$lib/ui/button.svelte';
 	import IconCopy from '$lib/ui/icons/icon-copy.svelte';
 	import IconExternalLink from '$lib/ui/icons/icon-external-link.svelte';
 	import IconLink from '$lib/ui/icons/icon-link.svelte';
 
 	import { format_date } from '$lib/utils/format-date';
-	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
-	import type { Windows } from './types';
+	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from './types';
 
 	const {
-		item,
-		manager
+		item
 	}: {
 		item: ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord | undefined;
-		manager: WindowManager<Windows>;
 	} = $props();
 
 	function is_bookmark(
@@ -26,11 +24,11 @@
 	}
 </script>
 
-<div class="absolute right-12 bottom-24">
-	<Window class="h-96- w-xl" title={item?.title || ''} {manager} id="inspector2" hidden={!item}>
-		<!-- {#snippet header()}
-			{#if item}
-				{#if is_bookmark(item)}
+<div class="h-full px-gap pt-1.5 pb-2">
+	<div class="grid h-full grid-rows-[1fr_auto_auto] gap-6">
+		{#if item}
+			{#if is_bookmark(item)}
+				<div>
 					<div class="flex items-center gap-2">
 						{#if item.favicon}
 							<div>
@@ -45,36 +43,47 @@
 						{/if}
 						<div>{item.title}</div>
 					</div>
-				{/if}
-			{:else}
-				Folder
-			{/if}
-		{/snippet} -->
-		{#if item}
-			{#if is_bookmark(item)}
-				<div class="mt-1 mb-12">
-					<div class="grid-12">
-						<div class="col-span-8 flex gap-layout-x">
-							<div class="max-w-md">
-								<div>
-									<div class="text-2">
-										<Markdown content={item.description || ''} />
+					<div class="mt-1 mb-12">
+						<div class="">
+							<div class="col-span-8 flex gap-layout-x">
+								<div class="line-clamp-4 max-w-md">
+									<div>
+										<div class="text-2 text-balance">
+											<Markdown content={item.description || ''} />
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-span-4 mb-12 text-right">
-							<!-- <a href={bookmark.url} target="_blank">{bookmark.url}</a> -->
-							<div class="mt-2 flex justify-end gap-2 text-2xl">
-								<button>
-									<IconCopy />
-								</button>
-								<a href={item.url} target="_blank">
-									<IconExternalLink />
-								</a>
-							</div>
+					</div>
+				</div>
+
+				<div>
+					<div class="flex items-center justify-between pb-1">
+						<a href={item.url}>
+							{item.url}
+						</a>
+
+						<!-- <a href={bookmark.url} target="_blank">{bookmark.url}</a> -->
+						<div class="flex gap-2 text-2xl">
+							<button class="flex">
+								<IconCopy />
+							</button>
+							<a class="flex" href={item.url} target="_blank">
+								<IconExternalLink />
+							</a>
 						</div>
 					</div>
+					<div class="aspect-video bg-black/10"></div>
+				</div>
+			{:else}
+				Folder
+			{/if}
+		{/if}
+
+		<div>
+			{#if item}
+				{#if is_bookmark(item)}
 					<div class="flex gap-4 pb-2">
 						{#each item.expand?.tags as tag}
 							<div class="w-fit bg-text px-1 py-0.5 text-bg">{tag.name}</div>
@@ -84,16 +93,16 @@
 						<div class="text-2 col-span-6">
 							Ajouté le {format_date(item.created)}
 						</div>
-						<div class="col-span-6">
+						<div class="col-span-6 space-y-0.5">
 							<div>Lien brisé?</div>
 							<div>Nouveau lien</div>
 							<div>Suggérer une modification</div>
 						</div>
 					</div>
-				</div>
-			{:else}
-				Folder
+				{/if}
 			{/if}
-		{/if}
-	</Window>
+
+			<!-- <div class="text-right"><Button size="md" onclick={() => {}}>Suggérer un lien</Button></div> -->
+		</div>
+	</div>
 </div>

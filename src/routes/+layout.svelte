@@ -26,10 +26,10 @@
 	]}
 	style="max-width: var(--breakpoint-break);"
 >
-	{#if !clean_ui}
-		<Header />
-	{/if}
+	<Header />
+
 	<div>{@render children()}</div>
+
 	<!-- {#if !clean_ui}
 		<Footer />
 	{/if} -->

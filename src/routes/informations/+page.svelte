@@ -3,6 +3,7 @@
 	import type { Windows } from '$lib/types';
 	import Window from '$lib/components/windows/window.svelte';
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
+	import Footer from '../footer.svelte';
 
 	const data = {
 		ressources: [
@@ -163,7 +164,7 @@
 		</div>
 	</Window>
 </div>
-
+<Footer {window_manager} />
 <svelte:head>
 	<title>AGRAF 🤓 Informations</title>
 	<style>

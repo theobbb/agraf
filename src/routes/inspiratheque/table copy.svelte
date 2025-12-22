@@ -1,22 +1,16 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { pocketbase } from '$lib/pocketbase';
-	import type { BookmarkTagsRecord } from '$lib/pocketbase.types';
 	import IconExternalLink from '$lib/ui/icons/icon-external-link.svelte';
 	import IconFolder from '$lib/ui/icons/icon-folder.svelte';
 	import IconLink from '$lib/ui/icons/icon-link.svelte';
 	import Breadcrumbs from './breadcrumbs.svelte';
 	import type { Explorer } from './explorer.svelte';
-	import Inspector from './inspector.svelte';
 	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from './types';
 
 	const {
-		explorer,
-		tags
-	}: {
-		explorer: Explorer<ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord>;
-		tags: BookmarkTagsRecord[];
-	} = $props();
+		explorer
+	}: { explorer: Explorer<ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord> } = $props();
 
 	const { navigation, breadcrumbs, inspecting, params, children_count } = $derived(explorer);
 
@@ -45,20 +39,17 @@
 	// }
 </script>
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
+<div>
+	<Breadcrumbs {breadcrumbs} />
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
+	<div class="grid-12 mt-6 whitespace-nowrap select-none">
+		{#each navigation as col, i}
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<section class="col-span-2">
+				<!-- <div class="flex">
+						{@render new_item_button(i)}
+					</div> -->
 
-<div
-	class=" grid divide-x overflow-x-auto whitespace-nowrap select-none"
-	style="grid-auto-flow: column; grid-auto-columns: 7.5%;"
->
-	{#each navigation as col, i}
-		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<section class="relative col-span-3">
-			<!-- <div class="flex">
-							{@render new_item_button(i)}
-						</div> -->
-
-			<div class="absolute inset-0 overflow-y-auto">
 				{#each col as item}
 					<div
 						class={[
@@ -108,12 +99,9 @@
 						</div>
 					</div>
 				{/each}
-			</div>
-		</section>
-	{/each}
-</div>
-
-<!-- <section>
+			</section>
+		{/each}
+		<!-- <section>
 				<table>
 					<tbody>
 						<tr>
@@ -124,3 +112,5 @@
 					</tbody>
 				</table>
 			</section> -->
+	</div>
+</div>

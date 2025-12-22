@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Button from '$lib/ui/button.svelte';
+	import IconInfo from '$lib/ui/icons/icon-info.svelte';
 	import IconLink from '$lib/ui/icons/icon-link.svelte';
+	import Input from '$lib/ui/input.svelte';
 	import Dialog from '$lib/ui/skeleton/dialog.svelte';
 	import type { ExpandedBookmarkFoldersRecord } from '../types';
 
@@ -9,10 +11,18 @@
 		parent
 	}: {
 		onclose: () => void;
-		parent: ExpandedBookmarkFoldersRecord | null;
+		parent: ExpandedBookmarkFoldersRecord | 'root';
 	} = $props();
 
 	let url: string = $state('');
+	let title: string = $state('');
+	let description: string = $state('');
+	let message: string = $state('');
+
+	let favicon: {
+		url: string | null;
+		file: File | null;
+	} | null = $state(null);
 
 	type UrlMetadata = {
 		title: string;
@@ -42,9 +52,7 @@ A design system for building faithful recreations of old UIs.`,
 		return file;
 	}
 
-	async function fetch_url(event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }) {
-		event.preventDefault();
-
+	async function fetch_url() {
 		if (!url) {
 			error = 'Tu dois fournir un url, bruh';
 			return;
@@ -53,25 +61,32 @@ A design system for building faithful recreations of old UIs.`,
 		try {
 			const res = await fetch(`/api/extract-url?url=${encodeURIComponent(url)}`);
 
-			const { title, description } = await res.json();
+			const data = await res.json();
 
 			const favicon_file = await fetch_favicon(url);
 
 			const favicon_url = favicon_file ? URL.createObjectURL(favicon_file) : '';
 
-			url_metadata = {
-				title,
-				description,
-				favicon_file,
-				favicon_url
-			};
+			if (data.title) title = data.title;
+			if (data.description) description = data.description;
+			if (favicon_url) {
+				favicon = {
+					url: favicon_url,
+					file: favicon_file
+				};
+			}
 
 			//update_toast(id, 'success', 'Extraction réussie');
 		} catch (err) {
 			//update_toast(id, 'error', `Erreur lors de l'extraction`);
 		}
 	}
-	$inspect(url_metadata);
+
+	const cx = {
+		input:
+			'min-h-8 bg-text/5 py-0.5 focus:bg-white/10 w-full border px-2 text-text outline-none focus:border-transparent! focus:ring-2',
+		label: 'block mb-1'
+	};
 </script>
 
 <Dialog
@@ -79,49 +94,53 @@ A design system for building faithful recreations of old UIs.`,
 	title="Suggérer un nouveau lien"
 	class="w-[calc(100vw/12*4-var(--spacing-gap)*2)]"
 >
-	{#if url_metadata}
-		<div class="mt-1.5">
+	<form class="mt-4 space-y-4">
+		<div class="flex items-end justify-between gap-4">
+			<div class="mb-px w-full">
+				<Input bind:value={url} name="url" id="url" label="URL" autofocus />
+			</div>
+
+			<div class="text-right"><Button onclick={fetch_url}>Extraire</Button></div>
+		</div>
+
+		<Input bind:value={title} name="title" id="title" label="Titre" />
+
+		<label for="description" class={cx.label}>Description</label>
+		<textarea
+			bind:value={description}
+			name="description"
+			rows={4}
+			class={[cx.input]}
+			id="description"
+		></textarea>
+
+		<div class="flex items-center justify-between">
 			<div>
-				{url}
+				{#if favicon?.url}
+					<div>
+						<img alt="favicon" class="size-4" src={favicon.url} />
+					</div>
+				{:else}
+					<div class="opacity-60"><IconLink /></div>
+				{/if}
+			</div>
+			<div>
+				{#if parent != 'root'}
+					<div class="flex items-center gap-2.5">
+						<img class="size-5" src="/icons/folder_closed.webp" alt="icon-folder" />
+						{parent.title}
+						<IconInfo />
+					</div>
+				{/if}
 			</div>
 			<div class="">
-				<div class="inline">
-					{#if url_metadata.favicon_url}
-						<div>
-							<img alt="favicon" class="size-4" src={url_metadata.favicon_url} />
-						</div>
-					{:else}
-						<div class="opacity-60"><IconLink /></div>
-					{/if}
-				</div>
-				<div>{url_metadata.title}</div>
+				<div class="my-2.5 text-right"><Button>Envoyer</Button></div>
 			</div>
-			<div>
-				{url_metadata.description}
-			</div>
-
-			<div class="my-2.5 text-right"><Button>Envoyer</Button></div>
 		</div>
-	{:else}
-		<form onsubmit={fetch_url}>
-			<div class="-mx-2.5 p-0.5">
-				<input
-					bind:value={url}
-					name="name"
-					type="text"
-					autofocus
-					class={[
-						'w-full border-0! px-4 font-serif text-text outline-none focus:border-transparent! focus:ring-3'
-					]}
-					placeholder="URL"
-				/>
-			</div>
-			<div class="my-2.5 text-right"><Button type="submit">Extraire</Button></div>
-		</form>
+	</form>
 
-		<!-- sadsa
+	<!-- sadsa
 	<div>
 		{parent?.title}
 	</div> -->
-	{/if}
 </Dialog>

@@ -29,7 +29,7 @@
 
 {#if src}
 	{#if src.endsWith('.mp4')}
-		<video muted autoplay class="h-full w-full object-contain" src={url}></video>
+		<video muted class="h-full w-full object-contain" src={url}></video>
 	{:else}
 		<img loading="lazy" class="h-full w-full object-contain" src={url} {alt} />
 	{/if}

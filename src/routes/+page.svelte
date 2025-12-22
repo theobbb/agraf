@@ -9,6 +9,7 @@
 	import { dev } from '$app/environment';
 	import Taskbar from '$lib/components/windows/taskbar.svelte';
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
+	import Footer from './footer.svelte';
 
 	const { data } = $props();
 
@@ -150,7 +151,13 @@
 	</Window>
 </div>
 
-<Taskbar manager={window_manager} />
+<div class="my-16 text-center text-xl font-normal" style="font-family: 'Comic', sans-serif;">
+	<div>© 2025 AGRAF ❤️ Tous droits réservés 😡🤬</div>
+	<div></div>
+</div>
+
+<Footer {window_manager} />
+<!-- <Taskbar manager={window_manager} /> -->
 
 <!-- <div class="grid-12 fixed right-gap bottom-8 left-gap z-200">
 	<div class="col-span-10 col-start-2 border bg-bg shadow">fwe</div>

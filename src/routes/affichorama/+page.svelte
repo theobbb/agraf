@@ -9,6 +9,7 @@
 	const { posters } = $derived(data);
 
 	const indexes: Record<string, number> = $state({});
+	const opened: Record<string, true> = $state({});
 </script>
 
 <Emoji>🧻</Emoji>
@@ -18,7 +19,7 @@
 		<div class="col-span-6 md:col-span-4 lg:col-span-3">
 			{#if poster.images?.length > 1}
 				<button
-					class="cursor-pointer"
+					class="-translate-y-0.5 cursor-pointer"
 					onclick={() =>
 						(indexes[poster.id] =
 							(indexes[poster.id] == null ? 1 : indexes[poster.id] + 1) % poster.images?.length)}
@@ -29,7 +30,7 @@
 				<div aria-hidden="true" class="invisible">*</div>
 			{/if}
 
-			<a href="/affichorama/{poster.slug}">
+			<div>
 				<div class="relative mb-1">
 					{#if poster.images?.length}
 						<Media
@@ -40,15 +41,26 @@
 						<div class="absolute inset-0 bg-white/5"></div>
 					{/if}
 				</div>
-				<div class="mb-0.5-">{poster.title}</div>
-				<div class="text-2 relative line-clamp-3 overflow-hidden text-ellipsis">
-					<Markdown content={poster.body || ''} />
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<div onclick={() => (opened[poster.id] = true)}>
+					<div class="mb-0.5-">{poster.title}</div>
+					<div
+						class={[
+							'text-2 relative  overflow-hidden text-ellipsis',
+							opened[poster.id] ? '' : 'line-clamp-3'
+						]}
+					>
+						<Markdown content={poster.body || ''} />
+					</div>
+					<div class="invisible" aria-label="hidden">*</div>
 				</div>
-				<div class="invisible">*</div>
-			</a>
+			</div>
 		</div>
 	{/each}
 </div>
+
+<div>Pagination</div>
 
 <svelte:head>
 	<title>AGRAF 🧻 Affichorama</title>

@@ -2,7 +2,7 @@
 	const { breadcrumbs } = $props();
 </script>
 
-<div class="mb-1.5">
+<div>
 	{#if breadcrumbs.length > 1}
 		<nav>
 			{#each breadcrumbs as crumb, i}

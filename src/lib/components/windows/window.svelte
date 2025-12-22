@@ -2,7 +2,7 @@
 	import IconClose from '$lib/ui/icons/icon-close.svelte';
 	import IconSubstract from '$lib/ui/icons/icon-substract.svelte';
 	import { onMount, type Snippet } from 'svelte';
-	import type { WindowManager, Window } from './window-manager.svelte';
+	import type { WindowManager } from './window-manager.svelte';
 
 	const {
 		id,
@@ -40,9 +40,8 @@
 	const ctx = $derived(manager?.windows?.[id] || base_window);
 
 	const { z_index, closed, minimized } = $derived(ctx);
-	const visible = $derived(!closed && !minimized);
+	const visible = $derived(manager?.windows[id] ? !closed && !minimized : !hidden);
 
-	// $inspect(ctx);
 	let el: HTMLDialogElement | HTMLDivElement | null = null;
 
 	const translate = $derived(ctx.translate);
@@ -65,7 +64,6 @@
 		if ((ev.target as HTMLElement).closest('button')) return;
 
 		if (!el) return;
-		//if (windows?.[id].hidden) return;
 
 		document.documentElement.style.cursor = 'grabbing';
 		document.documentElement.style.userSelect = 'none';
@@ -81,7 +79,6 @@
 
 		window.addEventListener('mousemove', onmove);
 		window.addEventListener('mouseup', end_drag);
-		//el.setPointerCapture(ev.pointerId);
 	}
 
 	function end_drag() {
@@ -89,21 +86,11 @@
 
 		window.removeEventListener('mousemove', onmove);
 		window.removeEventListener('mouseup', end_drag);
-		// window.removeEventListener('pointermove', onmove);
-		// if (el) {
-		// 	el.releasePointerCapture(ev.pointerId);
-		// }
+
 		document.documentElement.style.cursor = 'auto';
 		document.documentElement.style.userSelect = 'auto';
 		is_dragging = false;
 	}
-
-	// Your existing focus logic
-	// function focus() {
-	// 	//if (!windows) return;
-	// 	const max_z_index = Math.max(...Object.values(windows).map((w) => Number(w.z_index)));
-	// 	windows[id].z_index = max_z_index + 1;
-	// }
 
 	function focus() {
 		if (!manager) return;
@@ -128,27 +115,9 @@
 	onMount(() => {
 		if (!el) return;
 
-		// if (windows) {
-		// 	windows[id] = {
-		// 		el,
-		// 		z_index: 200,
-		// 		hidden,
-		// 		minimized: false
-		// 	};
-		// }
-
 		if (dialog && el instanceof HTMLDialogElement) {
 			el.showModal();
 		}
-		// Attach the cleanup handler to the window to catch releases anywhere
-		//window.addEventListener('pointerup', end_drag);
-
-		// Cleanup window event listener on component destroy
-		// return () => {
-		// 	window.removeEventListener('pointerup', end_drag);
-
-		// 	end_drag()
-		// };
 	});
 </script>
 

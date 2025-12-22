@@ -17,6 +17,14 @@
 	import WindowInfo from './windows/window-info.svelte';
 	import WindowInstructions from './windows/window-instructions.svelte';
 	import WindowSubmitter from './windows/window-submitter.svelte';
+	import Taskbar from '$lib/components/windows/taskbar.svelte';
+	import Inspector from './inspector.svelte';
+	import Breadcrumbs from './breadcrumbs.svelte';
+	import Footer from '../footer.svelte';
+	import Input from '$lib/ui/input.svelte';
+	import IconArrowBoxLeft from '$lib/ui/icons/icon-arrow-box-left.svelte';
+	import IconArrowBoxRight from '$lib/ui/icons/icon-arrow-box-right.svelte';
+	import IconArrowBoxUp from '$lib/ui/icons/icon-arrow-box-up.svelte';
 
 	const { data } = $props();
 
@@ -36,58 +44,82 @@
 
 	let dialog_create: {
 		open: boolean;
-		parent: ExpandedBookmarkFoldersRecord | null;
+		parent: ExpandedBookmarkFoldersRecord | 'root';
 	} = $state({
 		open: false,
-		parent: null
+		parent: 'root'
 	});
 
-	function new_item(folder_i: number) {
-		let parent: ExpandedBookmarkFoldersRecord | null = null;
-
-		if (folder_i > 0) {
-			const parent_id = breadcrumbs[folder_i - 1]?.id;
-			parent = folders.find((t) => t.id === parent_id) ?? null;
-		}
-		dialog_create = {
-			open: true,
-			parent
-		};
-	}
 	// function new_sub_item(type: EditorType) {
 	// 	if (!inspecting) return;
 	// 	creating_type = type;
 	// 	explorer.actions.new_sub_item(inspecting);
 	// }
 
+	function open_submitter() {
+		function get_parent() {
+			if (!inspecting) return 'root';
+
+			if (!is_bookmark(inspecting)) return inspecting;
+
+			const parent = folders.find((f) => f.id == inspecting.parent);
+			if (!parent) return 'root';
+
+			return parent;
+		}
+
+		dialog_create.parent = get_parent();
+		dialog_create.open = true;
+	}
+
 	function is_bookmark(
 		item: ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord
 	): item is ExpandedBookmarksRecord {
-		return item.collectionName == 'bookmarks';
-	}
-
-	function inspect(id: string) {
-		if (!id) goto('/inspiratheque');
-		goto('/inspiratheque/' + id);
+		return 'url' in item;
 	}
 
 	const window_manager = get_window_manager<Windows>('inspiratheque');
 </script>
 
-<Emoji>🕺</Emoji>
-
 <!-- <button class="cursor-pointer text-4xl" onclick={() => window_manager.open_window('intro')}>
 	<IconInfo />
 </button> -->
-
+<Emoji>🕺</Emoji>
 <!-- <Recent bookmarks={bookmarks.slice(0, 5)} /> -->
-<div class="mt-12 grid h-[calc(100vh-12rem)] grid-rows-[auto_1fr]">
-	<div class="mb-12 flex gap-4">
+<div class="grid h-[calc(100vh-9rem)] grid-rows-[auto_1fr]">
+	<!-- <div class="mb-12 flex gap-4">
 		<div>
 			<Button size="md" onclick={() => (dialog_create.open = true)}>Suggérer un lien</Button>
 		</div>
+	</div> -->
+	<div class="grid-12 mb-3">
+		<div class="flex items-center gap-2 text-2xl">
+			<IconArrowBoxLeft />
+			<IconArrowBoxRight />
+
+			<IconArrowBoxUp />
+		</div>
+		<div class="col-span-4 flex items-center">
+			<Breadcrumbs {breadcrumbs} />
+		</div>
+		<!-- <div class="col-span-5 flex gap-3">
+			{#each tags as tag}
+				<div>{tag.name}</div>
+			{/each}
+		</div> -->
+		<!-- <div class="col-span-4">
+			<Input id="search" name="search" placeholder="Rechercher..." />
+		</div> -->
+		<div class="col-span-3 col-start-10 flex items-center justify-end">
+			<Button size="md" onclick={open_submitter}>Suggérer un lien</Button>
+		</div>
 	</div>
-	<Table {explorer} />
+	<div class="grid grid-cols-[1fr_auto] border-t">
+		<Table {explorer} {tags} />
+		<div class="w-lg border-l">
+			<Inspector item={inspecting} />
+		</div>
+	</div>
 	<!-- {#if inspecting}
 		<Inspector bookmark={inspecting} />
 
@@ -102,79 +134,15 @@
 	<WindowSubmitter parent={dialog_create.parent} onclose={() => (dialog_create.open = false)} />
 {/if}
 
-<WindowSearch manager={window_manager} />
 <WindowInfo manager={window_manager} />
 <WindowInstructions
 	manager={window_manager}
 	open_window_submitter={() => (dialog_create.open = true)}
 />
-
-<WindowInspector item={inspecting} manager={window_manager} />
-
-<div class="grid-12 pointer-events-none absolute top-24">
-	<!-- <Window class="col-span-4 col-start-7" title="Inspirathèque" manager={window_manager} id="intro">
-		<div class="mt-1 mb-2.5">
-			<div class="text-3xl">
-				<IconInfo />
-			</div>
-			<div class="mt-1">
-				L’Inspirathèque est une librairie communautaire d’adresses URL, entretenue par les
-				étudiant·es du programme.
-			</div>
-			<br />
-			<div>
-				Elle rassemble une collection semi-organisée de liens semi-inspirants qui ont un
-				semi-rapport avec le design graphique.
-			</div>
-			<br />
-			<div>Participe STP !!!</div>
-			<div class="mt-4 text-right">
-				<Button onclick={() => window_manager.open_window('instructions')}
-					>Comment contribuer !!??</Button
-				>
-			</div>
-		</div>
-	</Window> -->
-	<!-- <Window
-		class="col-span-4 col-start-2 mt-24"
-		title="Instructions"
-		manager={window_manager}
-		hidden
-		id="instructions"
-	>
-		<div class="mt-1 mb-2.5">
-			<div class="font-serif">1. Suggère un lien ❤️</div>
-			<div>Ça peut être n'importe quel lien que tu penses qui mérites d'être partagé</div>
-
-			<div class="font-serif">2. Attends 😅</div>
-			<div>
-				Donnes-nous un mini moment pour qu'on accepte ton ajout.
-				<br />Rien de personnel, c'est simplement que puisque c'est ouvert au public, on doit un peu
-				vérifier. 🤞
-			</div>
-			<div class="mt-12">Prêt-e à te lancer tête première dans l'inspirathèque ?? 👀</div>
-			<div class="mt-4 text-right">
-				<Button onclick={() => (dialog_create.open = true)}>Suggérer un lien</Button>
-			</div>
-		</div>
-	</Window> -->
-</div>
-
-<!-- {#if dialog_intro.open}
-	<Dialog title="Inspirathèque" onclose={() => (dialog_intro.open = false)}>
-		<DialogIntro />
-	</Dialog>
-{/if} -->
-
-{#snippet new_item_button(i: number)}
-	<button
-		class="flex items-center justify-center px-2 py-1 text-lg text-current/40 hover:bg-current/10 hover:text-current"
-		onclick={() => new_item(i)}
-		style="box-shadow: inset 0 0 0 1px var(--color-background);"
-	>
-		<IconAdd />
-	</button>
-{/snippet}
+<Footer {window_manager} />
+<!-- <WindowInspector item={inspecting} manager={window_manager} /> -->
+<!-- 
+<Taskbar manager={window_manager} /> -->
 
 <svelte:head>
 	<title>AGRAF 🕺 Inspirathèque</title>

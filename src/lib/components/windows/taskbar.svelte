@@ -21,7 +21,7 @@
 	const time = get_time();
 </script>
 
-<footer class="fixed right-gap bottom-0 left-gap border-t bg-bg">
+<footer class="fixed right-gap bottom-0 left-gap z-500 border-t bg-bg">
 	<div class="grid-12 align-middle">
 		<div class="py-1.5">Taskbar {windows_array.length}</div>
 		<div class="col-span-5 flex items-center gap-2">

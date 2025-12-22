@@ -9,6 +9,7 @@
 	import { objectives } from './static';
 	import type { MemberEntriesRecordExpanded } from './types.js';
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
+	import Footer from '../../footer.svelte';
 
 	const { data } = $props();
 
@@ -191,6 +192,8 @@
 		</Dialog>
 	{/if}
 </div>
+
+<Footer {window_manager} />
 
 <svelte:head>
 	<title>AGRAF 🦖 L'association</title>

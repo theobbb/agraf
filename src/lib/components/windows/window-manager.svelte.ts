@@ -25,7 +25,6 @@ function create_window_manager<T extends string>(): WindowManager<T> {
 		const arr = Object.values(windows) as Window<T>[];
 		const max_z_index = Math.max(...arr.map((window) => Number(window.z_index)));
 		if (!windows[id]) return;
-		console.log(max_z_index);
 		windows[id].z_index = max_z_index + 1;
 	}
 	function minimize_window(id: T) {
@@ -58,12 +57,20 @@ function create_window_manager<T extends string>(): WindowManager<T> {
 	};
 }
 
+export const current_manager: {
+	value: WindowManager<any> | null;
+} = $state({
+	value: null
+});
+
 const managers = new Map<string, WindowManager<any>>();
 
 export function get_window_manager<T extends string>(key: string): WindowManager<T> {
 	// Check if it already exists
 	if (managers.has(key)) {
-		return managers.get(key) as WindowManager<T>;
+		const manager = managers.get(key) as WindowManager<T>;
+		current_manager.value = manager;
+		return manager;
 	}
 
 	// If not, create a new one using your existing function
@@ -72,5 +79,6 @@ export function get_window_manager<T extends string>(key: string): WindowManager
 	// Store it
 	managers.set(key, new_manager);
 
+	current_manager.value = new_manager;
 	return new_manager;
 }

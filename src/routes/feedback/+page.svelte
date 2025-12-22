@@ -7,6 +7,7 @@
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
 	import Taskbar from '$lib/components/windows/taskbar.svelte';
 	import Desktop from '$lib/components/windows/desktop.svelte';
+	import Footer from '../footer.svelte';
 
 	const form: {
 		sucess: boolean;
@@ -187,8 +188,8 @@
 	</div>
 {/if}
 <Desktop manager={window_manager} />
-<Taskbar manager={window_manager} />
-
+<!-- <Taskbar manager={window_manager} /> -->
+<Footer {window_manager} />
 <svelte:head>
 	<title>AGRAF 🦋 Feedback</title>
 	<style>
