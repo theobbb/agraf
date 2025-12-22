@@ -3,8 +3,12 @@
 	import { onMount } from 'svelte';
 	import { links } from './static';
 	import { useIntersectionObserver } from '$lib/utils/intersection-observer';
+	import MenuMobile from './menu-mobile.svelte';
+	import Button from '$lib/ui/button.svelte';
 
 	let sentinel: HTMLHeadElement;
+
+	let menu_mobile_open = $state(false);
 
 	let scrolled = $state(false);
 
@@ -29,65 +33,33 @@
 	});
 </script>
 
-<div>
-	<div class="grid-12 -mb-1.5 pt-1.5">
-		{#each links as { description, href }, i}
-			<a
-				onpointerenter={() => (hovered = href)}
-				onpointerleave={() => (hovered = null)}
-				{href}
-				class={[
-					'group col-span-6 flex flex-col justify-between sm:col-span-4 md:col-span-3 xl:col-span-2',
-					(href == '/' ? page.url.pathname === href : page.url.pathname.startsWith(href))
-						? ''
-						: 'border-b-transparent hover:border-b-current'
-				]}
-			>
-				<div class="max-w-60 pr-4">
-					<div class="text-2 whitespace-pre">
-						{description}
-					</div>
-				</div>
-				<div class="invisible" aria-hidden="true">*</div>
-
-				<!-- <div class={[page.url.pathname != href && 'opacity-0 group-hover:opacity-100']}>
-						{i}
-					</div> -->
-			</a>
-		{/each}
+<div bind:this={sentinel}></div>
+<header class={['sticky top-0 z-100 bg-bg', scrolled && 'border-b']}>
+	<div class="mt-1.5 text-right lg:hidden">
+		<Button onclick={() => (menu_mobile_open = true)}>Menu</Button>
 	</div>
-	<div bind:this={sentinel}></div>
-</div>
-<header class={['-mt-1.5- sticky top-0 z-100 bg-bg', scrolled && 'border-b']}>
-	<div class="grid-12 self-start">
-		{#each links as { name, href }, i}
-			<a
-				{href}
-				class={[
-					'group col-span-6 flex flex-col justify-between border-b pt-1.5 pb-1 sm:col-span-4 md:col-span-3 xl:col-span-2',
-					(href == '/' ? page.url.pathname === href : page.url.pathname.startsWith(href))
-						? scrolled && 'border-b-transparent'
-						: scrolled
-							? 'border-b-transparent'
-							: hovered == href
-								? ''
-								: 'border-b-transparent hover:border-b-current'
-				]}
-			>
-				<div class="pr-4">
+	<div class="grid-12">
+		<div class="col-span-7 flex gap-4">
+			{#each links as { name, href }, i}
+				{@const active =
+					href == '/' ? page.url.pathname === href : page.url.pathname.startsWith(href)}
+				<a
+					{href}
+					class={['py-1.5 underline-offset-6 hover:underline', active && !scrolled && 'underline']}
+				>
 					{name}
-
-					<span
-						class={[
-							href == '/'
-								? page.url.pathname === href
-								: page.url.pathname.startsWith(href)
-									? ''
-									: 'hidden'
-						]}>*</span
-					>
-				</div>
-			</a>
-		{/each}
+				</a>
+			{/each}
+		</div>
+		<!-- <div class="flex gap-4">
+			<div class="pt-1.5 pb-0.5 underline-offset-6 hover:underline">Préférences</div>
+			<div class="pt-1.5 pb-0.5 underline-offset-6 hover:underline">Paramètres</div>
+		</div> -->
 	</div>
 </header>
+
+<div class="lg:hidden">
+	{#if menu_mobile_open}
+		<MenuMobile onclose={() => (menu_mobile_open = false)} />
+	{/if}
+</div>

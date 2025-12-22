@@ -55,7 +55,7 @@
 
 <button class="cursor-pointer text-left" onclick={on_button_click}>Linkedin</button>
 
-<div class="pointer-events-none fixed inset-0 z-500" style="image-rendering: pixelated-;">
+<div class="pointer-events-none fixed inset-0 z-2000" style="image-rendering: pixelated-;">
 	<div class="absolute inset-0 flex items-center justify-center overflow-hidden">
 		<div
 			class="sprite aspect-square h-full"

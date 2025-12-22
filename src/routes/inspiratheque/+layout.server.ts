@@ -7,11 +7,11 @@ export async function load({ params, depends }) {
 
 	const bookmarks: ExpandedBookmarksRecord[] = await pocketbase
 		.collection('bookmarks')
-		.getFullList({ expand: 'tags' });
+		.getFullList({ expand: 'tags', sort: '-created' });
 
 	const folders: ExpandedBookmarkFoldersRecord[] = await pocketbase
 		.collection('bookmark_folders')
-		.getFullList();
+		.getFullList({ sort: 'title' });
 
 	const tags: BookmarkTagsRecord[] = await pocketbase.collection('bookmark_tags').getFullList();
 	// const folders: BookmarkFoldersRecord[] = await pocketbase

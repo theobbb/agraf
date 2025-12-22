@@ -3,27 +3,27 @@
 	import Media from '$lib/media.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import { format_date } from '$lib/utils/format-date';
-	import Window from '../lib/window.svelte';
-	import type { Windows } from '$lib/types';
+	import Window from '$lib/components/windows/window.svelte';
 	import Markdown from '$lib/markdown.svelte';
 	import Weather from './weather.svelte';
 	import { dev } from '$app/environment';
+	import Taskbar from '$lib/components/windows/taskbar.svelte';
+	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
 
 	const { data } = $props();
 
 	const { featured, links, related } = $derived(data);
 
+	const window_manager = get_window_manager('agraf');
 	let active_tab = $state(0);
-
-	const windows: Windows = $state({});
 </script>
 
-<div class="grid-12 grid-rows-10- relative mt-24 mb-24 lg:grid-rows-16">
+<div class="grid-12 grid-rows-10- relative mb-24 lg:grid-rows-16">
 	<Window
 		id="featured"
-		{windows}
-		name="En vedette!"
+		title="En vedette!"
 		class="col-span-8 lg:col-span-3 lg:col-start-9 lg:row-span-6 lg:row-start-1"
+		manager={window_manager}
 	>
 		<a href="/affichorama/{featured.slug}">
 			<div class="">
@@ -45,16 +45,16 @@
 	</Window>
 	<Window
 		id="logo"
-		{windows}
-		name="Logo"
+		manager={window_manager}
+		title="Logo"
 		class="col-span-full lg:col-span-4 lg:col-start-1 lg:row-span-3 lg:row-start-2"
 	>
 		<div class="my-2"><Logo /></div>
 	</Window>
 	<Window
 		id="desc"
-		{windows}
-		name="Description"
+		manager={window_manager}
+		title="Description"
 		class="col-span-full col-start-1 lg:col-span-5 lg:col-start-3 lg:row-span-3 lg:row-start-4"
 	>
 		<div class="mt-1 mb-4 font-serif">
@@ -64,8 +64,8 @@
 
 	<Window
 		id="desc_long"
-		{windows}
-		name="Description mais plus précise"
+		manager={window_manager}
+		title="Description mais plus précise"
 		class="col-span-full lg:col-span-4 lg:col-start-2 lg:row-span-3 lg:row-start-6"
 	>
 		<div class="mb-32 pt-1">
@@ -77,8 +77,8 @@
 
 	<Window
 		id="linktree"
-		{windows}
-		name="Linktree fait maison"
+		manager={window_manager}
+		title="Linktree fait maison"
 		class="col-span-7 col-start-5 row-span-2 lg:col-span-3 lg:col-start-7 lg:row-span-4 lg:row-start-8"
 	>
 		<div class="py-1 pb-24 lg:pb-12">
@@ -92,8 +92,8 @@
 
 	<Window
 		id="map"
-		{windows}
-		name="Adresse"
+		manager={window_manager}
+		title="Adresse"
 		class="order-last col-span-full row-span-2 max-h-96 overflow-hidden! lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-13"
 	>
 		<div class="relative -mx-2.5 h-64 lg:h-[calc(100%-2rem)]">
@@ -113,8 +113,8 @@
 
 	<Window
 		id="related"
-		{windows}
-		name="Projets reliés"
+		manager={window_manager}
+		title="Projets reliés"
 		class="col-span-full row-span-2 max-h-96 lg:col-span-7 lg:col-start-4 lg:row-span-4 lg:row-start-10"
 	>
 		<div class="pb-24 lg:pb-12">
@@ -140,8 +140,8 @@
 
 	<Window
 		id="weather"
-		{windows}
-		name="Température à Montréal"
+		manager={window_manager}
+		title="Température à Montréal"
 		class="col-span-8 col-start-2 max-h-96 lg:col-span-2 lg:col-start-6 lg:row-span-2 lg:row-start-13"
 	>
 		<div class="mt-1 pb-24 lg:pb-12">
@@ -149,6 +149,8 @@
 		</div>
 	</Window>
 </div>
+
+<Taskbar manager={window_manager} />
 
 <!-- <div class="grid-12 fixed right-gap bottom-8 left-gap z-200">
 	<div class="col-span-10 col-start-2 border bg-bg shadow">fwe</div>

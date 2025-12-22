@@ -5,7 +5,7 @@
 <input
 	{...props}
 	class={[
-		'border border-black/10 px-2.5 py-1.5 placeholder-black/50 ring-black/20 outline-none focus:ring-2',
+		'w-full px-4 font-serif text-text placeholder-current/40 outline-none focus:border-transparent! focus:ring-3',
 		props.class
 	]}
 	type="text"

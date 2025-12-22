@@ -30,7 +30,7 @@
 		<Header />
 	{/if}
 	<div>{@render children()}</div>
-	{#if !clean_ui}
+	<!-- {#if !clean_ui}
 		<Footer />
-	{/if}
+	{/if} -->
 </div>

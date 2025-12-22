@@ -1,14 +1,13 @@
 <script>
-	import Explosion from '../lib/components/explosion.svelte';
+	import Explosion from './explosion.svelte';
 </script>
 
-<footer class="fixed right-gap bottom-0 left-gap bg-bg">
-	<div class="grid-12 border-t py-1.5 pb-2">
-		logo agraf restart
+<footer class="mt-64- pb-2.5">
+	<div class="grid-12 border-t pt-1.5">
 		<a
+			target="_blank"
 			class="lg:col-start col-span-6 lg:col-span-2"
-			href="mailto:agraf.uqam@gmail.com"
-			target="_blank">agraf.uqam@gmail.com</a
+			href="mailto:agraf.uqam@gmail.com">agraf.uqam@gmail.com</a
 		>
 		<a
 			class="col-span-4 max-lg:col-start-8 max-lg:row-start-1 lg:col-span-1"

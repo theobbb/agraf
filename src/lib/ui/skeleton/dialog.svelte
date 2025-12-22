@@ -1,9 +1,13 @@
 <script lang="ts">
-	import Window from '$lib/window.svelte';
+	import Window from '$lib/components/windows/window.svelte';
 	import { onMount, type Snippet } from 'svelte';
 
-	let { onclose, name, children }: { onclose: () => void; name: string; children: Snippet } =
-		$props();
+	let {
+		onclose,
+		title,
+		class: cx,
+		children
+	}: { onclose: () => void; title: string; class?: string; children: Snippet } = $props();
 
 	const id = $props.id();
 	// onMount(() => {
@@ -18,7 +22,7 @@
 	// });
 </script>
 
-<Window id="window-dialog-{id}" dialog class="m-auto min-w-md text-text" {onclose} {name}>
+<Window id="window-dialog-{id}" dialog class="m-auto text-text {cx}" {onclose} {title}>
 	{@render children()}
 </Window>
 

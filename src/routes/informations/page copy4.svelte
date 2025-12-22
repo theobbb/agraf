@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Emoji from '$lib/emoji.svelte';
 	import type { Windows } from '$lib/types';
-	import Window from '$lib/window.svelte';
+	import Window from '$lib/components/windows/window.svelte';
 
 	const data = {
 		ressources: [

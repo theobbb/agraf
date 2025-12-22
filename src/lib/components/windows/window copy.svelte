@@ -2,7 +2,7 @@
 	import IconClose from '$lib/ui/icons/icon-close.svelte';
 	import IconSubstract from '$lib/ui/icons/icon-substract.svelte';
 	import { onMount, type Snippet } from 'svelte';
-	import type { Windows } from './types';
+	import type { Windows } from '../../types';
 
 	const {
 		id,
@@ -98,7 +98,8 @@
 
 	function minimize() {
 		if (!el) return;
-		el.style.width = '1000px';
+
+		//el.style.width = '1000px';
 	}
 
 	const dialog_props = dialog ? { onclose, closedby: 'any' } : {};
@@ -144,13 +145,17 @@
 	<header
 		onmousedown={start_drag}
 		class={[
-			'sticky top-0 flex cursor-grab items-center justify-between gap-1 border-b bg-bg py-1.5 '
+			'sticky top-0 flex cursor-grab items-center justify-between gap-1 border-b bg-bg py-1.5 select-none '
 		]}
 	>
 		<div class="">{name}</div>
-		<div class="flex gap-1">
-			<button onclick={minimize} class="hover:bg-text hover:text-bg"><IconSubstract /></button>
-			<button onclick={() => hide()} class="hover:bg-text hover:text-bg"><IconClose /></button>
+		<div class="flex gap-1 max-lg:gap-1.5 max-lg:text-2xl">
+			<button onclick={minimize} class="hover:bg-text hover:text-bg" type="button"
+				><IconSubstract /></button
+			>
+			<button onclick={() => hide()} class="hover:bg-text hover:text-bg" type="button"
+				><IconClose /></button
+			>
 		</div>
 	</header>
 

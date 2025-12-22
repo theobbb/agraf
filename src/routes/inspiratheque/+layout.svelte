@@ -1,34 +1,33 @@
 <script lang="ts">
 	import { create_explorer } from './explorer.svelte';
 	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from './types';
-
-	import IconLink from '$lib/ui/icons/icon-link.svelte';
-	import IconFolder from '$lib/ui/icons/icon-folder.svelte';
-
 	import Button from '$lib/ui/button.svelte';
-	import { pocketbase } from '$lib/pocketbase';
 	import Emoji from '$lib/emoji.svelte';
 	import IconAdd from '$lib/ui/icons/icon-add.svelte';
-	import Markdown from '$lib/markdown.svelte';
-	import Breadcrumbs from './breadcrumbs.svelte';
 	import DialogCreate from './dialog-create.svelte';
-	import Inspector from './inspector.svelte';
 	import { goto } from '$app/navigation';
-	import Recent from './recent.svelte';
-	import IconExternalLink from '$lib/ui/icons/icon-external-link.svelte';
+	import IconInfo from '$lib/ui/icons/icon-info.svelte';
+
+	import Window from '$lib/components/windows/window.svelte';
+	import Table from './table.svelte';
+	import WindowSearch from './windows/window-search.svelte';
+	import WindowInspector from './windows/window-inspector.svelte';
+	import type { Windows } from './windows/types';
+	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
+	import WindowInfo from './windows/window-info.svelte';
+	import WindowInstructions from './windows/window-instructions.svelte';
+	import WindowSubmitter from './windows/window-submitter.svelte';
 
 	const { data } = $props();
 
 	const { bookmarks, folders, tags } = data;
 
 	const items: (ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord)[] = [
-		...bookmarks,
-		...folders
+		...folders,
+		...bookmarks
 	];
 
-	const explorer = create_explorer<ExpandedBookmarkFoldersRecord | ExpandedBookmarkFoldersRecord>(
-		items
-	);
+	const explorer = create_explorer<ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord>(items);
 
 	const { navigation, breadcrumbs, inspecting, params, children_count } = $derived(explorer);
 
@@ -71,110 +70,101 @@
 		if (!id) goto('/inspiratheque');
 		goto('/inspiratheque/' + id);
 	}
+
+	const window_manager = get_window_manager<Windows>('inspiratheque');
 </script>
 
 <Emoji>🕺</Emoji>
 
-<!-- <div class="mb-32">
-	L'inspiratheque est une librairie de signets entretenue par les etudiants du programme.
-</div> -->
+<!-- <button class="cursor-pointer text-4xl" onclick={() => window_manager.open_window('intro')}>
+	<IconInfo />
+</button> -->
 
 <!-- <Recent bookmarks={bookmarks.slice(0, 5)} /> -->
-
-<div class="flex flex-col justify-between">
-	<div>
-		<Breadcrumbs {breadcrumbs} />
-		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<div class="grid-12 whitespace-nowrap select-none">
-			{#each navigation as col, i}
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<section class="col-span-2">
-					<div class="flex">
-						{@render new_item_button(i)}
-					</div>
-
-					{#each col as item}
-						<div
-							class={[
-								'group flex w-full cursor-default items-center gap-layout-x px-2 py-1',
-								params?.includes(item.id)
-									? params?.[params.length - 1] == item.id
-										? 'bg-current/20'
-										: 'bg-current/10'
-									: 'hover:bg-current/5',
-								'border-b-2- border-transparent first:border-t-2',
-
-								'transition-all duration-100'
-							]}
-							onclick={() => inspect(item.id)}
-						>
-							<div class="flex w-5 items-center justify-center">
-								{#if is_bookmark(item)}
-									{#if item.favicon}
-										<div>
-											<img
-												alt="favicon"
-												class="size-4"
-												src={pocketbase.files.getURL(item, item.favicon)}
-											/>
-										</div>
-									{:else}
-										<div class="opacity-60"><IconLink /></div>
-									{/if}
-								{:else}
-									<div class="opacity-60"><IconFolder /></div>
-								{/if}
-							</div>
-							<div class="relative w-full max-w-full min-w-0 overflow-hidden text-ellipsis">
-								{item.title}
-							</div>
-
-							<div class="text-2 text-right hover:text-text">
-								{#if is_bookmark(item)}
-									<div class="invisible -mr-1 flex justify-end text-lg group-hover:visible">
-										<a target="_blank" href={item.url}>
-											<IconExternalLink />
-										</a>
-									</div>
-								{:else if children_count.get(item.id)}
-									+{children_count.get(item.id)}
-								{/if}
-							</div>
-						</div>
-					{/each}
-				</section>
-			{/each}
-			<!-- <section>
-				<table>
-					<tbody>
-						<tr>
-							<td>
-								{@render new_item_button(navigation.length)}
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</section> -->
+<div class="mt-12 grid h-[calc(100vh-12rem)] grid-rows-[auto_1fr]">
+	<div class="mb-12 flex gap-4">
+		<div>
+			<Button size="md" onclick={() => (dialog_create.open = true)}>Suggérer un lien</Button>
 		</div>
 	</div>
-
-	{#if inspecting}
+	<Table {explorer} />
+	<!-- {#if inspecting}
 		<Inspector bookmark={inspecting} />
-		<!-- {#if is_bookmark(inspecting)}
-					<InspectorBookmark {explorer} {inspecting} />
-				{:else}
-					<InspectorFolder {explorer} {inspecting} {new_sub_item} />
-				{/if} -->
-	{/if}
+
+	{/if} -->
 </div>
-<div class="gap-1- my-24 flex flex-wrap whitespace-pre">
+<!-- <div class="gap-1- my-24 flex flex-wrap whitespace-pre">
 	{#each tags as tag}
 		<div class="rounded py-0.5">{tag.name}, {' '}</div>
 	{/each}
-</div>
+</div> -->
 {#if dialog_create.open}
-	<DialogCreate parent={dialog_create.parent} onclose={() => (dialog_create.open = false)} />
+	<WindowSubmitter parent={dialog_create.parent} onclose={() => (dialog_create.open = false)} />
 {/if}
+
+<WindowSearch manager={window_manager} />
+<WindowInfo manager={window_manager} />
+<WindowInstructions
+	manager={window_manager}
+	open_window_submitter={() => (dialog_create.open = true)}
+/>
+
+<WindowInspector item={inspecting} manager={window_manager} />
+
+<div class="grid-12 pointer-events-none absolute top-24">
+	<!-- <Window class="col-span-4 col-start-7" title="Inspirathèque" manager={window_manager} id="intro">
+		<div class="mt-1 mb-2.5">
+			<div class="text-3xl">
+				<IconInfo />
+			</div>
+			<div class="mt-1">
+				L’Inspirathèque est une librairie communautaire d’adresses URL, entretenue par les
+				étudiant·es du programme.
+			</div>
+			<br />
+			<div>
+				Elle rassemble une collection semi-organisée de liens semi-inspirants qui ont un
+				semi-rapport avec le design graphique.
+			</div>
+			<br />
+			<div>Participe STP !!!</div>
+			<div class="mt-4 text-right">
+				<Button onclick={() => window_manager.open_window('instructions')}
+					>Comment contribuer !!??</Button
+				>
+			</div>
+		</div>
+	</Window> -->
+	<!-- <Window
+		class="col-span-4 col-start-2 mt-24"
+		title="Instructions"
+		manager={window_manager}
+		hidden
+		id="instructions"
+	>
+		<div class="mt-1 mb-2.5">
+			<div class="font-serif">1. Suggère un lien ❤️</div>
+			<div>Ça peut être n'importe quel lien que tu penses qui mérites d'être partagé</div>
+
+			<div class="font-serif">2. Attends 😅</div>
+			<div>
+				Donnes-nous un mini moment pour qu'on accepte ton ajout.
+				<br />Rien de personnel, c'est simplement que puisque c'est ouvert au public, on doit un peu
+				vérifier. 🤞
+			</div>
+			<div class="mt-12">Prêt-e à te lancer tête première dans l'inspirathèque ?? 👀</div>
+			<div class="mt-4 text-right">
+				<Button onclick={() => (dialog_create.open = true)}>Suggérer un lien</Button>
+			</div>
+		</div>
+	</Window> -->
+</div>
+
+<!-- {#if dialog_intro.open}
+	<Dialog title="Inspirathèque" onclose={() => (dialog_intro.open = false)}>
+		<DialogIntro />
+	</Dialog>
+{/if} -->
 
 {#snippet new_item_button(i: number)}
 	<button
@@ -186,7 +176,6 @@
 	</button>
 {/snippet}
 
-<div class="h-[1000px]"></div>
 <svelte:head>
 	<title>AGRAF 🕺 Inspirathèque</title>
 	<style>
@@ -196,17 +185,3 @@
 		}
 	</style>
 </svelte:head>
-
-<style>
-	td {
-		height: 1.8rem;
-		padding: 0 0.6rem;
-	}
-	td:first-child {
-		padding: 0;
-		width: 2rem;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-</style>

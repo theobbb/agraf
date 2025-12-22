@@ -93,3 +93,19 @@
 	font-weight: 400;
 	src: url('/fonts/diatype-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
+
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Pixelated MS Sans Serif';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/ms_sans_serif.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'VCR-OSD-MONO';
+	font-style: normal;
+	font-weight: 400;
+	src: url('/fonts/vcr-osd-mono.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}

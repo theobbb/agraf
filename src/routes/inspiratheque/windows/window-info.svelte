@@ -1,0 +1,33 @@
+<script lang="ts">
+	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
+	import Window from '$lib/components/windows/window.svelte';
+	import Button from '$lib/ui/button.svelte';
+	import IconInfo from '$lib/ui/icons/icon-info.svelte';
+	import type { Windows } from './types';
+
+	const { manager }: { manager: WindowManager<Windows> } = $props();
+</script>
+
+<div class="grid-12 pointer-events-none absolute top-24">
+	<Window class="col-span-4 col-start-7" title="Inspirathèque" id="intro" {manager}>
+		<div class="mt-1 mb-2.5">
+			<div class="text-3xl">
+				<IconInfo />
+			</div>
+			<div class="mt-1">
+				L’Inspirathèque est une librairie communautaire d’adresses URL, entretenue par les
+				étudiant·es du programme.
+			</div>
+			<br />
+			<div>
+				Elle rassemble une collection semi-organisée de liens semi-inspirants qui ont un
+				semi-rapport avec le design graphique.
+			</div>
+			<br />
+			<div>Participe STP !!!</div>
+			<div class="mt-4 text-right">
+				<Button onclick={() => manager.open_window('instructions')}>Comment contribuer !!??</Button>
+			</div>
+		</div>
+	</Window>
+</div>

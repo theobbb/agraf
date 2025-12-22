@@ -2,7 +2,7 @@
 	import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 	import Emoji from '$lib/emoji.svelte';
 	import type { Windows } from '$lib/types';
-	import Window from '$lib/window.svelte';
+	import Window from '$lib/components/windows/window.svelte';
 
 	const form: {
 		sucess: boolean;

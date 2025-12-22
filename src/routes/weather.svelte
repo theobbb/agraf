@@ -50,7 +50,6 @@
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 			const data = await response.json();
-			console.log(data);
 			const temperature = data.current.temperature_2m;
 			const sky = get_sky_description(data.current.weather_code);
 

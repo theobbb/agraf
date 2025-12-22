@@ -14,6 +14,8 @@
 	--breakpoint-break: 130rem;
 
 	--spacing-layout-x: 0.625rem;
+
+	--spacing-window-y: 0.3rem;
 }
 
 html {
@@ -40,6 +42,9 @@ html {
 	font-size: 3.2rem;
 	line-height: 1.1;
 }
+.font-pixel {
+	font-family: 'Pixelated MS Sans Serif';
+}
 
 @media (max-width: 96rem) {
 	html {
@@ -55,7 +60,7 @@ html {
 .grid-12 {
 	display: grid;
 	grid-template-columns: repeat(12, minmax(0, 1fr));
-	gap: calc(2.5 * var(--spacing));
+	gap: var(--spacing-gap);
 }
 
 .og-link {

@@ -2,10 +2,15 @@
 	import Button from '$lib/ui/button.svelte';
 	import IconLink from '$lib/ui/icons/icon-link.svelte';
 	import Dialog from '$lib/ui/skeleton/dialog.svelte';
-	import type { ExpandedBookmarkFoldersRecord } from './types';
+	import type { ExpandedBookmarkFoldersRecord } from '../types';
 
-	const { onclose, parent }: { onclose: () => void; parent: ExpandedBookmarkFoldersRecord | null } =
-		$props();
+	const {
+		onclose,
+		parent
+	}: {
+		onclose: () => void;
+		parent: ExpandedBookmarkFoldersRecord | null;
+	} = $props();
 
 	let url: string = $state('');
 
@@ -23,7 +28,7 @@ A design system for building faithful recreations of old UIs.`,
 		favicon_file: null,
 		favicon_url: 'blob:http://localhost:5173/4e3d69c9-a6ea-4407-b45f-4be73ca79cee'
 	};
-	let url_metadata: UrlMetadata | null = $state(dummy_url_metadata);
+	let url_metadata: UrlMetadata | null = $state(null);
 
 	let error: string | null = $state(null);
 
@@ -120,5 +125,3 @@ A design system for building faithful recreations of old UIs.`,
 	</div> -->
 	{/if}
 </Dialog>
-
-{#if url_metadata}{/if}
