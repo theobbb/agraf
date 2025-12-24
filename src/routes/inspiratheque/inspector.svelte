@@ -1,12 +1,11 @@
 <script lang="ts">
-	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
-	import Window from '$lib/components/windows/window.svelte';
 	import Markdown from '$lib/markdown.svelte';
 	import { pocketbase } from '$lib/pocketbase';
-	import Button from '$lib/ui/button.svelte';
 	import IconCopy from '$lib/ui/icons/icon-copy.svelte';
 	import IconExternalLink from '$lib/ui/icons/icon-external-link.svelte';
 	import IconLink from '$lib/ui/icons/icon-link.svelte';
+	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
+	import IconFolderOpen from '$lib/ui/icons/static/icon-folder-open.svelte';
 
 	import { format_date } from '$lib/utils/format-date';
 	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from './types';
@@ -29,7 +28,7 @@
 		{#if item}
 			{#if is_bookmark(item)}
 				<div>
-					<div class="flex items-center gap-2">
+					<div class="flex items-center gap-2.5">
 						{#if item.favicon}
 							<div>
 								<img
@@ -77,7 +76,10 @@
 					<div class="aspect-video bg-black/10"></div>
 				</div>
 			{:else}
-				Folder
+				<div class="items center flex gap-2.5">
+					<IconFolderOpen />
+					<div>{item.title}</div>
+				</div>
 			{/if}
 		{/if}
 

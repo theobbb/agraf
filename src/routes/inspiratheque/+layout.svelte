@@ -3,25 +3,15 @@
 	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from './types';
 	import Button from '$lib/ui/button.svelte';
 	import Emoji from '$lib/emoji.svelte';
-	import IconAdd from '$lib/ui/icons/icon-add.svelte';
-	import DialogCreate from './dialog-create.svelte';
-	import { goto } from '$app/navigation';
-	import IconInfo from '$lib/ui/icons/icon-info.svelte';
-
-	import Window from '$lib/components/windows/window.svelte';
 	import Table from './table.svelte';
-	import WindowSearch from './windows/window-search.svelte';
-	import WindowInspector from './windows/window-inspector.svelte';
 	import type { Windows } from './windows/types';
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
 	import WindowInfo from './windows/window-info.svelte';
 	import WindowInstructions from './windows/window-instructions.svelte';
 	import WindowSubmitter from './windows/window-submitter.svelte';
-	import Taskbar from '$lib/components/windows/taskbar.svelte';
 	import Inspector from './inspector.svelte';
 	import Breadcrumbs from './breadcrumbs.svelte';
 	import Footer from '../footer.svelte';
-	import Input from '$lib/ui/input.svelte';
 	import IconArrowBoxLeft from '$lib/ui/icons/icon-arrow-box-left.svelte';
 	import IconArrowBoxRight from '$lib/ui/icons/icon-arrow-box-right.svelte';
 	import IconArrowBoxUp from '$lib/ui/icons/icon-arrow-box-up.svelte';
@@ -86,7 +76,7 @@
 </button> -->
 <Emoji>🕺</Emoji>
 <!-- <Recent bookmarks={bookmarks.slice(0, 5)} /> -->
-<div class="grid h-[calc(100vh-9rem)] grid-rows-[auto_1fr]">
+<div class="grid h-[calc(100vh-9rem)] grid-rows-[auto_1fr] pb-gap">
 	<!-- <div class="mb-12 flex gap-4">
 		<div>
 			<Button size="md" onclick={() => (dialog_create.open = true)}>Suggérer un lien</Button>

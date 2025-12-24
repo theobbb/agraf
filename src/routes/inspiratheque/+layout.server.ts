@@ -10,7 +10,8 @@ export async function load({ params, setHeaders }) {
 	] = await Promise.all([
 		pocketbase.collection('bookmarks').getFullList<ExpandedBookmarksRecord>({
 			expand: 'tags',
-			sort: '-created'
+			sort: '-created',
+			filter: 'approved = true'
 			//fields: 'id,parent,title,url,favicon,tags,likes,created'
 		}),
 		pocketbase.collection('bookmark_folders').getFullList<ExpandedBookmarkFoldersRecord>({

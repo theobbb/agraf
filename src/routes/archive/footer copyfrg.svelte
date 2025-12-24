@@ -1,6 +1,8 @@
 <script lang="ts" generics="T extends string">
 	import Explosion from '$lib/components/explosion.svelte';
 	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
+	import IconFacebook from '$lib/ui/icons/apps/icon-facebook.svelte';
+	import IconInstagram from '$lib/ui/icons/apps/icon-instagram.svelte';
 
 	const { window_manager }: { window_manager: WindowManager<T> } = $props();
 
@@ -39,17 +41,21 @@
 			<a class="" href="mailto:agraf.uqam@gmail.com" target="_blank">agraf.uqam@gmail.com</a>
 		</div>
 
-		<div class="col-span-6 flex items-center gap-4 py-1 lg:col-span-3">
+		<div class="col-span-6 flex items-center gap-4 lg:col-span-3">
 			<a
-				class="col-span-4 max-lg:col-start-8 max-lg:row-start-1 lg:col-span-1"
+				class="col-span-4 py-1.5 max-lg:col-start-8 max-lg:row-start-1 lg:col-span-1"
 				target="_blank"
-				href="https://www.instagram.com/agraf.uqam/">Instagram</a
+				href="https://www.instagram.com/agraf.uqam/"
 			>
+				<div class="flex text-3xl"><IconInstagram /></div>
+			</a>
 			<a
-				class="col-span-4 max-lg:col-start-8 max-lg:row-start-2 lg:col-span-1"
+				class="col-span-4 py-1.5 max-lg:col-start-8 max-lg:row-start-2 lg:col-span-1"
 				target="_blank"
-				href="https://www.facebook.com/agraf.uqam/">Facebook</a
+				href="https://www.facebook.com/agraf.uqam/"
 			>
+				<div class="relative flex overflow-hidden text-3xl"><IconFacebook /></div>
+			</a>
 
 			<div class="col-span-4 max-lg:col-start-8 max-lg:row-start-3 lg:col-span-1">
 				<Explosion />

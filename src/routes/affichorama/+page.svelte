@@ -3,6 +3,7 @@
 	import Markdown from '$lib/markdown.svelte';
 	import Media from '$lib/media.svelte';
 	import { pocketbase } from '$lib/pocketbase';
+	import Pagination from './pagination.svelte';
 
 	const { data } = $props();
 
@@ -10,10 +11,17 @@
 
 	const indexes: Record<string, number> = $state({});
 	const opened: Record<string, true> = $state({});
+
+	const dummy_pagination = $derived({
+		...posters,
+		totalItems: 300,
+		totalPages: 20,
+		items: []
+	});
 </script>
 
 <Emoji>🧻</Emoji>
-
+<Pagination pagination={dummy_pagination} />
 <div class="grid-12 mb-24">
 	{#each posters.items as poster}
 		<div class="col-span-6 md:col-span-4 lg:col-span-3">
@@ -31,7 +39,7 @@
 			{/if}
 
 			<div>
-				<div class="relative mb-1">
+				<a class="relative mb-1" href="/affichorama/{poster.slug}">
 					{#if poster.images?.length}
 						<Media
 							src={pocketbase.files.getURL(poster, poster.images[indexes[poster.id] || 0])}
@@ -40,7 +48,7 @@
 					{:else}
 						<div class="absolute inset-0 bg-white/5"></div>
 					{/if}
-				</div>
+				</a>
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
 				<div onclick={() => (opened[poster.id] = true)}>

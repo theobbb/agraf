@@ -40,10 +40,15 @@ html {
 .font-serif {
 	font-family: 'Instrument Serif';
 	font-size: 3.2rem;
-	line-height: 1.1;
+	line-height: 1;
 }
 .font-pixel {
 	font-family: 'Pixelated MS Sans Serif';
+}
+
+.link-active,
+.link-hover:hover {
+	box-shadow: inset 0 -1px 0 currentColor;
 }
 
 @media (max-width: 96rem) {

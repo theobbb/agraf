@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 
-	type Variant = 'base' | 'action' | 'cancel';
+	type Variant = 'pixel' | 'icon';
 	type Size = 'sm' | 'md' | 'lg';
 	const {
-		variant = 'base',
+		variant = 'pixel',
 		type = 'button',
 		size = 'md',
 		class: cx,
@@ -19,24 +19,19 @@
 		children: Snippet;
 	} = $props();
 
-	const variant_cx = {
-		base: 'bg-white/10 border-black/20',
-		action: 'bg-green-900 text-white/90 border-green-600/50',
-		cancel: 'bg-red-500'
-	};
-
-	const size_cx: Record<Size, string> = {
+	const pixel_size_cx: Record<Size, string> = {
 		sm: 'min-w-19 min-h-5.5 px-4 text-xs',
 		md: 'min-w-28 min-h-8 px-8 text-lg',
 		lg: 'min-w-44 min-h-10 px-16 text-2xl'
 	};
+
+	const variant_cx: Record<Variant, string> = {
+		pixel: 'font-pixel font-normal ' + pixel_size_cx[size],
+		icon: 'text-lg'
+	};
 </script>
 
-<button
-	{onclick}
-	class={['font-pixel font-normal uppercase', variant_cx[variant], size_cx[size], cx]}
-	{type}
->
+<button {onclick} class={['uppercase', variant_cx[variant], cx]} {type}>
 	{@render children?.()}
 </button>
 

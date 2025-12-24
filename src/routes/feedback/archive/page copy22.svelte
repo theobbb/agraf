@@ -7,7 +7,7 @@
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
 	import Taskbar from '$lib/components/windows/taskbar.svelte';
 	import Desktop from '$lib/components/windows/desktop.svelte';
-	import Footer from '../footer.svelte';
+	import Footer from '../../footer.svelte';
 
 	const form: {
 		sucess: boolean;
@@ -67,10 +67,10 @@
 </script>
 
 <Emoji>🦋</Emoji>
-<!-- <div class="-mt-12">
+<div class="-mt-12">
 	WTF !!? Laissez-moi écrire mon commentaire normalement svp →
 	<Button size="sm">Formulaire pour les nuls</Button>
-</div> -->
+</div>
 <div class="pointer-events-none relative mt-24">
 	<form class="grid-12 relative my-2.5" {onsubmit}>
 		<div class="grid-12 absolute top-0 right-0 left-0">

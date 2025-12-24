@@ -19,25 +19,22 @@
 	let active_tab = $state(0);
 </script>
 
-<div class="grid-12 lg:grid-rows-16- relative mb-24 max-lg:-mt-2">
+<div class="grid-12 grid-rows-10- relative mb-24 lg:grid-rows-16">
 	<Window
-		title="Logo"
-		class="max-lg:translate-x-1- col-span-full lg:col-span-4 lg:col-start-1 lg:row-span-3 lg:row-start-2"
-		manager={window_manager}
 		id="logo"
+		manager={window_manager}
+		title="Logo"
+		class="col-span-full lg:col-span-4 lg:col-start-1 lg:row-span-3 lg:row-start-2"
 	>
 		<div class="my-2"><Logo /></div>
 	</Window>
 	<Window
-		title="En vedette!"
-		class={[
-			'col-span-9 max-lg:-mt-12 max-lg:-ml-3',
-			'lg:col-span-3 lg:col-start-9 lg:row-span-6 lg:row-start-1'
-		]}
-		manager={window_manager}
 		id="featured"
+		title="En vedette!"
+		class="col-span-8 lg:col-span-3 lg:col-start-9 lg:row-span-6 lg:row-start-1"
+		manager={window_manager}
 	>
-		<a href="/affichorama/{featured?.slug}">
+		<a href="/affichorama/{featured.slug}">
 			<div class="">
 				<Media
 					autoplay={!dev}
@@ -57,15 +54,12 @@
 	</Window>
 
 	<Window
-		title="Description"
-		class={[
-			'col-span-full col-start-1 max-lg:mt-12',
-			'lg:col-span-5 lg:col-start-3 lg:row-span-3 lg:row-start-4'
-		]}
-		manager={window_manager}
 		id="desc"
+		manager={window_manager}
+		title="Description"
+		class="col-span-full col-start-1 lg:col-span-5 lg:col-start-3 lg:row-span-3 lg:row-start-4"
 	>
-		<div class="mt-1 mb-24 font-serif">
+		<div class="mt-1 mb-4 font-serif">
 			Association étudiante du programme de design graphique de l'<span class="italic">UQAM</span>
 		</div>
 	</Window>
@@ -74,10 +68,7 @@
 		id="desc_long"
 		manager={window_manager}
 		title="Description mais plus précise"
-		class={[
-			'col-span-10  max-lg:-mt-12 max-lg:translate-x-3',
-			' lg:col-span-4 lg:col-start-2 lg:row-span-3 lg:row-start-6'
-		]}
+		class="col-span-full lg:col-span-4 lg:col-start-2 lg:row-span-3 lg:row-start-6"
 	>
 		<div class="mb-32 pt-1">
 			L’AGRAF rassemble et représente l’ensemble des étudiant·e·s en design graphique. Elle agit
@@ -90,10 +81,7 @@
 		id="linktree"
 		manager={window_manager}
 		title="Linktree fait maison"
-		class={[
-			'col-span-8 col-start-4 row-span-2 max-lg:mt-8',
-			'lg:col-span-3 lg:col-start-7 lg:row-span-4 lg:row-start-8'
-		]}
+		class="col-span-7 col-start-5 row-span-2 lg:col-span-3 lg:col-start-7 lg:row-span-4 lg:row-start-8"
 	>
 		<div class="py-1 pb-24 lg:pb-12">
 			{#each links as link}
@@ -156,21 +144,18 @@
 		id="weather"
 		manager={window_manager}
 		title="Température à Montréal"
-		class={[
-			'col-span-8 col-start-2  max-lg:mt-12',
-			'lg:col-span-2 lg:col-start-6 lg:row-span-2 lg:row-start-13'
-		]}
+		class="col-span-8 col-start-2 max-h-96 lg:col-span-2 lg:col-start-6 lg:row-span-2 lg:row-start-13"
 	>
-		<div class="mt-1 max-h-96 pb-24 lg:pb-12">
+		<div class="mt-1 pb-24 lg:pb-12">
 			<Weather />
 		</div>
 	</Window>
 </div>
 
-<!-- <div class="my-16 text-center text-xl font-normal" style="font-family: 'Comic', sans-serif;">
+<div class="my-16 text-center text-xl font-normal" style="font-family: 'Comic', sans-serif;">
 	<div>© 2025 AGRAF ❤️ Tous droits réservés 😡🤬</div>
 	<div></div>
-</div> -->
+</div>
 
 <Footer {window_manager} />
 <!-- <Taskbar manager={window_manager} /> -->
