@@ -19,10 +19,14 @@
 	let active_tab = $state(0);
 </script>
 
-<div class="grid-12 lg:grid-rows-16- relative mb-24 max-lg:-mt-2">
+<div class="grid-12 relative mb-24 max-lg:-mt-2">
 	<Window
 		title="Logo"
-		class="max-lg:translate-x-1- col-span-full lg:col-span-4 lg:col-start-1 lg:row-span-3 lg:row-start-2"
+		class={[
+			'col-span-full',
+			'sm:col-span-5 sm:col-start-1 sm:row-span-3 sm:row-start-1',
+			'lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-2'
+		]}
 		manager={window_manager}
 		id="logo"
 	>
@@ -31,13 +35,14 @@
 	<Window
 		title="En vedette!"
 		class={[
-			'col-span-9 max-lg:-mt-12 max-lg:-ml-3',
+			'col-span-9 max-lg:-ml-3 max-sm:-mt-12',
+			'sm:col-span-4 sm:col-start-9 sm:row-span-4 sm:row-start-2',
 			'lg:col-span-3 lg:col-start-9 lg:row-span-6 lg:row-start-1'
 		]}
 		manager={window_manager}
 		id="featured"
 	>
-		<a href="/affichorama/{featured?.slug}">
+		<a href="/affichorama/{featured.slug}">
 			<div class="">
 				<Media
 					autoplay={!dev}
@@ -45,13 +50,9 @@
 					alt="featured media - {featured.title}"
 				/>
 			</div>
-			<div class="py-1">
-				<div>{featured?.title}</div>
-
+			<div class="py-1 pb-2">
+				<div>{featured.title}</div>
 				<div class="text-2">{format_date(featured.date)}</div>
-				<br />
-				<br />
-				<div>Anonyme</div>
 			</div>
 		</a>
 	</Window>
@@ -59,8 +60,9 @@
 	<Window
 		title="Description"
 		class={[
-			'col-span-full col-start-1 max-lg:mt-12',
-			'lg:col-span-5 lg:col-start-3 lg:row-span-3 lg:row-start-4'
+			'col-span-full col-start-1 max-sm:mt-12',
+			'sm:col-span-7 sm:col-start-1 sm:row-span-3 sm:row-start-3',
+			'lg:col-span-5 lg:col-start-3 lg:row-span-3 lg:row-start-5'
 		]}
 		manager={window_manager}
 		id="desc"
@@ -75,8 +77,9 @@
 		manager={window_manager}
 		title="Description mais plus précise"
 		class={[
-			'col-span-10  max-lg:-mt-12 max-lg:translate-x-3',
-			' lg:col-span-4 lg:col-start-2 lg:row-span-3 lg:row-start-6'
+			'col-span-10 max-sm:-mt-12 max-sm:translate-x-3',
+			'sm:col-span-7 sm:col-start-5 sm:row-start-6',
+			' lg:col-span-4 lg:col-start-2 lg:row-span-3 lg:row-start-7'
 		]}
 	>
 		<div class="mb-32 pt-1">
@@ -92,6 +95,7 @@
 		title="Linktree fait maison"
 		class={[
 			'col-span-8 col-start-4 row-span-2 max-lg:mt-8',
+			'sm:col-start-2',
 			'lg:col-span-3 lg:col-start-7 lg:row-span-4 lg:row-start-8'
 		]}
 	>
@@ -108,7 +112,11 @@
 		id="map"
 		manager={window_manager}
 		title="Adresse"
-		class="order-last col-span-full row-span-2 max-h-96 overflow-hidden! lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-13"
+		class={[
+			'order-last col-span-full row-span-2 aspect-video',
+			'sm:col-span-6 sm:col-start-5',
+			'lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-13'
+		]}
 	>
 		<div class="relative -mx-2.5 h-64 lg:h-[calc(100%-2rem)]">
 			<iframe
@@ -129,7 +137,11 @@
 		id="related"
 		manager={window_manager}
 		title="Projets reliés"
-		class="col-span-full row-span-2 max-h-96 lg:col-span-7 lg:col-start-4 lg:row-span-4 lg:row-start-10"
+		class={[
+			'col-span-full row-span-2 max-h-96',
+			'sm:col-span-11',
+			'lg:col-span-7 lg:col-start-4 lg:row-span-4 lg:row-start-10'
+		]}
 	>
 		<div class="pb-24 lg:pb-12">
 			<div class="flex border-b">
@@ -157,11 +169,12 @@
 		manager={window_manager}
 		title="Température à Montréal"
 		class={[
-			'col-span-8 col-start-2  max-lg:mt-12',
-			'lg:col-span-2 lg:col-start-6 lg:row-span-2 lg:row-start-13'
+			'col-span-8 col-start-2 max-lg:mt-12',
+			'sm:row-start-10- sm:col-span-4 sm:col-start-9',
+			'lg:col-span-3 lg:col-start-6 lg:row-span-2 lg:row-start-13'
 		]}
 	>
-		<div class="mt-1 max-h-96 pb-24 lg:pb-12">
+		<div class="mt-1 max-h-96 pb-12">
 			<Weather />
 		</div>
 	</Window>

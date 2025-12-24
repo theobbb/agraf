@@ -58,7 +58,7 @@
 
 <div class="grid-12 pointer-events-none absolute">
 	<Window
-		class="col-span-4 col-start-8"
+		class={['col-span-11', 'sm:', 'lg:col-span-4 lg:col-start-8']}
 		id="comite"
 		manager={window_manager}
 		title="Comité exécutif"
@@ -77,7 +77,7 @@
 		</div>
 	</Window>
 	<Window
-		class="col-span-4 col-start-8"
+		class="col-span-11 lg:col-span-4 lg:col-start-8"
 		id="assemblee"
 		manager={window_manager}
 		title="Assemblée générale (AG)"
@@ -92,30 +92,6 @@
 	</Window>
 </div>
 <div class="mb-64 text-xl lg:text-2xl">
-	<!-- <div class="grid-12 mb-24">
-		<div
-			class="col-span-full grid grid-cols-7 gap-2.5 bg-text px-2.5 py-2.5 text-bg lg:col-span-7 lg:col-start-2"
-		>
-			<div class="col-span-3 mb-24">
-				<Logo />
-			</div>
-			<div class="col-span-full space-y-2 md:col-span-3 md:col-start-5">
-				<button onclick={() => open_dialog('assemblee')} class="flex items-center gap-2"
-					><span class="-mt-1">Assemblée générale</span> <IconArrowCorner /></button
-				>
-				<button onclick={() => open_dialog('comite')} class="flex items-center gap-2"
-					><span class="-mt-1">Comité exécutif</span> <IconArrowCorner /></button
-				>
-			</div>
-
-			<div class="col-span-full mb-8 border-t-2 pt-1 sm:col-span-5 sm:col-start-3">
-				L’AGRAF rassemble et représente l’ensemble des étudiant·e·s en design graphique. Elle agit
-				pour améliorer les conditions d’études et soutient les initiatives sociales, culturelles et
-				collectives au sein du programme.
-			</div>
-		</div>
-	</div> -->
-	<!-- <div class="font-serif- mb-4 font-serif">Comité exécutif</div> -->
 	<div class="gap-2- mb-16 flex">
 		{#each years as year, i}
 			<a href="/association/{year.id}" data-sveltekit-keepfocus data-sveltekit-noscroll
@@ -141,12 +117,13 @@
 			{/each}
 		{/each}
 	</div>
-	<div class="grid-12 mb-64 font-serif text-2xl/7! lg:text-[2.9vw]/[3vw]! break:text-6xl!">
+	<div class="grid-12 break:text-6xl!- mb-64 font-serif max-sm:text-4xl/9.5!">
 		<div class="col-span-full italic xl:col-span-2">Objectifs →</div>
 		<div class="col-span-full text-balance lg:col-start-2 xl:col-span-10 xl:col-start-3">
 			{#each objectives as objective, i}
-				<span class="inline-flex w-14 items-center justify-center rounded-full bg-text px-6 text-bg"
-					>{i + 1}</span
+				<span
+					class="inline-flex w-[1.5em] items-center justify-center rounded-full bg-text px-6 text-bg"
+					><div>{i + 1}</div></span
 				>
 
 				<span class="mr-2">
@@ -155,7 +132,7 @@
 			{/each}
 		</div>
 	</div>
-
+	<div class="border-b">À venir</div>
 	<div>Description des postes</div>
 	<div>Status et Règlements</div>
 
@@ -168,7 +145,7 @@
 		<Dialog
 			title="s"
 			onclose={() => (dialog.open = false)}
-			class="mr-[calc(100vw/12)] mb-5 w-[calc(5*100vw/12)]"
+			class="mr-[calc(100vw/12)] mb-5 xl:w-[calc(5*100vw/12)]"
 		>
 			{#if dialog.name == 'assemblee'}
 				<div class="max-w-xl-">

@@ -53,10 +53,9 @@
 			<div class="pt-1.5 pb-0.5 underline-offset-6 hover:underline">Paramètres</div>
 		</div> -->
 	</div>
+	<div class="lg:hidden">
+		{#if menu_mobile_open}
+			<MenuMobile onclose={() => (menu_mobile_open = false)} />
+		{/if}
+	</div>
 </header>
-
-<div class="lg:hidden">
-	{#if menu_mobile_open}
-		<MenuMobile onclose={() => (menu_mobile_open = false)} />
-	{/if}
-</div>

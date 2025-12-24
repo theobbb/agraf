@@ -8,6 +8,7 @@
 	import Input from '$lib/ui/input.svelte';
 	import Loader from '$lib/ui/loader.svelte';
 	import Dialog from '$lib/ui/skeleton/dialog.svelte';
+	import Textarea from '$lib/ui/textarea.svelte';
 	import type { ExpandedBookmarkFoldersRecord } from '../types';
 
 	const {
@@ -143,18 +144,12 @@
 			onsubmit_response = 'error';
 		}
 	}
-
-	const cx = {
-		input:
-			'min-h-8 bg-text/5 py-0.5 focus:bg-white/10 w-full border px-2 text-text outline-none focus:border-transparent! focus:ring-2',
-		label: 'block mb-1'
-	};
 </script>
 
 <Dialog
 	{onclose}
 	title="Suggérer un nouveau lien"
-	class="w-[calc(100vw/12*4-var(--spacing-gap)*2)]"
+	class="w-[calc(100vw/12*4-var(--spacing-gap)*2)]- lg:w-lg"
 >
 	<form class="mt-4 space-y-4" {onsubmit}>
 		<div class="flex items-end justify-between gap-4">
@@ -187,16 +182,9 @@
 			</div>
 		{/if}
 
-		<Input bind:value={title} name="title" id="title" label="Titre" />
+		<Input bind:value={title} name="title" label="Titre" />
 
-		<label for="description" class={cx.label}>Description</label>
-		<textarea
-			bind:value={description}
-			name="description"
-			rows={4}
-			class={[cx.input]}
-			id="description"
-		></textarea>
+		<Textarea name="description" rows={4} label="Description" />
 
 		<div class="flex items-center justify-between">
 			<div>

@@ -1,11 +1,27 @@
-<script>
-	let { name, value = $bindable(), rows = 8, ...props } = $props();
+<script lang="ts">
+	import type { HTMLTextareaAttributes } from 'svelte/elements';
+	import Label from './label.svelte';
+
+	let {
+		id,
+		name,
+		label,
+		value = $bindable(),
+		rows = 8,
+		...props
+	}: HTMLTextareaAttributes & {
+		label?: string;
+	} = $props();
 </script>
 
+{#if label}
+	<Label id={id || name} class="mb-1 block">{label}</Label>
+{/if}
 <textarea
 	{...props}
+	id={id || name}
 	class={[
-		'border border-black/20  px-2.5 py-1.5 placeholder-black/50 ring-black/20 outline-none focus:ring-2',
+		'min-h-8 w-full border bg-text/5 px-2 py-0.5 text-text outline-none focus:border-transparent! focus:bg-white/10 focus:ring-2',
 		props.class
 	]}
 	{name}

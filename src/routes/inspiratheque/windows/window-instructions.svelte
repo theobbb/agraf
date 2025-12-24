@@ -13,14 +13,16 @@
 
 <div class="grid-12- pointer-events-none absolute top-24 left-1/5">
 	<Window
-		class="col-span-4 col-start-2 mt-24 w-lg"
+		class="col-span-4 col-start-2 mt-24 lg:w-lg"
 		title="Contribution - Instructions"
 		{manager}
 		hidden
 		id="instructions"
 	>
 		<div class="mt-1 mb-2.5">
-			<div class="border-b- grid grid-cols-[2rem_1fr_6rem] gap-y-4 pb-6">
+			<div
+				class="border-b- grid grid-cols-[1.5rem_1fr_3rem] gap-y-4 pb-6 lg:grid-cols-[2rem_1fr_6rem]"
+			>
 				<div>1.</div>
 				<div>
 					<div>Surfe le net</div>

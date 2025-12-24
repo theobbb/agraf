@@ -65,10 +65,10 @@
 
 <div>
 	<div class="flex gap-2 text-3xl">
-		<div class="text-5xl">{weather?.sky[1]}</div>
 		<div class="font-serif">
 			{weather?.temperature || '...'} °C
 		</div>
+		<div class="text-5xl">{weather?.sky[1]}</div>
 	</div>
-	<div class="">{weather?.sky[0]}</div>
+	<div class="mt-1">{weather?.sky[0]}</div>
 </div>

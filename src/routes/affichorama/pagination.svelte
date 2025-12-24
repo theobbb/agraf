@@ -28,7 +28,7 @@
 	});
 </script>
 
-<div class="grid w-fit min-w-72 grid-cols-7 gap-x-2">
+<div class="min-w-72- grid w-fit grid-cols-7 gap-x-1.5">
 	<div class="flex items-center justify-center gap-1 text-xl">
 		{#if page > 1}
 			<!-- <a href="/affichorama?page=1" class="link-hover ">
@@ -45,7 +45,10 @@
 
 	{#each range as p}
 		<a
-			class={['border px-1.5 py-0.5 text-center', page == p ? '' : 'text-2']}
+			class={[
+				'border- px-1.5- link-hover w-fit py-0.5 text-center',
+				page == p ? 'link-active' : 'text-2'
+			]}
 			href="/affichorama?page={p}"
 		>
 			{p}

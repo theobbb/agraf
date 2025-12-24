@@ -6,7 +6,7 @@ export async function load() {
 
 	const { collection, id } = settings_featured.value;
 
-	const featured = settings_featured ? await pocketbase.collection(collection).getOne(id) : null;
+	const featured = await pocketbase.collection(collection).getOne(id);
 
 	const links: LinksRecord[] = await pocketbase
 		.collection('links')

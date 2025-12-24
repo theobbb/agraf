@@ -76,20 +76,20 @@
 </button> -->
 <Emoji>🕺</Emoji>
 <!-- <Recent bookmarks={bookmarks.slice(0, 5)} /> -->
-<div class="grid h-[calc(100vh-9rem)] grid-rows-[auto_1fr] pb-gap">
+<div class="grid h-[calc(100vh-9rem)] grid-rows-[auto_1fr] pb-gap max-lg:-mt-10">
 	<!-- <div class="mb-12 flex gap-4">
 		<div>
 			<Button size="md" onclick={() => (dialog_create.open = true)}>Suggérer un lien</Button>
 		</div>
 	</div> -->
 	<div class="grid-12 mb-3">
-		<div class="flex items-center gap-2 text-2xl">
+		<div class="flex items-center gap-2 text-2xl max-lg:hidden">
 			<IconArrowBoxLeft />
 			<IconArrowBoxRight />
 
 			<IconArrowBoxUp />
 		</div>
-		<div class="col-span-4 flex items-center">
+		<div class="col-span-4 flex items-center max-lg:order-2">
 			<Breadcrumbs {breadcrumbs} />
 		</div>
 		<!-- <div class="col-span-5 flex gap-3">
@@ -100,13 +100,15 @@
 		<!-- <div class="col-span-4">
 			<Input id="search" name="search" placeholder="Rechercher..." />
 		</div> -->
-		<div class="col-span-3 col-start-10 flex items-center justify-end">
+		<div class="col-span-full flex items-center justify-end lg:col-span-6 lg:col-start-7">
 			<Button size="md" onclick={open_submitter}>Suggérer un lien</Button>
 		</div>
 	</div>
-	<div class="grid grid-cols-[1fr_auto] border-t">
+	<div
+		class="relative grid h-full border-t max-lg:-mx-gap max-lg:grid-rows-[1fr_20vh] lg:-ml-gap lg:grid-cols-[5fr_2fr]"
+	>
 		<Table {explorer} {tags} />
-		<div class="w-lg border-l">
+		<div class="max-lg:border-t lg:border-l">
 			<Inspector item={inspecting} />
 		</div>
 	</div>
@@ -120,6 +122,7 @@
 		<div class="rounded py-0.5">{tag.name}, {' '}</div>
 	{/each}
 </div> -->
+
 {#if dialog_create.open}
 	<WindowSubmitter parent={dialog_create.parent} onclose={() => (dialog_create.open = false)} />
 {/if}
@@ -129,10 +132,8 @@
 	manager={window_manager}
 	open_window_submitter={() => (dialog_create.open = true)}
 />
+
 <Footer {window_manager} />
-<!-- <WindowInspector item={inspecting} manager={window_manager} /> -->
-<!-- 
-<Taskbar manager={window_manager} /> -->
 
 <svelte:head>
 	<title>AGRAF 🕺 Inspirathèque</title>

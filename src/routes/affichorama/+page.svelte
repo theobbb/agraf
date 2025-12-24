@@ -21,7 +21,7 @@
 </script>
 
 <Emoji>🧻</Emoji>
-<Pagination pagination={dummy_pagination} />
+
 <div class="grid-12 mb-24">
 	{#each posters.items as poster}
 		<div class="col-span-6 md:col-span-4 lg:col-span-3">
@@ -51,8 +51,8 @@
 				</a>
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div onclick={() => (opened[poster.id] = true)}>
-					<div class="mb-0.5-">{poster.title}</div>
+				<div class="mt-0.5" onclick={() => (opened[poster.id] = true)}>
+					<div class="">{poster.title}</div>
 					<div
 						class={[
 							'text-2 relative  overflow-hidden text-ellipsis',
@@ -61,14 +61,12 @@
 					>
 						<Markdown content={poster.body || ''} />
 					</div>
-					<div class="invisible" aria-label="hidden">*</div>
 				</div>
 			</div>
 		</div>
 	{/each}
 </div>
-
-<div>Pagination</div>
+<Pagination pagination={dummy_pagination} />
 
 <svelte:head>
 	<title>AGRAF 🧻 Affichorama</title>

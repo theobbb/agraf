@@ -73,7 +73,7 @@
 							</a>
 						</div>
 					</div>
-					<div class="aspect-video bg-black/10"></div>
+					<div class="aspect-video bg-black/10 max-lg:hidden"></div>
 				</div>
 			{:else}
 				<div class="items center flex gap-2.5">
@@ -83,7 +83,7 @@
 			{/if}
 		{/if}
 
-		<div>
+		<div class="max-lg:hidden">
 			{#if item}
 				{#if is_bookmark(item)}
 					<div class="flex gap-4 pb-2">

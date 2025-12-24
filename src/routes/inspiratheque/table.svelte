@@ -5,6 +5,8 @@
 	import IconExternalLink from '$lib/ui/icons/icon-external-link.svelte';
 	import IconFolder from '$lib/ui/icons/icon-folder.svelte';
 	import IconLink from '$lib/ui/icons/icon-link.svelte';
+	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
+	import IconFolderOpen from '$lib/ui/icons/static/icon-folder-open.svelte';
 	import Breadcrumbs from './breadcrumbs.svelte';
 	import type { Explorer } from './explorer.svelte';
 	import Inspector from './inspector.svelte';
@@ -48,8 +50,7 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 
 <div
-	class=" grid divide-x overflow-x-auto whitespace-nowrap select-none"
-	style="grid-auto-flow: column; grid-auto-columns: 7.5%;"
+	class="grid auto-cols-[14%] grid-flow-col-dense divide-x overflow-x-auto whitespace-nowrap select-none md:auto-cols-[10%] xl:auto-cols-[7.5%]"
 >
 	{#each navigation as col, i}
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -72,7 +73,7 @@
 						]}
 						onclick={() => inspect(item.id)}
 					>
-						<div class="flex w-6 items-center justify-center">
+						<div class="flex w-5 shrink-0 items-center justify-center">
 							{#if is_bookmark(item)}
 								{#if item.favicon}
 									<div>
@@ -86,9 +87,9 @@
 									<div class="opacity-60"><IconLink /></div>
 								{/if}
 							{:else if params?.includes(item.id)}
-								<img src="/icons/folder_open.webp" alt="icon-folder-open" />
+								<IconFolderOpen />
 							{:else}
-								<img src="/icons/folder_closed.webp" alt="icon-folder-closed" />
+								<IconFolderClosed />
 							{/if}
 						</div>
 						<div class="relative w-full max-w-full min-w-0 overflow-hidden text-ellipsis">

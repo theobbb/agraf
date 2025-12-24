@@ -14,8 +14,9 @@
 	const {
 		src,
 		alt,
-		thumbnail = false
-	}: { src: string; alt: string; thumbnail?: boolean } = $props();
+		thumbnail = false,
+		autoplay = false
+	}: { src: string; alt: string; thumbnail?: boolean; autoplay?: boolean } = $props();
 
 	const url: string = $derived.by(() => {
 		if (src.startsWith('blob')) return src;
@@ -29,7 +30,7 @@
 
 {#if src}
 	{#if src.endsWith('.mp4')}
-		<video muted class="h-full w-full object-contain" src={url}></video>
+		<video muted {autoplay} loop class="h-full w-full object-contain" src={url}></video>
 	{:else}
 		<img loading="lazy" class="h-full w-full object-contain" src={url} {alt} />
 	{/if}

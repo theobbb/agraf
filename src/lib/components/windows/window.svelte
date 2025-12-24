@@ -129,7 +129,7 @@
 	onmousedown={focus}
 	class={[
 		cx,
-		'window pointer-events-auto relative overflow-y-auto border bg-bg px-2.5 shadow',
+		'window overflow-y-auto- pointer-events-auto relative border bg-bg px-2.5 shadow',
 		visible ? '' : 'invisible'
 	]}
 	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px); "
@@ -137,7 +137,7 @@
 	<header
 		onmousedown={start_drag}
 		class={[
-			'sticky top-0 flex cursor-grab items-center justify-between gap-1 border-b bg-bg py-1.5 select-none '
+			'flex cursor-grab items-center justify-between gap-1 border-b bg-bg py-1.5 select-none '
 		]}
 	>
 		<div class="">
