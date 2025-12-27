@@ -9,7 +9,7 @@
 <div class="grid-12 gap-y-12! py-24">
 	{#each links as link}
 		<div class="col-span-6 sm:col-span-4 lg:col-span-3">
-			<a class="group flex flex-col items-center" href={link.url}>
+			<a class="group flex flex-col items-center" href={link.url} target="_blank">
 				<div class="relative w-fit">
 					<img src="/icons/folder_closed.webp" />
 					<div class="absolute inset-0 flex items-center justify-end text-2xl">

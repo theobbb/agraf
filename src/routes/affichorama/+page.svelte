@@ -51,11 +51,11 @@
 				</a>
 				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div class="mt-0.5" onclick={() => (opened[poster.id] = true)}>
+				<div class="mt-1" onclick={() => (opened[poster.id] = true)}>
 					<div class="">{poster.title}</div>
 					<div
 						class={[
-							'text-2 relative  overflow-hidden text-ellipsis',
+							'text-2 relative overflow-hidden text-ellipsis',
 							opened[poster.id] ? '' : 'line-clamp-3'
 						]}
 					>
