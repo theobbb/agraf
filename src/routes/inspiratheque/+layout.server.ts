@@ -1,8 +1,9 @@
 import { pocketbase } from '$lib/pocketbase';
 import type { BookmarkTagsRecord } from '$lib/pocketbase.types';
+import { redirect } from '@sveltejs/kit';
 import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from './types';
 
-export async function load({ params, setHeaders }) {
+export async function load() {
 	const [bookmarks, folders, tags]: [
 		ExpandedBookmarksRecord[],
 		ExpandedBookmarkFoldersRecord[],
@@ -23,22 +24,12 @@ export async function load({ params, setHeaders }) {
 			.getFullList<BookmarkTagsRecord>({ fields: 'id,name,color' })
 	]);
 
-	setHeaders({
-		'cache-control': 'public, max-age=600'
-	});
+	// setHeaders({
+	// 	'cache-control': 'public, max-age=600'
+	// });
 
-	// const bookmarks: ExpandedBookmarksRecord[] = await pocketbase
-	// 	.collection('bookmarks')
-	// 	.getFullList({ expand: 'tags', sort: '-created' });
-
-	// const folders: ExpandedBookmarkFoldersRecord[] = await pocketbase
-	// 	.collection('bookmark_folders')
-	// 	.getFullList({ sort: 'title' });
-
-	// const tags: BookmarkTagsRecord[] = await pocketbase.collection('bookmark_tags').getFullList();
-	// const folders: BookmarkFoldersRecord[] = await pocketbase
-	// 	.collection('bookmark_folders')
-	// 	.getFullList({ filter: `folder == ${params.folder}` });
+	// const recent_url = '/inspiratheque/' + bookmarks[0].id;
+	// redirect(302, recent_url);
 
 	return { bookmarks, folders, tags };
 }

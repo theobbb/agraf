@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onNavigate } from '$app/navigation';
 	import { page } from '$app/state';
-	import IconArrowCorner from '$lib/ui/icons/icon-arrow-corner.svelte';
 	import Dialog from '$lib/ui/skeleton/dialog.svelte';
 	import { links } from './static';
 
@@ -18,7 +17,7 @@
 			<a
 				{href}
 				class={[
-					'group col-span-6 flex flex-col justify-between  pt-1.5 pb-1 font-serif text-2xl sm:col-span-4 md:col-span-3 xl:col-span-2',
+					'group col-span-6 flex flex-col justify-between pt-1.5 pb-1 font-serif text-2xl last:pb-2 sm:col-span-4 md:col-span-3 xl:col-span-2',
 					active && 'italic'
 				]}
 			>

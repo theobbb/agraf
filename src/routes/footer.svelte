@@ -2,9 +2,9 @@
 	import Explosion from '$lib/components/explosion.svelte';
 	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
 
-	const { window_manager }: { window_manager: WindowManager<T> } = $props();
+	const { window_manager }: { window_manager?: WindowManager<T> } = $props();
 
-	const { windows_array } = $derived(window_manager);
+	const { windows_array } = $derived(window_manager ? window_manager : { windows_array: [] });
 
 	const minimized = $derived(windows_array.filter((window) => window.minimized));
 
@@ -23,8 +23,13 @@
 
 <footer class="fixed right-gap bottom-0 left-gap z-500 border-t bg-bg">
 	<div class="grid-12 max-lg:text-sm">
-		<div class="py-1.5 max-lg:hidden">A</div>
-		<div class="col-span-5 flex items-center gap-2 max-lg:hidden">
+		<div
+			class="col-span-4 py-1.5 font-normal max-lg:hidden"
+			style="font-family: 'Comic', sans-serif;"
+		>
+			<div>© 2025 AGRAF ❤️ Tous droits réservés 😡🤬</div>
+		</div>
+		<div class="col-span-2 flex items-center gap-2 max-lg:hidden">
 			{#each minimized as window}
 				<button
 					class="relative size-5 cursor-pointer overflow-hidden border"

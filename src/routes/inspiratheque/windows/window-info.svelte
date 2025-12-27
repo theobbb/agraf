@@ -6,16 +6,21 @@
 	import type { Windows } from './types';
 
 	const { manager }: { manager: WindowManager<Windows> } = $props();
+
+	function onclose() {
+		console.log('close');
+	}
 </script>
 
 <div class="grid-12 pointer-events-none absolute top-24">
 	<Window
 		class="col-span-full lg:col-span-4 lg:col-start-7"
 		title="Inspirathèque"
-		id="intro"
+		id="info"
 		{manager}
+		{onclose}
 	>
-		<div class="mt-1 mb-2.5">
+		<div class="mt-1.5 mb-2.5">
 			<div class="text-3xl">
 				<IconInfo />
 			</div>

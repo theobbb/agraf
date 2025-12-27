@@ -30,7 +30,7 @@
 
 	function inspect(id: string) {
 		if (!id) goto('/inspiratheque');
-		goto('/inspiratheque/' + id);
+		goto('/inspiratheque/' + id, { replaceState: true });
 	}
 
 	// 	function new_item(folder_i: number) {

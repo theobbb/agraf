@@ -96,7 +96,7 @@
 		class={[
 			'col-span-8 col-start-4 row-span-2 max-lg:mt-8',
 			'sm:col-start-2',
-			'lg:col-span-3 lg:col-start-7 lg:row-span-4 lg:row-start-8'
+			'lg:col-span-3 lg:col-start-7 lg:row-span-4 lg:row-start-9'
 		]}
 	>
 		<div class="py-1 pb-24 lg:pb-12">
@@ -115,7 +115,7 @@
 		class={[
 			'order-last col-span-full row-span-2 aspect-video',
 			'sm:col-span-6 sm:col-start-5',
-			'lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-13'
+			'lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-17'
 		]}
 	>
 		<div class="relative -mx-2.5 h-64 lg:h-[calc(100%-2rem)]">
@@ -140,7 +140,7 @@
 		class={[
 			'col-span-full row-span-2 max-h-96',
 			'sm:col-span-11',
-			'lg:col-span-7 lg:col-start-4 lg:row-span-4 lg:row-start-10'
+			'lg:col-span-7 lg:col-start-4 lg:row-span-5 lg:row-start-12'
 		]}
 	>
 		<div class="pb-24 lg:pb-12">
@@ -171,7 +171,7 @@
 		class={[
 			'col-span-8 col-start-2 max-lg:mt-12',
 			'sm:row-start-10- sm:col-span-4 sm:col-start-9',
-			'lg:col-span-3 lg:col-start-6 lg:row-span-2 lg:row-start-13'
+			'lg:col-span-3 lg:col-start-6 lg:row-span-2 lg:row-start-17'
 		]}
 	>
 		<div class="mt-1 max-h-96 pb-12">

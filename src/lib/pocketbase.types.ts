@@ -17,6 +17,8 @@ export enum Collections {
 	Comments = "comments",
 	Documents = "documents",
 	Feedback = "feedback",
+	InfoTags = "info_tags",
+	Infos = "infos",
 	Links = "links",
 	MemberEntries = "member_entries",
 	Members = "members",
@@ -131,7 +133,7 @@ export type BookmarksRecord = {
 	favicon?: FileNameString
 	id: string
 	likes?: number
-	parent: RecordIdString
+	parent?: RecordIdString
 	submit_message?: string
 	tags?: RecordIdString[]
 	title: string
@@ -178,6 +180,23 @@ export type FeedbackRecord = {
 	updated: IsoAutoDateString
 }
 
+export type InfoTagsRecord = {
+	created: IsoAutoDateString
+	id: string
+	title?: string
+	updated: IsoAutoDateString
+}
+
+export type InfosRecord = {
+	body?: string
+	created: IsoAutoDateString
+	id: string
+	order?: number
+	tags?: RecordIdString[]
+	title?: string
+	updated: IsoAutoDateString
+}
+
 export type LinksRecord = {
 	created: IsoAutoDateString
 	hidden?: boolean
@@ -199,6 +218,7 @@ export type MemberEntriesRecord = {
 }
 
 export type MembersRecord = {
+	archived?: boolean
 	code?: string
 	created: IsoAutoDateString
 	email?: string
@@ -226,7 +246,6 @@ export type PostersRecord = {
 	id: string
 	images: FileNameString[]
 	slug?: string
-	test?: FileNameString
 	title: string
 	updated: IsoAutoDateString
 }
@@ -308,6 +327,8 @@ export type BookmarksResponse<Texpand = unknown> = Required<BookmarksRecord> & B
 export type CommentsResponse<Texpand = unknown> = Required<CommentsRecord> & BaseSystemFields<Texpand>
 export type DocumentsResponse<Texpand = unknown> = Required<DocumentsRecord> & BaseSystemFields<Texpand>
 export type FeedbackResponse<Texpand = unknown> = Required<FeedbackRecord> & BaseSystemFields<Texpand>
+export type InfoTagsResponse<Texpand = unknown> = Required<InfoTagsRecord> & BaseSystemFields<Texpand>
+export type InfosResponse<Texpand = unknown> = Required<InfosRecord> & BaseSystemFields<Texpand>
 export type LinksResponse<Texpand = unknown> = Required<LinksRecord> & BaseSystemFields<Texpand>
 export type MemberEntriesResponse<Texpand = unknown> = Required<MemberEntriesRecord> & BaseSystemFields<Texpand>
 export type MembersResponse<Texpand = unknown> = Required<MembersRecord> & BaseSystemFields<Texpand>
@@ -333,6 +354,8 @@ export type CollectionRecords = {
 	comments: CommentsRecord
 	documents: DocumentsRecord
 	feedback: FeedbackRecord
+	info_tags: InfoTagsRecord
+	infos: InfosRecord
 	links: LinksRecord
 	member_entries: MemberEntriesRecord
 	members: MembersRecord
@@ -357,6 +380,8 @@ export type CollectionResponses = {
 	comments: CommentsResponse
 	documents: DocumentsResponse
 	feedback: FeedbackResponse
+	info_tags: InfoTagsResponse
+	infos: InfosResponse
 	links: LinksResponse
 	member_entries: MemberEntriesResponse
 	members: MembersResponse

@@ -52,43 +52,37 @@
 		dialog.name = name;
 		dialog.open = true;
 	}
-
-	const cx = {
-		text: 'text-xl lg:text-2xl/8.5'
-	};
 </script>
 
 <Emoji>🦖</Emoji>
 
-<div class="relative">
-	<div class={[cx.text]}>
-		<div class="gap-2- mb-16 flex">
-			{#each years as year, i}
-				<a href="/association/{year.id}" data-sveltekit-keepfocus data-sveltekit-noscroll
-					><span class={['rounded-full px-2', year.id == page.params.year && 'bg-text text-bg']}
-						>{year.id}</span
-					><span class={['ml-0.5', i == years.length - 1 && 'hidden']}>*</span></a
-				>
-			{/each}
-		</div>
-		<div class={['grid-12 mb-24 gap-y-0!']}>
-			{#each grouped as { role, entries }}
-				<div
-					class="py-1- col-span-6 border-t lg:col-span-4"
-					style="grid-row: span {entries.length} / span {entries.length};"
-				>
-					{role.name}
-				</div>
-
-				{#each entries as member, i}
-					<div class={['whitespace-nowrap- py-1- col-span-6', i == 0 && 'border-t']}>
-						{member.expand?.member?.name}
-					</div>
-				{/each}
-			{/each}
-		</div>
+<div class="relative mb-64 text-xl lg:text-2xl">
+	<div class="gap-2- mb-16 flex">
+		{#each years as year, i}
+			<a href="/association/{year.id}" data-sveltekit-keepfocus data-sveltekit-noscroll
+				><span class={['rounded-full px-2', year.id == page.params.year && 'bg-text text-bg']}
+					>{year.id}</span
+				><span class={['ml-0.5', i == years.length - 1 && 'hidden']}>*</span></a
+			>
+		{/each}
 	</div>
-	<div class="grid-12 pointer-events-none top-0 -mt-112 mb-32">
+	<div class="grid-12 mb-24 gap-y-0!">
+		{#each grouped as { role, entries }}
+			<div
+				class="col-span-6 mb-1 border-t lg:col-span-4"
+				style="grid-row: span {entries.length} / span {entries.length};"
+			>
+				{role.name}
+			</div>
+
+			{#each entries as member, i}
+				<div class={['whitespace-nowrap- col-span-6 mb-1', i == 0 && 'border-t']}>
+					{member.expand?.member?.name}
+				</div>
+			{/each}
+		{/each}
+	</div>
+	<div class="grid-12 pointer-events-none absolute top-0 text-base">
 		<Window
 			class={['col-span-11', 'sm:', 'lg:col-span-4 lg:col-start-8']}
 			id="comite"
@@ -123,23 +117,21 @@
 			</div>
 		</Window>
 	</div>
-</div>
-<div class="grid-12 break:text-6xl!- mb-64 font-serif max-sm:text-4xl/9.5!">
-	<div class="col-span-full italic xl:col-span-2">Objectifs →</div>
-	<div class="col-span-full text-balance lg:col-start-2 xl:col-span-10 xl:col-start-3">
-		{#each objectives as objective, i}
-			<span
-				class="inline-flex w-[1.5em] items-center justify-center rounded-full bg-text px-6 text-bg"
-				><div>{i + 1}</div></span
-			>
+	<div class="grid-12 break:text-6xl!- mb-64 font-serif max-sm:text-4xl/9.5!">
+		<div class="col-span-full italic xl:col-span-2">Objectifs →</div>
+		<div class="col-span-full text-balance lg:col-start-2 xl:col-span-10 xl:col-start-3">
+			{#each objectives as objective, i}
+				<span
+					class="inline-flex w-[1.5em] items-center justify-center rounded-full bg-text px-6 text-bg"
+					><div>{i + 1}</div></span
+				>
 
-			<span class="mr-2">
-				{objective}
-			</span>
-		{/each}
+				<span class="mr-2">
+					{objective}
+				</span>
+			{/each}
+		</div>
 	</div>
-</div>
-<div class={[cx.text, 'mb-32']}>
 	<div class="border-b">À venir</div>
 	<div>Description des postes</div>
 	<div>Status et Règlements</div>
@@ -148,35 +140,35 @@
 	<div>Procès verbaux</div>
 	<div>Demandes de subvention</div>
 	<div>Download data pdf</div>
-</div>
 
-{#if dialog.open}
-	<Dialog
-		title="s"
-		onclose={() => (dialog.open = false)}
-		class="mr-[calc(100vw/12)] mb-5 xl:w-[calc(5*100vw/12)]"
-	>
-		{#if dialog.name == 'assemblee'}
-			<div class="max-w-xl-">
-				<div class="border-b-2">Assemblée générale (AG)</div>
+	{#if dialog.open}
+		<Dialog
+			title="s"
+			onclose={() => (dialog.open = false)}
+			class="mr-[calc(100vw/12)] mb-5 xl:w-[calc(5*100vw/12)]"
+		>
+			{#if dialog.name == 'assemblee'}
+				<div class="max-w-xl-">
+					<div class="border-b-2">Assemblée générale (AG)</div>
 
-				<div>
-					Instance décisionnelle principale de l’Association, l’Assemblée générale est ouverte à
-					tous les membres. C’est l’espace où l’on discute, débat et vote sur les orientations,
-					actions et prises de position de l’AGRAF.
+					<div>
+						Instance décisionnelle principale de l’Association, l’Assemblée générale est ouverte à
+						tous les membres. C’est l’espace où l’on discute, débat et vote sur les orientations,
+						actions et prises de position de l’AGRAF.
+					</div>
 				</div>
-			</div>
-		{:else if dialog.name == 'comite'}
-			<div class="max-w-xl-">
-				<div class="border-b-2">Comité exécutif</div>
-				Chargé de mettre en œuvre les décisions adoptées en Assemblée générale, le Comité exécutif rassemble
-				des membres occupant divers postes — trésorerie, secrétariat, affaires internes, affaires externes,
-				etc. Plusieurs postes sont ouverts chaque année afin d’encourager la participation et l’implication
-				des étudiant·e·s.
-			</div>
-		{/if}
-	</Dialog>
-{/if}
+			{:else if dialog.name == 'comite'}
+				<div class="max-w-xl-">
+					<div class="border-b-2">Comité exécutif</div>
+					Chargé de mettre en œuvre les décisions adoptées en Assemblée générale, le Comité exécutif
+					rassemble des membres occupant divers postes — trésorerie, secrétariat, affaires internes,
+					affaires externes, etc. Plusieurs postes sont ouverts chaque année afin d’encourager la participation
+					et l’implication des étudiant·e·s.
+				</div>
+			{/if}
+		</Dialog>
+	{/if}
+</div>
 
 <Footer {window_manager} />
 

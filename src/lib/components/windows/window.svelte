@@ -11,6 +11,7 @@
 		hidden = false,
 		header,
 		class: cx,
+		style,
 		dialog,
 		onclose,
 		children
@@ -18,6 +19,7 @@
 		id: string;
 		title: string;
 		class?: string | string[];
+		style?: string;
 		dialog?: boolean;
 		manager?: WindowManager<any>;
 		hidden?: boolean;
@@ -102,8 +104,8 @@
 		manager.minimize_window(id);
 	}
 	function close() {
+		if (typeof onclose == 'function') onclose();
 		if (dialog) {
-			if (typeof onclose == 'function') onclose();
 			return;
 		}
 		if (!manager) return;
@@ -129,15 +131,15 @@
 	onmousedown={focus}
 	class={[
 		cx,
-		'window overflow-y-auto- pointer-events-auto relative border bg-bg px-2.5 shadow',
+		'window overflow-y-auto- pointer-events-auto relative border bg-bg/60 px-2.5 shadow backdrop-blur-lg',
 		visible ? '' : 'invisible'
 	]}
-	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px); "
+	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px); {style}"
 >
 	<header
 		onmousedown={start_drag}
 		class={[
-			'flex cursor-grab items-center justify-between gap-1 border-b bg-bg py-1.5 select-none '
+			'bg-bg- -mx-gap flex cursor-grab items-center justify-between gap-1 border-b px-gap py-1.5 select-none '
 		]}
 	>
 		<div class="">

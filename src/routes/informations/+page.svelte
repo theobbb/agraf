@@ -1,120 +1,82 @@
 <script lang="ts">
 	import Emoji from '$lib/emoji.svelte';
-	import type { Windows } from '$lib/types';
+
 	import Window from '$lib/components/windows/window.svelte';
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
 	import Footer from '../footer.svelte';
+	import Markdown from '$lib/markdown.svelte';
 
-	const data = {
-		ressources: [
-			{
-				name: `Bibliothèque LU `,
-				emoji: '📚',
-				body: `Située au 3ᵉ étage du pavillon de design de l’UQAM, cette bibliothèque rassemble des livres graphiques, des monographies et des magazines. Les documents sont destinés à être consultés sur place afin que les étudiant.e.s puissent s'informer, s'inspirer et se divertir.`,
-				url: 'https://www.instagram.com/bibliolu',
-				window_cx: 'col-span-4 col-start-9 row-span-2 row-start-1'
-			},
-			{
-				name: 'Sérigraphie',
-				emoji: '✒️',
-				body: 'local 2048544',
-				window_cx: ' col-span-3 col-start-1 row-span-2 row-start-4'
-			},
-			{
-				name: 'Typographie et reliure',
-				emoji: '📖',
-				body: 'local 2048544',
-				window_cx: 'col-span-3 col-start-2 row-span-3 row-start-2'
-			},
-			{
-				name: 'Développement argentique',
-				emoji: '📷',
-				body: 'local 2048544',
-				window_cx: 'col-span-3 col-start-8 row-span-2 row-start-7 '
-			},
-			{
-				name: 'Studio photo',
-				emoji: '🤳',
-				body: 'local 2048544',
-				window_cx: 'col-span-3 col-start-1 row-span-2 row-start-1'
-			},
-			{
-				name: 'Prêt de matériel',
-				emoji: '🗿',
-				body: 'local 2048544',
-				window_cx: 'col-span-3 col-start-1 row-span-2 row-start-6'
-			},
-			{
-				name: 'Impression',
-				emoji: '🖨️',
-				body: '',
-				window_cx: 'col-span-3 col-start-3 row-span-2 row-start-7'
-			}
-		]
-	};
-
-	type Dialog = 'entente';
-
-	const dialog: {
-		open: Boolean;
-		name: Dialog | null;
-	} = $state({
-		open: false,
-		name: 'entente'
-	});
+	const { data } = $props();
+	const { infos: items } = $derived(data);
 
 	const window_manager = get_window_manager('informations');
+	const { windows } = $derived(window_manager);
 
-	const windows: Windows = $state({});
-
+	function toggle_window(id: string) {
+		if (windows[id]?.closed) window_manager.open_window(id);
+		else window_manager.close_window(id);
+	}
 	const cx = {
 		text: 'text-2xl/6.5'
 	};
+
+	//top: {i * 33}px; left: {i * 33}px;
 </script>
 
-<div class="relative">
-	<Emoji>🤓</Emoji>
+<Emoji>🤓</Emoji>
+<div
+	class="absolute right-gap left-1/3 lg:grid"
+	style="grid-template-columns: repeat(auto-fit, 33px); "
+>
+	{#each items as { id, title, body, expand }, i}
+		<div
+			class=" w-lg- row-span-4- col-span-12 max-lg:mt-gap!"
+			style="grid-column: span 16 / span 16; grid-column-start: {i +
+				1}; grid-row-start: 1; margin-top: {i * 33}px;"
+		>
+			<Window class="" title={title || ''} {id} manager={window_manager} hidden>
+				<div class="mt-1 mb-12">
+					<div>
+						<Markdown content={body || ''}></Markdown>
+					</div>
+					<div class="mt-4 flex gap-1">
+						{#each expand.tags as tag}
+							<div class="bg-text px-1 text-bg">{tag.title}</div>
+						{/each}
+					</div>
+				</div>
+			</Window>
+		</div>
+	{/each}
+</div>
 
-	<div class="max-w-30">Ressources pour l'étudiant</div>
+<div class="relative mb-24">
+	<!-- <div class="max-w-30">Ressources pour l'étudiant</div> -->
 
 	<div class="relative pt-1">
-		<div class="text-2xl/7">
-			{#each data.ressources as { name, emoji }}
+		<div class="mb-1.5">Ressources pour l'étudiant</div>
+		<div class="text-2xl/7- divide-y border-y">
+			{#each items as { id, title, expand }}
 				<button
-					onclick={() => (windows[name].hidden = false)}
-					class={[
-						'last:border-b-0- group flex w-full flex-col items-center gap-2 border-b py-4 text-center first:border-t',
-						windows[name] && !windows[name]?.hidden && 'italic'
-					]}
+					onclick={() => toggle_window(id)}
+					class="justify-center- flex w-full cursor-pointer gap-2 py-2 text-center hover:italic"
 				>
 					<div class="font-serif">
-						<span class="invisible group-hover:visible">{emoji}</span>
-						{name}
-						<span class="invisible group-hover:visible">{emoji}</span>
+						{windows[id]?.closed ? '' : '*'}
+						{title}
 					</div>
+					<!-- <div class="flex gap-1">
+						{#each expand.tags as tag}
+							<div class="bg-text px-1 text-bg">{tag.title}</div>
+						{/each}
+					</div> -->
 				</button>
 			{/each}
 		</div>
 	</div>
-	<div class="grid-12 pointer-events-none absolute inset-0 grid-rows-6">
-		{#each data.ressources as { name, body, window_cx, emoji }}
-			<Window
-				hidden
-				id={name}
-				{windows}
-				{name}
-				class="col-span-4 col-start-9 row-span-2 row-start-1"
-			>
-				<div class="my-2">
-					<div>{body}</div>
-					<div class="text-4xl">{emoji}</div>
-				</div>
-			</Window>
-		{/each}
-	</div>
 </div>
 
-<div class="grid-12 pointer-events-none">
+<!-- <div class="grid-12 pointer-events-none">
 	<Window class="col-span-4" title="Entente d'évaluation 🫶" manager={window_manager} id="entente">
 		<div class="mt-1 mb-24 text-balance">
 			<div>
@@ -163,7 +125,7 @@
 			</div>
 		</div>
 	</Window>
-</div>
+</div> -->
 <Footer {window_manager} />
 <svelte:head>
 	<title>AGRAF 🤓 Informations</title>

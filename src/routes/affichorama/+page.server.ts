@@ -9,9 +9,9 @@ export async function load({ url, setHeaders }) {
 		.collection('posters')
 		.getList(page, 16, { sort: '-date' });
 
-	setHeaders({
-		'cache-control': 'public, max-age=600'
-	});
+	// setHeaders({
+	// 	'cache-control': 'public, max-age=600'
+	// });
 
 	return { posters };
 }

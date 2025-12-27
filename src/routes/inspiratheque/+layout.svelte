@@ -15,6 +15,7 @@
 	import IconArrowBoxLeft from '$lib/ui/icons/icon-arrow-box-left.svelte';
 	import IconArrowBoxRight from '$lib/ui/icons/icon-arrow-box-right.svelte';
 	import IconArrowBoxUp from '$lib/ui/icons/icon-arrow-box-up.svelte';
+	import IconInfo from '$lib/ui/icons/icon-info.svelte';
 
 	const { data } = $props();
 
@@ -69,11 +70,18 @@
 	}
 
 	const window_manager = get_window_manager<Windows>('inspiratheque');
+
+	function toggle_info() {
+		if (window_manager.windows['info']?.closed) window_manager.open_window('info');
+		else window_manager.close_window('info');
+	}
 </script>
 
-<!-- <button class="cursor-pointer text-4xl" onclick={() => window_manager.open_window('intro')}>
-	<IconInfo />
-</button> -->
+<div class=" fixed top-2 right-96 z-200">
+	<button class=" cursor-pointer text-3xl" onclick={() => toggle_info()}>
+		<IconInfo />
+	</button>
+</div>
 <Emoji>🕺</Emoji>
 <!-- <Recent bookmarks={bookmarks.slice(0, 5)} /> -->
 <div class="grid h-[calc(100vh-9rem)] grid-rows-[auto_1fr] pb-gap max-lg:-mt-10">

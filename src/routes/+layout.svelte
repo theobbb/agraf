@@ -5,14 +5,13 @@
 	import favicon from '$lib/assets/favicon.svg';
 
 	import Header from './header.svelte';
-	import Footer from './footer.svelte';
 	import { page } from '$app/state';
 
 	let { children } = $props();
 
 	//mx-auto my-24 max-w-2xl px-4
 
-	const clean_ui = $derived(page.params.slug || page.route.id == '/liens');
+	const clean_ui = $derived(page.params.slug);
 </script>
 
 <svelte:head>
