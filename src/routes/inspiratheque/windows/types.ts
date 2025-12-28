@@ -1,1 +1,1 @@
-export type Windows = 'info' | 'instructions' | 'search' | 'inspector' | 'submitter';
+export type Windows = 'info' | 'instructions' | 'search' | 'inspector' | 'tags' | 'submitter';

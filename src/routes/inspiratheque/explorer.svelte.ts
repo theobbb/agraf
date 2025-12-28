@@ -6,6 +6,8 @@ export type Explorer<T> = {
 	breadcrumbs: T[];
 	children_count: Map<string, number>;
 	inspecting: T | undefined;
+	tag_count: Map<string, number> | null;
+	set_tag_count: (count: Map<string, number>) => void;
 };
 
 export type BaseItem = {
@@ -18,6 +20,7 @@ const is_folder = (item: any) => !('url' in item);
 
 export function create_explorer<T extends BaseItem>(initial_items: T[]): Explorer<T> {
 	let items: T[] = $state(initial_items);
+	let tag_count: Map<string, number> | null = $state(null);
 
 	const children_count = $derived.by(() => {
 		const memo = new Map<string, number>();
@@ -104,6 +107,10 @@ export function create_explorer<T extends BaseItem>(initial_items: T[]): Explore
 
 	const inspecting = $derived(items.find((t) => t.id == page.params.id));
 
+	function set_tag_count(count: Map<string, number>) {
+		tag_count = count;
+	}
+
 	// function new_item(col_i: number) {
 	// 	let parent: T | null = null;
 
@@ -138,6 +145,10 @@ export function create_explorer<T extends BaseItem>(initial_items: T[]): Explore
 		},
 		get inspecting() {
 			return inspecting;
-		}
+		},
+		get tag_count() {
+			return tag_count;
+		},
+		set_tag_count
 	};
 }

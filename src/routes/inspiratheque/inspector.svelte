@@ -28,18 +28,20 @@
 		{#if item}
 			{#if is_bookmark(item)}
 				<div>
-					<div class="flex items-center gap-2.5">
-						{#if item.favicon}
-							<div>
-								<img
-									alt="favicon"
-									class="size-4"
-									src={pocketbase.files.getURL(item, item.favicon)}
-								/>
-							</div>
-						{:else}
-							<div class="opacity-60"><IconLink /></div>
-						{/if}
+					<div class="flex items-start gap-2.5">
+						<div class="mt-0.5 shrink-0">
+							{#if item.favicon}
+								<div>
+									<img
+										alt="favicon"
+										class="size-4"
+										src={pocketbase.files.getURL(item, item.favicon)}
+									/>
+								</div>
+							{:else}
+								<div class="opacity-60"><IconLink /></div>
+							{/if}
+						</div>
 						<div>{item.title}</div>
 					</div>
 					<div class="mt-1 mb-12">
@@ -73,7 +75,11 @@
 							</a>
 						</div>
 					</div>
-					<div class="aspect-video bg-black/10 max-lg:hidden"></div>
+					<div class=" bg-black/10 max-lg:hidden" style="aspect-ratio: 128/80">
+						{#if item.screenshot}
+							<img src={pocketbase.files.getURL(item, item.screenshot)} alt="screenshot" />
+						{/if}
+					</div>
 				</div>
 			{:else}
 				<div class="items center flex gap-2.5">

@@ -27,7 +27,7 @@
 
 	const variant_cx: Record<Variant, string> = {
 		pixel: 'font-pixel font-normal ' + pixel_size_cx[size],
-		icon: 'text-lg'
+		icon: 'p-1'
 	};
 </script>
 

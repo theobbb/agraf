@@ -212,7 +212,15 @@
 	</form>
 </Dialog>
 {#if onsubmit_response}
-	<Dialog onclose={() => (onsubmit_response = null)} title="Succès" class="w-lg">
+	<Dialog
+		onclose={() => (onsubmit_response = null)}
+		title={onsubmit_response == 'loading'
+			? ''
+			: onsubmit_response == 'success'
+				? 'Succès'
+				: 'Erreur'}
+		class="w-lg"
+	>
 		<div class="mt-1 mb-12">
 			{#if onsubmit_response == 'loading'}
 				<div class="text-2 flex items-center gap-1.5"><Loader />Soumission en cours...</div>

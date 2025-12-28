@@ -17,7 +17,11 @@
 </script>
 
 <nav class="flex items-center gap-2">
-	<a href="/inspiratheque" class={['link-hover', folders.length ? 'text-2' : '']}>A:</a>
+	<a
+		href="/inspiratheque"
+		class={['link-hover flex items-center gap-1', folders.length ? 'text-2' : '']}
+		><img src="/icons/people.webp" class="size-8" />:</a
+	>
 	{#each folders as crumb, i}
 		<span class="mx-2- text-current/20">\</span>
 

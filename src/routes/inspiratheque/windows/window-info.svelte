@@ -21,9 +21,7 @@
 		{onclose}
 	>
 		<div class="mt-1.5 mb-2.5">
-			<div class="text-3xl">
-				<IconInfo />
-			</div>
+			<img src="/icons/help_book.webp" class="size-6" />
 			<div class="mt-1">
 				L’Inspirathèque est une librairie communautaire d’adresses URL, entretenue par les
 				étudiant·es du programme.
