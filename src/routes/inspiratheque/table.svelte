@@ -68,7 +68,7 @@
 								? params?.[params.length - 1] == item.id
 									? 'border-current bg-current/20'
 									: 'border-current bg-current/10'
-								: 'underline- border-transparent hover:bg-current/5 ',
+								: 'border-transparent hover:bg-current/10 ',
 							''
 						]}
 						onclick={() => inspect(item.id)}

@@ -12,8 +12,6 @@
 
 	let scrolled = $state(false);
 
-	let hovered: string | null = $state('');
-
 	function handle_intersect(entry: IntersectionObserverEntry) {
 		if (entry.isIntersecting) {
 			scrolled = false;
@@ -44,7 +42,7 @@
 		<div class="col-span-7 flex gap-4">
 			{#each links as { name, href }}
 				{@const active =
-					href == '/' ? page.url.pathname === href : page.url.pathname.startsWith(href)}
+					href == '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(href)}
 				<a {href} class={['link-hover  py-1.5', active && !scrolled && 'link-active']}>
 					{name}
 				</a>

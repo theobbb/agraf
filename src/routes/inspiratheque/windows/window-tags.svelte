@@ -33,6 +33,7 @@
 		class="col-span-full lg:col-span-3 lg:col-start-1"
 		title="Catégories"
 		id="tags"
+		hidden
 		{manager}
 		{onclose}
 	>

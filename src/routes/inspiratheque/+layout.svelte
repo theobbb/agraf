@@ -115,12 +115,12 @@
 	</div> -->
 	<div class="grid-12 mb-3">
 		<div class="col-span-5 flex items-center gap-4 max-lg:order-2">
-			<div class="flex items-center gap-2 text-2xl max-lg:hidden">
+			<!-- <div class="flex items-center gap-2 text-2xl max-lg:hidden">
 				<IconArrowBoxLeft />
 				<IconArrowBoxRight />
 
 				<IconArrowBoxUp />
-			</div>
+			</div> -->
 			<Breadcrumbs {breadcrumbs} />
 		</div>
 		<!-- <div class="col-span-5 flex gap-3">

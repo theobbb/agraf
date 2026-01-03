@@ -131,7 +131,7 @@
 	onmousedown={focus}
 	class={[
 		cx,
-		'window overflow-y-auto- pointer-events-auto relative border bg-bg/60 px-2.5 shadow backdrop-blur-lg',
+		'window overflow-y-auto- backdrop-blur-lg- pointer-events-auto relative border bg-bg px-2.5 shadow',
 		visible ? '' : 'invisible'
 	]}
 	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px); {style}"

@@ -35,11 +35,11 @@
 				1}; grid-row-start: 1; margin-top: {i * 33}px;"
 		>
 			<Window class="" title={title || ''} {id} manager={window_manager} hidden>
-				<div class="mt-1 mb-12">
+				<div class="mt-1.5 mb-12">
 					<div>
 						<Markdown content={body || ''}></Markdown>
 					</div>
-					<div class="mt-4 flex gap-1">
+					<div class="mb-2.5 flex justify-end gap-1">
 						{#each expand.tags as tag}
 							<div class="bg-text px-1 text-bg">{tag.title}</div>
 						{/each}

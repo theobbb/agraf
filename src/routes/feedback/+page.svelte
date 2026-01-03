@@ -55,7 +55,7 @@
 
 <div class="grid-12 pointer-events-none relative">
 	<Window
-		title="Formulaire"
+		title="Boîte de commentaires"
 		manager={window_manager}
 		id="form"
 		class={[
