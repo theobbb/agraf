@@ -10,6 +10,7 @@
 	import Taskbar from '$lib/components/windows/taskbar.svelte';
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
 	import Footer from './footer.svelte';
+	import Chat from './+/chat.svelte';
 
 	const { data } = $props();
 
@@ -177,6 +178,19 @@
 		<div class="mt-1 max-h-96 pb-12">
 			<Weather />
 		</div>
+	</Window>
+
+	<Window
+		id="chat"
+		manager={window_manager}
+		title="Chat"
+		class={[
+			'col-span-8 col-start-2 max-lg:mt-12',
+			'sm:row-start-10- sm:col-span-4 sm:col-start-9',
+			'lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-20'
+		]}
+	>
+		<Chat />
 	</Window>
 </div>
 

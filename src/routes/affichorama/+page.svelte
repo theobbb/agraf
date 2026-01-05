@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Window from '$lib/components/windows/window.svelte';
 	import Emoji from '$lib/emoji.svelte';
 	import Markdown from '$lib/markdown.svelte';
 	import Media from '$lib/media.svelte';
@@ -21,6 +22,10 @@
 </script>
 
 <Emoji>🧻</Emoji>
+
+<!-- <Window id="t" title="Yo">
+	
+</Window> -->
 
 <div class="grid-12 mb-24">
 	{#each posters.items as poster}

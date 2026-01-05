@@ -7,6 +7,10 @@
 	import Header from './header.svelte';
 	import { page } from '$app/state';
 
+	import Login from '$lib/components/login/login-dialog.svelte';
+	import LoginDialog from '$lib/components/login/login-dialog.svelte';
+	import { auth } from '$lib/components/login/auth.svelte';
+
 	let { children } = $props();
 
 	//mx-auto my-24 max-w-2xl px-4
@@ -33,3 +37,7 @@
 		<Footer />
 	{/if} -->
 </div>
+
+{#if auth.dialog_open}
+	<LoginDialog />
+{/if}

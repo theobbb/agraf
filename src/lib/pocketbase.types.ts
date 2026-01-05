@@ -14,6 +14,7 @@ export enum Collections {
 	BookmarkFolders = "bookmark_folders",
 	BookmarkTags = "bookmark_tags",
 	Bookmarks = "bookmarks",
+	Chat = "chat",
 	Comments = "comments",
 	Documents = "documents",
 	Feedback = "feedback",
@@ -130,15 +131,25 @@ export type BookmarksRecord = {
 	approved?: boolean
 	created: IsoAutoDateString
 	description?: string
+	draft?: boolean
 	favicon?: FileNameString
 	id: string
 	likes?: number
 	parent?: RecordIdString
+	screenshot?: FileNameString
 	submit_message?: string
 	tags?: RecordIdString[]
 	title: string
 	updated: IsoAutoDateString
 	url: string
+}
+
+export type ChatRecord = {
+	body: string
+	created: IsoAutoDateString
+	guest_author?: string
+	id: string
+	updated: IsoAutoDateString
 }
 
 export enum CommentsEventTypeOptions {
@@ -150,7 +161,7 @@ export enum CommentsEventTypeOptions {
 export type CommentsRecord = {
 	author_id: RecordIdString
 	body: string
-	collection?: string
+	collection: string
 	created: IsoAutoDateString
 	event_type: CommentsEventTypeOptions
 	id: string
@@ -254,6 +265,7 @@ export type RolesRecord = {
 	color?: string
 	created: IsoAutoDateString
 	description?: string
+	field?: HTMLString
 	id: string
 	level?: number
 	name?: string
@@ -282,12 +294,12 @@ export enum TicketsPriorityOptions {
 	"can_wait" = "can_wait",
 }
 export type TicketsRecord = {
-	assigned_to?: RecordIdString
+	assigned_members?: RecordIdString[]
+	assigned_roles?: RecordIdString[]
 	body?: string
 	created: IsoAutoDateString
 	created_by: RecordIdString
 	due_date?: IsoDateString
-	file?: FileNameString
 	id: string
 	parent?: RecordIdString
 	priority?: TicketsPriorityOptions
@@ -324,6 +336,7 @@ export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> &
 export type BookmarkFoldersResponse<Texpand = unknown> = Required<BookmarkFoldersRecord> & BaseSystemFields<Texpand>
 export type BookmarkTagsResponse<Texpand = unknown> = Required<BookmarkTagsRecord> & BaseSystemFields<Texpand>
 export type BookmarksResponse<Texpand = unknown> = Required<BookmarksRecord> & BaseSystemFields<Texpand>
+export type ChatResponse<Texpand = unknown> = Required<ChatRecord> & BaseSystemFields<Texpand>
 export type CommentsResponse<Texpand = unknown> = Required<CommentsRecord> & BaseSystemFields<Texpand>
 export type DocumentsResponse<Texpand = unknown> = Required<DocumentsRecord> & BaseSystemFields<Texpand>
 export type FeedbackResponse<Texpand = unknown> = Required<FeedbackRecord> & BaseSystemFields<Texpand>
@@ -351,6 +364,7 @@ export type CollectionRecords = {
 	bookmark_folders: BookmarkFoldersRecord
 	bookmark_tags: BookmarkTagsRecord
 	bookmarks: BookmarksRecord
+	chat: ChatRecord
 	comments: CommentsRecord
 	documents: DocumentsRecord
 	feedback: FeedbackRecord
@@ -377,6 +391,7 @@ export type CollectionResponses = {
 	bookmark_folders: BookmarkFoldersResponse
 	bookmark_tags: BookmarkTagsResponse
 	bookmarks: BookmarksResponse
+	chat: ChatResponse
 	comments: CommentsResponse
 	documents: DocumentsResponse
 	feedback: FeedbackResponse

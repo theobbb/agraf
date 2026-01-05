@@ -5,6 +5,7 @@
 	import { useIntersectionObserver } from '$lib/utils/intersection-observer';
 	import MenuMobile from './menu-mobile.svelte';
 	import Button from '$lib/ui/button.svelte';
+	import { auth, get_user } from '$lib/components/login/auth.svelte';
 
 	let sentinel: HTMLHeadElement;
 
@@ -21,6 +22,8 @@
 	}
 
 	onMount(() => {
+		get_user();
+
 		const cleanup = useIntersectionObserver(sentinel, handle_intersect, {
 			root: null, // The viewport
 			rootMargin: '0px 0px 0px 0px', // We can keep this simple since we use the 1px sentinel
@@ -47,6 +50,9 @@
 					{name}
 				</a>
 			{/each}
+			<div>
+				{auth.user}
+			</div>
 		</div>
 		<!-- <div class="flex gap-4">
 			<div class="pt-1.5 pb-0.5 underline-offset-6 hover:underline">Préférences</div>

@@ -28,9 +28,13 @@ html {
 	line-height: var(--spacing-line-height);
 
 	-webkit-tap-highlight-color: unset;
-
+	/* Optional: Prevents layout shift (page jump) caused by the scrollbar disappearing */
+	scrollbar-gutter: stable;
 	/* --link-color: LinkText;
 	--link-visited-color: VisitedText; */
+}
+body:has(dialog[open]) {
+	overflow: hidden;
 }
 
 .text-2 {
