@@ -15,12 +15,13 @@
 
 	async function onsubmit(event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }) {
 		event.preventDefault();
-		console.log('suibmit');
+
 		const form = event.currentTarget;
 		if (!auth.user) await login();
 
 		const form_data = new FormData(form, event.submitter);
 		try {
+			if (auth.user) form_data.set('author', auth.user);
 			await pocketbase.collection('chat').create(form_data);
 			form.reset();
 			scroll_bottom();
@@ -34,7 +35,6 @@
 			.collection('chat')
 			.getList<ChatRecord>(1, 50, { sort: 'created' });
 		chat = list.items;
-		console.log(chat);
 
 		loaded = true;
 	}
@@ -75,9 +75,10 @@
 			{@attach scroll_bottom}
 			bind:this={scroll_container}
 		>
-			{#each chat as { body, created }}
+			{#each chat as { body, author, created }}
 				<div>
 					<div class="inline">[{format_time(created)}]</div>
+					<div>({author})</div>
 					<div class="inline">
 						{body}
 					</div>
