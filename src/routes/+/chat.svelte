@@ -78,7 +78,7 @@
 			{#each chat as { body, author, created }}
 				<div>
 					<div class="inline">[{format_time(created)}]</div>
-					<div>({author})</div>
+					<div class="inline">({author})</div>
 					<div class="inline">
 						{body}
 					</div>
