@@ -164,6 +164,18 @@
 			</div>
 		</div>
 	</Window>
+	<Window
+		id="chat"
+		manager={window_manager}
+		title="Chat"
+		class={[
+			'col-span-8 col-start-2 max-lg:mt-12',
+			'sm:row-start-10- sm:col-span-4 sm:col-start-9',
+			'lg:col-span-5 lg:col-start-8 lg:row-span-4 lg:row-start-18'
+		]}
+	>
+		<Chat />
+	</Window>
 
 	<Window
 		id="weather"
@@ -178,19 +190,6 @@
 		<div class="mt-1 max-h-96 pb-12">
 			<Weather />
 		</div>
-	</Window>
-
-	<Window
-		id="chat"
-		manager={window_manager}
-		title="Chat"
-		class={[
-			'col-span-8 col-start-2 max-lg:mt-12',
-			'sm:row-start-10- sm:col-span-4 sm:col-start-9',
-			'lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:row-start-20'
-		]}
-	>
-		<Chat />
 	</Window>
 </div>
 

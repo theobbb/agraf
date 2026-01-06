@@ -115,6 +115,7 @@ export type BookmarkFoldersRecord = {
 	description?: string
 	id: string
 	parent?: RecordIdString
+	path?: string
 	title: string
 	updated: IsoAutoDateString
 }
@@ -129,6 +130,7 @@ export type BookmarkTagsRecord = {
 
 export type BookmarksRecord = {
 	approved?: boolean
+	author?: string
 	created: IsoAutoDateString
 	description?: string
 	draft?: boolean
@@ -137,7 +139,6 @@ export type BookmarksRecord = {
 	likes?: number
 	parent?: RecordIdString
 	screenshot?: FileNameString
-	submit_message?: string
 	tags?: RecordIdString[]
 	title: string
 	updated: IsoAutoDateString
@@ -145,11 +146,10 @@ export type BookmarksRecord = {
 }
 
 export type ChatRecord = {
+	author?: string
 	body: string
 	created: IsoAutoDateString
-	guest_author?: string
 	id: string
-	updated: IsoAutoDateString
 }
 
 export enum CommentsEventTypeOptions {

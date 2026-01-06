@@ -17,8 +17,11 @@
 		event.preventDefault();
 
 		const form = event.currentTarget;
-		if (!auth.user) await login();
 
+		if (!auth.user) {
+			const authorized = await login();
+			if (!authorized) return;
+		}
 		const form_data = new FormData(form, event.submitter);
 		try {
 			if (auth.user) form_data.set('author', auth.user);
@@ -61,7 +64,7 @@
 	}
 
 	function format_time(str: string) {
-		const date = new Date();
+		const date = new Date(str);
 		const hours = String(date.getHours()).padStart(2, '0');
 		const minutes = String(date.getMinutes()).padStart(2, '0');
 		return `${hours}:${minutes}`;
@@ -78,16 +81,16 @@
 			{#each chat as { body, author, created }}
 				<div>
 					<div class="inline">[{format_time(created)}]</div>
-					<div class="inline">({author})</div>
+					<div class="inline">&lt;{author}&gt;</div>
 					<div class="inline">
 						{body}
 					</div>
 				</div>
 			{/each}
 		</div>
-		<form {onsubmit} class="mb-2.5">
+		<form {onsubmit} class="mb-1.5">
 			<div class="flex items-center gap-1.5">
-				<Input name="body" />
+				<Input name="body" required />
 				<div class="shrink-0"><Button type="submit">Envoyer</Button></div>
 			</div>
 		</form>

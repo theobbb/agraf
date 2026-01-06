@@ -10,7 +10,7 @@
 	import Breadcrumbs from './breadcrumbs.svelte';
 	import type { Explorer } from './explorer.svelte';
 	import Inspector from './inspector.svelte';
-	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from './types';
+	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
 
 	const {
 		explorer,
@@ -29,8 +29,8 @@
 	}
 
 	function inspect(id: string) {
-		if (!id) goto('/inspiratheque');
-		goto('/inspiratheque/' + id, { replaceState: true });
+		if (!id) goto('/inspiratheque/explorateur');
+		goto('/inspiratheque/explorateur/' + id, { replaceState: true });
 	}
 
 	// 	function new_item(folder_i: number) {

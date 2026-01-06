@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { auth, login } from '$lib/components/login/auth.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import Button from '$lib/ui/button.svelte';
 	import IconError from '$lib/ui/icons/icon-error.svelte';
@@ -131,14 +132,23 @@
 	async function onsubmit(event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }) {
 		event.preventDefault();
 
+		const form = event.currentTarget;
+
+		if (!auth.user) {
+			const authorized = await login();
+			if (!authorized) return;
+		}
+
 		onsubmit_response = 'loading';
 
-		const form_data = new FormData(event.currentTarget, event.submitter);
+		const form_data = new FormData(form, event.submitter);
 		if (parent && typeof parent != 'string') form_data.set('parent', parent.id);
 		if (favicon?.file) form_data.set('favicon', favicon.file);
+		if (auth.user) form_data.set('author', auth.user);
 		try {
 			await pocketbase.collection('bookmarks').create(form_data);
 			onsubmit_response = 'success';
+			form.reset();
 		} catch (err) {
 			console.log(err);
 			onsubmit_response = 'error';
@@ -154,7 +164,7 @@
 	<form class="mt-4 space-y-4" {onsubmit}>
 		<div class="flex items-end justify-between gap-4">
 			<div class="mb-px w-full">
-				<Input bind:value={url} name="url" id="url" label="URL" autofocus />
+				<Input bind:value={url} name="url" id="url" label="URL" autofocus required />
 			</div>
 
 			<div class="text-right"><Button onclick={fetch_url}>Extraire</Button></div>

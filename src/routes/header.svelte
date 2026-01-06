@@ -5,7 +5,7 @@
 	import { useIntersectionObserver } from '$lib/utils/intersection-observer';
 	import MenuMobile from './menu-mobile.svelte';
 	import Button from '$lib/ui/button.svelte';
-	import { auth, get_user } from '$lib/components/login/auth.svelte';
+	import { auth, get_user, login } from '$lib/components/login/auth.svelte';
 
 	let sentinel: HTMLHeadElement;
 
@@ -19,6 +19,10 @@
 		} else {
 			scrolled = true;
 		}
+	}
+
+	async function open_auth() {
+		await login();
 	}
 
 	onMount(() => {
@@ -46,14 +50,23 @@
 			{#each links as { name, href }}
 				{@const active =
 					href == '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(href)}
-				<a {href} class={['link-hover  py-1.5', active && !scrolled && 'link-active']}>
+				<a {href} class={['link-hover py-1.5', active && !scrolled && 'link-active']}>
 					{name}
 				</a>
 			{/each}
-			<div>
-				{auth.user}
-			</div>
 		</div>
+		{#if auth.user}
+			<div class="col-span-2 col-start-11 flex items-center justify-end gap-2">
+				<div class="py-1.5">
+					{auth.user}
+				</div>
+				<div>
+					<Button onclick={open_auth} variant="icon">
+						<img src="/icons/keys.webp" alt="icon-keys" class="size-6" />
+					</Button>
+				</div>
+			</div>
+		{/if}
 		<!-- <div class="flex gap-4">
 			<div class="pt-1.5 pb-0.5 underline-offset-6 hover:underline">Préférences</div>
 			<div class="pt-1.5 pb-0.5 underline-offset-6 hover:underline">Paramètres</div>

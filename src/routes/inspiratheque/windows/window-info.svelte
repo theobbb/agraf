@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
 	import Window from '$lib/components/windows/window.svelte';
 	import Button from '$lib/ui/button.svelte';
@@ -10,6 +11,9 @@
 	function onclose() {
 		console.log('close');
 	}
+
+	const hidden = !page.route.id?.startsWith('/inspiratheque/explorateur');
+	console.log(hidden);
 </script>
 
 <div class="grid-12 pointer-events-none absolute top-24">
@@ -17,6 +21,7 @@
 		class="col-span-full lg:col-span-4 lg:col-start-7"
 		title="Inspirathèque"
 		id="info"
+		{hidden}
 		{manager}
 		{onclose}
 	>

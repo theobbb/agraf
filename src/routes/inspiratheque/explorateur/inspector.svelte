@@ -8,7 +8,7 @@
 	import IconFolderOpen from '$lib/ui/icons/static/icon-folder-open.svelte';
 
 	import { format_date } from '$lib/utils/format-date';
-	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from './types';
+	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
 
 	const {
 		item

@@ -6,15 +6,12 @@
 
 	// const { onclose, resolve }: { onclose: () => void; resolve: () => void } = $props();
 
-	let username = $state('');
+	let username = $state(auth.user);
 
 	async function onsubmit(event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }) {
 		event.preventDefault();
 
-		set_user(username);
-	}
-
-	function submit() {
+		set_user(username || '');
 		auth.resolve(true);
 		auth.dialog_open = false;
 	}
@@ -25,13 +22,13 @@
 	}
 </script>
 
-<Dialog title="Connexion" {onclose}>
+<Dialog title="Identification" {onclose}>
 	<form class="mt-1 mb-2.5 space-y-2.5" {onsubmit}>
 		<!-- <div>
 			<span class="text-2xl">🗿</span>
 			(Pas besoin de compte )
 		</div> -->
 		<Input name="name" label="Nom d'utilisateur" bind:value={username} />
-		<div class="text-right"><Button type="submit">Se connecter</Button></div>
+		<div class="text-right"><Button type="submit">S'identifier</Button></div>
 	</form>
 </Dialog>
