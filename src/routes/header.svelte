@@ -56,15 +56,15 @@
 			{/each}
 		</div>
 		{#if auth.user}
-			<div class="col-span-2 col-start-11 flex items-center justify-end gap-2">
-				<div class="py-1.5">
+			<div class="col-span- col-start-11 flex items-center gap-2">
+				<button class="py-1.5" onclick={open_auth}>
 					{auth.user}
-				</div>
-				<div>
+				</button>
+				<!-- <div>
 					<Button onclick={open_auth} variant="icon">
 						<img src="/icons/keys.webp" alt="icon-keys" class="size-6" />
 					</Button>
-				</div>
+				</div> -->
 			</div>
 		{/if}
 		<!-- <div class="flex gap-4">

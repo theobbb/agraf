@@ -12,6 +12,7 @@ export enum Collections {
 	Otps = "_otps",
 	Superusers = "_superusers",
 	BookmarkFolders = "bookmark_folders",
+	BookmarkTagCounts = "bookmark_tag_counts",
 	BookmarkTags = "bookmark_tags",
 	Bookmarks = "bookmarks",
 	Chat = "chat",
@@ -118,6 +119,12 @@ export type BookmarkFoldersRecord = {
 	path?: string
 	title: string
 	updated: IsoAutoDateString
+}
+
+export type BookmarkTagCountsRecord = {
+	bookmark_count?: number
+	id: string
+	name?: string
 }
 
 export type BookmarkTagsRecord = {
@@ -334,6 +341,7 @@ export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemF
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
 export type BookmarkFoldersResponse<Texpand = unknown> = Required<BookmarkFoldersRecord> & BaseSystemFields<Texpand>
+export type BookmarkTagCountsResponse<Texpand = unknown> = Required<BookmarkTagCountsRecord> & BaseSystemFields<Texpand>
 export type BookmarkTagsResponse<Texpand = unknown> = Required<BookmarkTagsRecord> & BaseSystemFields<Texpand>
 export type BookmarksResponse<Texpand = unknown> = Required<BookmarksRecord> & BaseSystemFields<Texpand>
 export type ChatResponse<Texpand = unknown> = Required<ChatRecord> & BaseSystemFields<Texpand>
@@ -362,6 +370,7 @@ export type CollectionRecords = {
 	_otps: OtpsRecord
 	_superusers: SuperusersRecord
 	bookmark_folders: BookmarkFoldersRecord
+	bookmark_tag_counts: BookmarkTagCountsRecord
 	bookmark_tags: BookmarkTagsRecord
 	bookmarks: BookmarksRecord
 	chat: ChatRecord
@@ -389,6 +398,7 @@ export type CollectionResponses = {
 	_otps: OtpsResponse
 	_superusers: SuperusersResponse
 	bookmark_folders: BookmarkFoldersResponse
+	bookmark_tag_counts: BookmarkTagCountsResponse
 	bookmark_tags: BookmarkTagsResponse
 	bookmarks: BookmarksResponse
 	chat: ChatResponse

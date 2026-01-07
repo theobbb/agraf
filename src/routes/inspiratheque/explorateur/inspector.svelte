@@ -8,6 +8,7 @@
 	import IconFolderOpen from '$lib/ui/icons/static/icon-folder-open.svelte';
 
 	import { format_date } from '$lib/utils/format-date';
+	import Description from '../description.svelte';
 	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
 
 	const {
@@ -26,39 +27,8 @@
 <div class="h-full px-gap pt-1.5 pb-2">
 	<div class="grid h-full grid-rows-[1fr_auto_auto] gap-6">
 		{#if item}
+			<Description {item} />
 			{#if is_bookmark(item)}
-				<div>
-					<div class="flex items-start gap-2.5">
-						<div class="mt-0.5 shrink-0">
-							{#if item.favicon}
-								<div>
-									<img
-										alt="favicon"
-										class="size-4"
-										src={pocketbase.files.getURL(item, item.favicon)}
-									/>
-								</div>
-							{:else}
-								<div class="opacity-60"><IconLink /></div>
-							{/if}
-						</div>
-						<div>{item.title}</div>
-					</div>
-					<div class="mt-1 mb-12">
-						<div class="">
-							<div class="col-span-8 flex gap-layout-x">
-								<div class="line-clamp-4 max-w-md">
-									<div>
-										<div class="text-2 text-balance">
-											<Markdown content={item.description || ''} />
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
 				<div>
 					<div class="flex items-center justify-between pb-1">
 						<a href={item.url}>
@@ -80,11 +50,6 @@
 							<img src={pocketbase.files.getURL(item, item.screenshot)} alt="screenshot" />
 						{/if}
 					</div>
-				</div>
-			{:else}
-				<div class="items center flex gap-2.5">
-					<IconFolderOpen />
-					<div>{item.title}</div>
 				</div>
 			{/if}
 		{/if}

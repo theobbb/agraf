@@ -16,9 +16,9 @@
 	console.log(hidden);
 </script>
 
-<div class="grid-12 pointer-events-none absolute top-24">
+<div class="grid-12 pointer-events-none absolute top-68">
 	<Window
-		class="col-span-full lg:col-span-4 lg:col-start-7"
+		class="col-span-full lg:col-span-4 lg:col-start-5"
 		title="Inspirathèque"
 		id="info"
 		{hidden}

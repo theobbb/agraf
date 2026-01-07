@@ -17,3 +17,9 @@ export type ExpandedBookmarkFoldersRecord = BookmarkFoldersRecord & {
 	};
 	collectionName: 'bookmark_records';
 };
+
+export function is_bookmark(
+	item: ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord
+): item is ExpandedBookmarksRecord {
+	return 'url' in item;
+}

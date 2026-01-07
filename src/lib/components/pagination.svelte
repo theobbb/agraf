@@ -3,7 +3,7 @@
 	import IconChevronLeft from '$lib/ui/icons/icon-chevron-left.svelte';
 	import IconChevronRight from '$lib/ui/icons/icon-chevron-right.svelte';
 
-	const { pagination }: { pagination: PaginationResult<any> } = $props();
+	const { pagination, route }: { pagination: PaginationResult<any>; route: string } = $props();
 
 	const { page, perPage, totalItems, totalPages } = $derived(pagination);
 
@@ -24,13 +24,13 @@
 	});
 </script>
 
-<div class="min-w-72- grid w-fit grid-cols-7 gap-x-1.5">
+<div class="min-w-72- grid w-fit grid-cols-7 gap-x-1.5 font-serif">
 	<div class="flex items-center justify-center gap-1 text-xl">
 		{#if page > 1}
-			<!-- <a href="/affichorama?page=1" class="link-hover ">
+			<!-- <a href="{route}?page=1" class="link-hover ">
 				<IconChevronLeftDouble />
 			</a> -->
-			<a href="/affichorama?page={page - 1}" class="link-hover py-0.5">
+			<a href="{route}?page={page - 1}" class="link-hover py-0.5">
 				<IconChevronLeft />
 			</a>
 		{:else}
@@ -45,7 +45,7 @@
 				'border- px-1.5- link-hover w-fit py-0.5 text-center',
 				page == p ? 'link-active' : 'text-2'
 			]}
-			href="/affichorama?page={p}"
+			href="{route}?page={p}"
 		>
 			{p}
 		</a>
@@ -53,10 +53,10 @@
 
 	<div class="flex items-center justify-center gap-1 text-xl">
 		{#if page < totalPages}
-			<a href="/affichorama?page={page + 1}" class="link-hover">
+			<a href="{route}?page={page + 1}" class="link-hover">
 				<IconChevronRight />
 			</a>
-			<!-- <a href="/affichorama?page={totalPages}" class="link-hover">
+			<!-- <a href="{route}?page={totalPages}" class="link-hover">
 				<IconChevronRightDouble />
 			</a> -->
 		{:else}

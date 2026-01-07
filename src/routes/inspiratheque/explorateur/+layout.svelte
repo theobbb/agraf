@@ -139,9 +139,9 @@
 				<!-- <Button onclick={toggle_window_tags} class="aspect-square h-full shrink-0" variant="icon"
 					>#</Button
 				> -->
-				<Button class="shrink-0" variant="icon"
+				<!-- <Button class="shrink-0" variant="icon"
 					><img src="/icons/folder-search.webp" class="size-6" /></Button
-				>
+				> -->
 				<!-- <Button class="shrink-0" onclick={() => toggle_info()} variant="icon"
 					><img src="/icons/help_book.webp" class="size-6" /></Button
 				> -->

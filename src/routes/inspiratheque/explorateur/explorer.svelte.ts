@@ -6,8 +6,6 @@ export type Explorer<T> = {
 	breadcrumbs: T[];
 	children_count: Map<string, number>;
 	inspecting: T | undefined;
-	tag_count: Map<string, number> | null;
-	set_tag_count: (count: Map<string, number>) => void;
 };
 
 export type BaseItem = {
@@ -20,9 +18,9 @@ const is_folder = (item: any) => !('url' in item);
 
 export function create_explorer<T extends BaseItem>(initial_items: T[]): Explorer<T> {
 	let items: T[] = $state(initial_items);
-	let tag_count: Map<string, number> | null = $state(null);
 
-	const children_count = $derived.by(() => {
+	// TODO pocketbase view to list items counts in folders
+	const get_children_count = () => {
 		const memo = new Map<string, number>();
 		const children_by_parent = new Map<string, T[]>();
 
@@ -56,7 +54,8 @@ export function create_explorer<T extends BaseItem>(initial_items: T[]): Explore
 		}
 
 		return memo;
-	});
+	};
+	const children_count = get_children_count();
 
 	const root_items = $derived(sort_items(items.filter((item) => !item.parent)));
 
@@ -107,29 +106,6 @@ export function create_explorer<T extends BaseItem>(initial_items: T[]): Explore
 
 	const inspecting = $derived(items.find((t) => t.id == page.params.id));
 
-	function set_tag_count(count: Map<string, number>) {
-		tag_count = count;
-	}
-
-	// function new_item(col_i: number) {
-	// 	let parent: T | null = null;
-
-	// 	if (col_i > 0) {
-	// 		const parent_id = breadcrumbs[col_i - 1]?.id;
-	// 		parent = items.find((t) => t.id === parent_id) ?? null;
-	// 	}
-	// 	inspector = {
-	// 		mode: 'create',
-	// 		parent
-	// 	};
-	// }
-	// function new_sub_item(parent: T) {
-	// 	inspector = {
-	// 		mode: 'create',
-	// 		parent
-	// 	};
-	// }
-
 	return {
 		get navigation() {
 			return navigation;
@@ -145,10 +121,6 @@ export function create_explorer<T extends BaseItem>(initial_items: T[]): Explore
 		},
 		get inspecting() {
 			return inspecting;
-		},
-		get tag_count() {
-			return tag_count;
-		},
-		set_tag_count
+		}
 	};
 }
