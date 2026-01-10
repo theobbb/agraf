@@ -1,10 +1,10 @@
 <script lang="ts">
+	import Pagination from '$lib/components/pagination.svelte';
 	import Window from '$lib/components/windows/window.svelte';
 	import Emoji from '$lib/emoji.svelte';
 	import Markdown from '$lib/markdown.svelte';
 	import Media from '$lib/media.svelte';
 	import { pocketbase } from '$lib/pocketbase';
-	import Pagination from './pagination.svelte';
 
 	const { data } = $props();
 
@@ -71,7 +71,7 @@
 		</div>
 	{/each}
 </div>
-<Pagination pagination={dummy_pagination} />
+<Pagination pagination={dummy_pagination} route="/affichorama" />
 
 <svelte:head>
 	<title>AGRAF 🧻 Affichorama</title>

@@ -26,10 +26,10 @@
 			</div>
 			<div>{item.title}</div>
 		</div>
-		<div class="mb-12- mt-1 mr-6">
+		<div class="mt-0.5 mr-6">
 			<div class="">
 				<div class="col-span-8 flex gap-layout-x">
-					<div class="line-clamp-4 max-w-md">
+					<div class={['line-clamp-4 max-w-md']}>
 						<div>
 							<div class="text-2 text-balance">
 								<Markdown content={item.description || ''} />

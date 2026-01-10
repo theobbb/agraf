@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from './types';
+	import type { ExpandedBookmarkFoldersRecord } from './types';
 	import Button from '$lib/ui/button.svelte';
 	import Emoji from '$lib/emoji.svelte';
 
@@ -10,19 +10,20 @@
 	import WindowSubmitter from './windows/window-submitter.svelte';
 
 	import Footer from '../footer.svelte';
-	import IconArrowBoxLeft from '$lib/ui/icons/icon-arrow-box-left.svelte';
-	import IconArrowBoxRight from '$lib/ui/icons/icon-arrow-box-right.svelte';
-	import IconArrowBoxUp from '$lib/ui/icons/icon-arrow-box-up.svelte';
-	import IconInfo from '$lib/ui/icons/icon-info.svelte';
-	import Input from '$lib/ui/input.svelte';
 	import WindowTags from './windows/window-tags.svelte';
-	import { setContext } from 'svelte';
+	import { onMount, setContext } from 'svelte';
 	import { page } from '$app/state';
+	import {
+		realtime_comments_subscribe,
+		realtime_comments_unsubscribe
+	} from '$lib/cache/cache-comments.svelte';
+	import Input from '$lib/ui/input.svelte';
+	import Tabs from '$lib/components/tabs.svelte';
+	import Search from '$lib/components/search.svelte';
 
 	const { data, children } = $props();
 
 	type EditorType = 'folder' | 'bookmark';
-	let creating_type: EditorType = $state('bookmark');
 
 	let dialog_create: {
 		open: boolean;
@@ -32,102 +33,102 @@
 		parent: 'root'
 	});
 
+	const { tags, tag_groups } = $derived(data);
+
 	function open_submitter() {
-		// function get_parent() {
-		// 	if (!page.params.id) return 'root';
-
-		// 	if (!is_bookmark(inspecting)) return inspecting;
-
-		// 	const parent = folders.find((f) => f.id == inspecting.parent);
-		// 	if (!parent) return 'root';
-
-		// 	return parent;
-		// }
-
 		dialog_create.parent = 'root';
 		dialog_create.open = true;
 	}
-
-	function is_bookmark(
-		item: ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord
-	): item is ExpandedBookmarksRecord {
-		return 'url' in item;
-	}
-	// function new_sub_item(type: EditorType) {
-	// 	if (!inspecting) return;
-	// 	creating_type = type;
-	// 	explorer.actions.new_sub_item(inspecting);
-	// }
 
 	const window_manager = get_window_manager<Windows>('inspiratheque');
 
 	setContext('window_manager', window_manager);
 
-	const current_view = $derived(page.url.pathname.split('/')[2]);
-
-	// 	function toggle_window_tags() {
-	// 	if (window_manager.windows['tags']?.closed) {
-	// 		if (!explorer.tag_count) {
-	// 			explorer.set_tag_count(expand_tags());
-	// 		}
-	// 		window_manager.open_window('tags');
-	// 	} else window_manager.close_window('tags');
-	// }
+	const views = ['explorateur', 'liste', 'grille'];
+	const current_view_i = $derived(views.indexOf(page.url.pathname.split('/')[2]));
 
 	function toggle_window(window_id: Windows) {
 		if (window_manager.windows[window_id]?.closed) window_manager.open_window(window_id);
 		else window_manager.close_window(window_id);
 	}
+
+	onMount(() => {
+		realtime_comments_subscribe('bookmarks');
+		return () => {
+			realtime_comments_unsubscribe('bookmarks');
+		};
+	});
 </script>
 
-<Emoji>🕺</Emoji>
-<div class="mb-3 -ml-gap flex items-end justify-between border-b pl-gap">
-	<div class="col-span-6">
-		{#each ['explorateur', 'liste', 'grille'] as view}
-			<a
-				class={[
-					'inline-block translate-y-px border px-3 py-1 capitalize not-first:border-l-0',
-					view == current_view ? 'border-b-bg' : 'bg-black/20-'
-				]}
-				href="/inspiratheque/{view}"
-				><div class={[view == current_view ? '' : 'text-2']}>{view}</div></a
-			>
-		{/each}
-	</div>
-	<div>
-		<div class="flex shrink-0 items-center gap-2">
-			<Button class="shrink-0" variant="icon" onclick={() => toggle_window('info')}>
-				<img src="/icons/help_book.webp" class="size-6" />
-			</Button>
+<div>
+	<Emoji>🕺</Emoji>
 
-			<Button class="shrink-0" variant="icon">
-				<img src="/icons/folder-search.webp" class="size-6" />
-			</Button>
-			<Button
-				class="aspect-square  h-full shrink-0"
-				variant="icon"
-				onclick={() => toggle_window('tags')}
-			>
-				<div class="flex size-6 items-center justify-center">#</div>
-			</Button>
+	<div class="grid-12 mb-gap -ml-gap pb-gap pl-gap">
+		<div class="col-span-3 -mt-0.5">
+			<Tabs items={['explorateur', 'liste', 'grille']} active_item_i={current_view_i} border_t>
+				{#snippet rendered(item, i)}
+					<a class="capitalize" href="/inspiratheque/{item}"> {item}</a>
+				{/snippet}
+			</Tabs>
 		</div>
-		<!-- <div class="">
-			<Button variant="icon" class=" cursor-pointer text-3xl">
-				<img src="/icons/help_book.webp" class="size-6" />
-			</Button>
-		</div> -->
-	</div>
-	<div class="">
-		<Button size="md" onclick={open_submitter}>Soumettre un lien</Button>
-	</div>
-</div>
-<!-- <a href="/inspiratheque/explorateur">explorateur</a>
-<a href="/inspiratheque/liste">liste</a> -->
 
-<!-- <div class="lg:col-start-10- col-span-full flex items-center justify-end lg:col-span-2">
-	<Button size="md" onclick={open_submitter}>Soumettre un lien</Button>
-</div> -->
-{@render children?.()}
+		<!-- <div class="self-end">
+			{#each ['explorateur', 'liste', 'grille'] as view, i}
+				<a
+					class={[
+						'inline-block translate-y-px border px-3 py-1 capitalize not-first:border-l-0',
+						i == current_view_i ? 'border-b-bg' : 'bg-black/20-'
+					]}
+					href="/inspiratheque/{view}"
+					><div class={[i == current_view_i ? '' : 'text-2']}>{view}</div></a
+				>
+			{/each}
+		</div> -->
+		<div class="col-span-4">
+			<Search id="s" />
+		</div>
+		<div class="col-span-2 flex">
+			<div class="flex shrink-0 items-center gap-2">
+				<Button class="shrink-0" variant="icon" onclick={() => toggle_window('info')}>
+					<img src="/icons/help_book.webp" class="size-6" />
+				</Button>
+				<Button class="aspect-square shrink-0" variant="icon" onclick={() => toggle_window('tags')}>
+					<div class="flex size-6 items-center justify-center text-lg">#</div>
+				</Button>
+				<!-- <Button class="shrink-0" variant="icon">
+					<img src="/icons/folder-search.webp" class="size-6" />
+				</Button> -->
+				<!-- <Button class="aspect-square shrink-0" variant="icon" onclick={() => toggle_window('tags')}>
+					<div class="flex size-6 items-center justify-center text-lg">#</div>
+				</Button> -->
+			</div>
+
+			<!-- <div class="">
+				<Button variant="icon" class=" cursor-pointer text-3xl">
+					<img src="/icons/help_book.webp" class="size-6" />
+				</Button>
+			</div> -->
+		</div>
+
+		<!-- <div class="flex items-center gap-1">
+			<Input name="search" class="w-full" placeholder="Rechercher..." />
+			<div class="flex gap-1">
+				<Button class="shrink-0">Rechercher</Button>
+				<Button class="shrink-0">Ré</Button>
+			</div>
+		</div> -->
+		<div class="col-span-3 text-right">
+			<Button size="md" onclick={open_submitter}>Soumettre un lien</Button>
+		</div>
+	</div>
+	<!-- <a href="/inspiratheque/explorateur">explorateur</a>
+	<a href="/inspiratheque/liste">liste</a> -->
+
+	<!-- <div class="lg:col-start-10- col-span-full flex items-center justify-end lg:col-span-2">
+		<Button size="md" onclick={open_submitter}>Soumettre un lien</Button>
+	</div> -->
+	{@render children?.()}
+</div>
 <!-- <div class=" fixed top-2 right-96 z-200">
 	<Button variant="icon" class=" cursor-pointer text-3xl">
 		<img src="/icons/help_book.webp" class="size-8" />
@@ -135,16 +136,18 @@
 	</Button>
 </div> -->
 
-{#if dialog_create.open}
-	<WindowSubmitter parent={dialog_create.parent} onclose={() => (dialog_create.open = false)} />
-{/if}
+<div>
+	{#if dialog_create.open}
+		<WindowSubmitter parent={dialog_create.parent} onclose={() => (dialog_create.open = false)} />
+	{/if}
 
-<WindowInfo manager={window_manager} />
-<WindowInstructions
-	manager={window_manager}
-	open_window_submitter={() => (dialog_create.open = true)}
-/>
-<WindowTags tags={data.tags} manager={window_manager} />
+	<WindowInfo manager={window_manager} />
+	<WindowInstructions
+		manager={window_manager}
+		open_window_submitter={() => (dialog_create.open = true)}
+	/>
+	<WindowTags {tags} {tag_groups} manager={window_manager} />
+</div>
 
 <Footer {window_manager} />
 

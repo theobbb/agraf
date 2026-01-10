@@ -9,7 +9,7 @@
 	import IconFolderOpen from '$lib/ui/icons/static/icon-folder-open.svelte';
 	import Breadcrumbs from './breadcrumbs.svelte';
 	import type { Explorer } from './explorer.svelte';
-	import Inspector from './inspector.svelte';
+
 	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
 
 	const {
@@ -98,8 +98,8 @@
 
 						<div class="text-2 text-right hover:text-text">
 							{#if is_bookmark(item)}
-								<div class="invisible -mr-1 flex justify-end text-lg group-hover:visible">
-									<a target="_blank" href={item.url}>
+								<div class="invisible -my-0.5 -mr-1 flex justify-end text-lg group-hover:visible">
+									<a class="p-0.5 hover:bg-text hover:text-bg" target="_blank" href={item.url}>
 										<IconExternalLink />
 									</a>
 								</div>

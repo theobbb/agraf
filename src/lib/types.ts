@@ -1,3 +1,5 @@
+import type { CommentsCollectionOptions as EnumCommentsCollectionOptions } from './pocketbase.types';
+
 export interface PaginationResult<T> {
 	page: number;
 	perPage: number;
@@ -5,7 +7,7 @@ export interface PaginationResult<T> {
 	totalPages: number;
 	items: T[];
 }
-
+export type CommentsCollectionOptions = `${EnumCommentsCollectionOptions}`;
 // export type Windows = Record<
 // 	string,
 // 	{ z_index: Number; el: HTMLDivElement; hidden: Boolean; minimized: Boolean }

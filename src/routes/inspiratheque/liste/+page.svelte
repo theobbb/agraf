@@ -10,6 +10,7 @@
 	import Button from '$lib/ui/button.svelte';
 	import Pagination from '$lib/components/pagination.svelte';
 	import Description from '../description.svelte';
+	import Comments from '$lib/components/comments/comments.svelte';
 
 	const { data } = $props();
 
@@ -31,7 +32,8 @@
 		</div>
 	</div>
 </div> -->
-<div class="space-y-2.5">
+<!-- <div class="font-serif">{data.pagination_bookmarks.totalItems} liens</div> -->
+<div class="mt-8 space-y-2.5">
 	{#each data.pagination_bookmarks.items as item}
 		<div class="grid-12">
 			<div class="col-span-3 text-balance">

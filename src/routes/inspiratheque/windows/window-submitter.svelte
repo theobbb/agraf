@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { auth, login } from '$lib/components/login/auth.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import Button from '$lib/ui/button.svelte';
@@ -23,7 +24,6 @@
 	let url: string = $state('');
 	let title: string = $state('');
 	let description: string = $state('');
-	let message: string = $state('');
 
 	let favicon: {
 		url: string | null;
@@ -79,6 +79,7 @@
 			const favicon_file = await fetch_favicon(url);
 			const favicon_url = favicon_file ? URL.createObjectURL(favicon_file) : '';
 
+			console.log(data);
 			if (data.title) title = data.title;
 			if (data.description) description = data.description;
 			if (favicon_url) {
@@ -127,7 +128,8 @@
 		fetching_url = false;
 	}
 
-	let onsubmit_response: 'loading' | 'success' | 'error' | null = $state(null);
+	let onsubmit_response: 'loading' | 'success' | 'duplicate' | 'error' | null = $state(null);
+	let duplicate_id: string | null = $state(null);
 
 	async function onsubmit(event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }) {
 		event.preventDefault();
@@ -139,7 +141,16 @@
 			if (!authorized) return;
 		}
 
+		if (!is_valid_url(url)) {
+			fetch_url_response = {
+				type: 'error',
+				message: `Ton URL n'est pas valide, bruh`
+			};
+			return;
+		}
+
 		onsubmit_response = 'loading';
+		duplicate_id = null;
 
 		const form_data = new FormData(form, event.submitter);
 		if (parent && typeof parent != 'string') form_data.set('parent', parent.id);
@@ -149,9 +160,23 @@
 			await pocketbase.collection('bookmarks').create(form_data);
 			onsubmit_response = 'success';
 			form.reset();
-		} catch (err) {
-			console.log(err);
-			onsubmit_response = 'error';
+		} catch (err: any) {
+			if (err.status === 400) {
+				const errors = err.response.data;
+
+				// 2. Check the specific field (e.g., 'url')
+				if (errors.url?.code === 'validation_not_unique') {
+					const duplicate = await pocketbase
+						.collection('bookmarks')
+						.getFirstListItem(`url = "${url}"`);
+					duplicate_id = duplicate?.id;
+					onsubmit_response = 'duplicate';
+				}
+			} else {
+				onsubmit_response = 'error';
+				// Handle other errors (network, 403, etc.)
+				console.error('Something went wrong:', err.message);
+			}
 		}
 	}
 </script>
@@ -192,9 +217,9 @@
 			</div>
 		{/if}
 
-		<Input bind:value={title} name="title" label="Titre" />
+		<Input bind:value={title} required name="title" label="Titre" />
 
-		<Textarea name="description" rows={4} label="Description" />
+		<Textarea bind:value={description} name="description" rows={4} label="Description" />
 
 		<div class="flex items-center justify-between">
 			<div>
@@ -229,9 +254,9 @@
 			: onsubmit_response == 'success'
 				? 'Succès'
 				: 'Erreur'}
-		class="w-lg"
+		class="w-md"
 	>
-		<div class="mt-1 mb-12">
+		<div class="mt-1 mb-2">
 			{#if onsubmit_response == 'loading'}
 				<div class="text-2 flex items-center gap-1.5"><Loader />Soumission en cours...</div>
 			{:else if onsubmit_response == 'success'}
@@ -241,6 +266,18 @@
 				<div class="text-2">
 					Donne-nous un mini moment pour valider ton ajout. Rien de personnel: comme c’est ouvert à
 					tou·tes, on fait juste une petite vérification.
+				</div>
+			{:else if onsubmit_response == 'duplicate'}
+				<div class="text-red-300">
+					Oh non! 😅 ... Ton lien <span class="text-2"> {url}</span> n'a pas été envoyé parce qu'il
+					existe déjà!
+					{#if duplicate_id}
+						<div class="mt-4 text-right">
+							<Button onclick={() => goto(`/inspiratheque/explorateur/${duplicate_id}`)}>
+								Consulter le lien
+							</Button>
+						</div>
+					{/if}
 				</div>
 			{:else}
 				<div class="text-red-300">

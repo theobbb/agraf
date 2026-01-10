@@ -11,6 +11,7 @@
 	import Textarea from '$lib/ui/textarea.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import Dialog from '$lib/ui/skeleton/dialog.svelte';
+	import { onMount } from 'svelte';
 
 	const window_manager = get_window_manager('feedback');
 
@@ -49,13 +50,22 @@
 
 		loading = false;
 	}
+
+	// let mounted = $state(false);
+	// onMount(() => {
+	// 	window_manager.windows_array.forEach((w) => {
+	// 		console.log(w);
+	// 	});
+	// 	console.log(window_manager.windows_array);
+	// 	mounted = true;
+	// });
 </script>
 
 <Emoji>🦋</Emoji>
 
-<div class="grid-12 pointer-events-none relative">
+<div class={['grid-12 pointer-events-none relative']}>
 	<Window
-		title="Boîte de commentaires"
+		title="Boîte de commentaires - Formulaire"
 		manager={window_manager}
 		id="form"
 		class={[
@@ -90,7 +100,7 @@
 		</div>
 	</Window>
 	<Window
-		title="Boîte de commentaires"
+		title="Boîte de commentaires - Description"
 		manager={window_manager}
 		id="intro"
 		class={[

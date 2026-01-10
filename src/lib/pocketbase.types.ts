@@ -11,8 +11,10 @@ export enum Collections {
 	Mfas = "_mfas",
 	Otps = "_otps",
 	Superusers = "_superusers",
+	BookmarkComments = "bookmark_comments",
 	BookmarkFolders = "bookmark_folders",
 	BookmarkTagCounts = "bookmark_tag_counts",
+	BookmarkTagGroups = "bookmark_tag_groups",
 	BookmarkTags = "bookmark_tags",
 	Bookmarks = "bookmarks",
 	Chat = "chat",
@@ -111,6 +113,22 @@ export type SuperusersRecord = {
 	verified?: boolean
 }
 
+export enum BookmarkCommentsTypeOptions {
+	"public" = "public",
+	"admin" = "admin",
+	"system" = "system",
+}
+export type BookmarkCommentsRecord = {
+	author?: string
+	body?: string
+	created: IsoAutoDateString
+	id: string
+	parent?: RecordIdString
+	parent_comment?: RecordIdString
+	type?: BookmarkCommentsTypeOptions
+	updated: IsoAutoDateString
+}
+
 export type BookmarkFoldersRecord = {
 	created: IsoAutoDateString
 	description?: string
@@ -124,14 +142,24 @@ export type BookmarkFoldersRecord = {
 export type BookmarkTagCountsRecord = {
 	bookmark_count?: number
 	id: string
+	tag?: RecordIdString
+}
+
+export type BookmarkTagGroupsRecord = {
+	created: IsoAutoDateString
+	id: string
 	name?: string
+	tag_count?: number
+	updated: IsoAutoDateString
 }
 
 export type BookmarkTagsRecord = {
+	bookmark_count?: number
 	color?: string
 	created: IsoAutoDateString
 	id: string
 	name?: string
+	parent?: RecordIdString
 	updated: IsoAutoDateString
 }
 
@@ -159,21 +187,31 @@ export type ChatRecord = {
 	id: string
 }
 
-export enum CommentsEventTypeOptions {
+export enum CommentsTypeOptions {
 	"user_comment" = "user_comment",
 	"status_change" = "status_change",
 	"ticket_moved" = "ticket_moved",
+	"public" = "public",
 	"renamed" = "renamed",
+	"moved" = "moved",
+	"admin" = "admin",
+	"system" = "system",
+}
+
+export enum CommentsCollectionOptions {
+	"tickets" = "tickets",
+	"bookmarks" = "bookmarks",
 }
 export type CommentsRecord = {
-	author_id: RecordIdString
+	author_id?: RecordIdString
+	author_name?: string
 	body: string
-	collection: string
+	collection?: CommentsCollectionOptions
 	created: IsoAutoDateString
-	event_type: CommentsEventTypeOptions
 	id: string
-	parent: RecordIdString
+	parent: string
 	parent_comment?: RecordIdString
+	type: CommentsTypeOptions
 	updated: IsoAutoDateString
 }
 
@@ -340,8 +378,10 @@ export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRec
 export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemFields<Texpand>
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
+export type BookmarkCommentsResponse<Texpand = unknown> = Required<BookmarkCommentsRecord> & BaseSystemFields<Texpand>
 export type BookmarkFoldersResponse<Texpand = unknown> = Required<BookmarkFoldersRecord> & BaseSystemFields<Texpand>
 export type BookmarkTagCountsResponse<Texpand = unknown> = Required<BookmarkTagCountsRecord> & BaseSystemFields<Texpand>
+export type BookmarkTagGroupsResponse<Texpand = unknown> = Required<BookmarkTagGroupsRecord> & BaseSystemFields<Texpand>
 export type BookmarkTagsResponse<Texpand = unknown> = Required<BookmarkTagsRecord> & BaseSystemFields<Texpand>
 export type BookmarksResponse<Texpand = unknown> = Required<BookmarksRecord> & BaseSystemFields<Texpand>
 export type ChatResponse<Texpand = unknown> = Required<ChatRecord> & BaseSystemFields<Texpand>
@@ -369,8 +409,10 @@ export type CollectionRecords = {
 	_mfas: MfasRecord
 	_otps: OtpsRecord
 	_superusers: SuperusersRecord
+	bookmark_comments: BookmarkCommentsRecord
 	bookmark_folders: BookmarkFoldersRecord
 	bookmark_tag_counts: BookmarkTagCountsRecord
+	bookmark_tag_groups: BookmarkTagGroupsRecord
 	bookmark_tags: BookmarkTagsRecord
 	bookmarks: BookmarksRecord
 	chat: ChatRecord
@@ -397,8 +439,10 @@ export type CollectionResponses = {
 	_mfas: MfasResponse
 	_otps: OtpsResponse
 	_superusers: SuperusersResponse
+	bookmark_comments: BookmarkCommentsResponse
 	bookmark_folders: BookmarkFoldersResponse
 	bookmark_tag_counts: BookmarkTagCountsResponse
+	bookmark_tag_groups: BookmarkTagGroupsResponse
 	bookmark_tags: BookmarkTagsResponse
 	bookmarks: BookmarksResponse
 	chat: ChatResponse

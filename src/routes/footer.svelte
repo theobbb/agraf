@@ -1,6 +1,7 @@
 <script lang="ts" generics="T extends string">
 	import Explosion from '$lib/components/explosion.svelte';
 	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
+	import { onMount } from 'svelte';
 
 	const { window_manager }: { window_manager?: WindowManager<T> } = $props();
 
@@ -8,6 +9,7 @@
 
 	const minimized = $derived(windows_array.filter((window) => window.minimized));
 
+	let time: string = $state(get_time());
 	function get_time() {
 		const now = new Date();
 		let hours = now.getHours();
@@ -18,7 +20,25 @@
 
 		return `${hours}:${minutes} ${ampm}`;
 	}
-	const time = get_time();
+
+	$effect(() => {
+		let timeout_id: ReturnType<typeof setTimeout>;
+
+		function schedule_update() {
+			// Calculate ms until the start of the next minute
+			const delay = 60000 - (Date.now() % 60000);
+
+			timeout_id = setTimeout(() => {
+				time = get_time();
+				schedule_update(); // Recursively schedule the next one
+			}, delay);
+		}
+
+		schedule_update();
+
+		// Automatic cleanup
+		return () => clearTimeout(timeout_id);
+	});
 </script>
 
 <footer class="fixed right-gap bottom-0 left-gap z-500 border-t bg-bg">

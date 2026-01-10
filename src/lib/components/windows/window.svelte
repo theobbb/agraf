@@ -3,6 +3,10 @@
 	import IconSubstract from '$lib/ui/icons/icon-substract.svelte';
 	import { onMount, type Snippet } from 'svelte';
 	import type { WindowManager } from './window-manager.svelte';
+	import ResizeHandles from './resize-handles.svelte';
+	import Button from '$lib/ui/button.svelte';
+	import IconMaximize from '$lib/ui/icons/icon-maximize.svelte';
+	import IconRestore from '$lib/ui/icons/icon-restore.svelte';
 
 	const {
 		id,
@@ -21,7 +25,7 @@
 		class?: string | string[];
 		style?: string;
 		dialog?: boolean;
-		manager?: WindowManager<any>;
+		manager: WindowManager<any>;
 		hidden?: boolean;
 		header?: Snippet;
 		onclose?: () => void;
@@ -34,27 +38,30 @@
 		z_index: 100,
 		minimized: false,
 		closed: hidden,
-		translate: { x: 0, y: 0 }
+		translate: { x: 0, y: 0 },
+		size: { width: 0, height: 0 },
+		is_floating: false,
+		ghost_size: { width: 0, height: 0 },
+		is_expanded: false,
+		container: null
 	});
 	if (manager) {
 		manager.windows[id] = manager?.windows?.[id] || base_window;
 	}
-	const ctx = $derived(manager?.windows?.[id] || base_window);
 
-	const { z_index, closed, minimized } = $derived(ctx);
+	const { z_index, closed, minimized, translate, size, is_floating, ghost_size, is_expanded } =
+		$derived(manager?.windows?.[id] || base_window);
 	const visible = $derived(manager?.windows[id] ? !closed && !minimized : !hidden);
 
-	let el: HTMLDialogElement | HTMLDivElement | null = null;
+	let container: HTMLDialogElement | HTMLDivElement | null = $state(null);
+	let ghost_el: HTMLElement | null = null;
 
-	const translate = $derived(ctx.translate);
 	const start = { cursor: { x: 0, y: 0 }, window: { x: 0, y: 0 } };
-
-	const size = $state({ width: 0, height: 0 });
 
 	let is_dragging = false;
 
 	function onmove(ev: MouseEvent) {
-		if (!el || !is_dragging) return;
+		if (!container || !is_dragging) return;
 
 		const target = manager?.windows[id] || base_window;
 
@@ -65,7 +72,9 @@
 	function start_drag(ev: MouseEvent) {
 		if ((ev.target as HTMLElement).closest('button')) return;
 
-		if (!el) return;
+		if (!container) return;
+
+		if (is_expanded) toggle_expand();
 
 		document.documentElement.style.cursor = 'grabbing';
 		document.documentElement.style.userSelect = 'none';
@@ -101,6 +110,8 @@
 
 	function minimize() {
 		if (!manager) return;
+		//container.style.width = `${1000}px`;
+
 		manager.minimize_window(id);
 	}
 	function close() {
@@ -114,54 +125,175 @@
 
 	const dialog_props = dialog ? { onclose, closedby: 'any' } : {};
 
-	onMount(() => {
-		if (!el) return;
+	//let ghost_rect = $state({ width: 0, height: 0 });
+	//let ghost_translate = $state({ x: 0, y: 0 });
 
-		if (dialog && el instanceof HTMLDialogElement) {
-			el.showModal();
+	let is_resizing = $state(false);
+
+	function handle_interaction() {
+		if (!container) return;
+		if (is_floating) return;
+
+		const rect = container.getBoundingClientRect();
+
+		const target = manager?.windows[id] || base_window;
+
+		target.ghost_size = { width: rect.width, height: rect.height };
+		target.size = { width: rect.width, height: rect.height };
+
+		target.is_floating = true;
+	}
+
+	function start_resize(
+		ev: MouseEvent,
+		direction: 'n' | 's' | 'e' | 'w' | 'ne' | 'nw' | 'se' | 'sw'
+	) {
+		ev.preventDefault();
+		ev.stopPropagation();
+
+		handle_interaction(); // Ensure we are floated
+		focus();
+
+		const target = manager?.windows[id] || base_window;
+
+		const start_mouse = { x: ev.clientX, y: ev.clientY };
+		const start_size = { ...target.size };
+		const start_translate = { ...translate };
+
+		function on_resize_move(move_ev: MouseEvent) {
+			const dx = move_ev.clientX - start_mouse.x;
+			const dy = move_ev.clientY - start_mouse.y;
+
+			// Handle Horizontal
+			if (direction.includes('e')) {
+				target.size.width = Math.max(150, start_size.width + dx);
+			}
+			if (direction.includes('w')) {
+				const new_width = Math.max(150, start_size.width - dx);
+				const actual_delta = start_size.width - new_width;
+				target.size.width = new_width;
+				target.translate.x = start_translate.x + actual_delta;
+			}
+
+			// Handle Vertical
+			if (direction.includes('s')) {
+				target.size.height = Math.max(100, start_size.height + dy);
+			}
+			if (direction.includes('n')) {
+				const new_height = Math.max(100, start_size.height - dy);
+				const actual_delta = start_size.height - new_height;
+				target.size.height = new_height;
+				target.translate.y = start_translate.y + actual_delta;
+			}
+		}
+
+		function end_resize() {
+			window.removeEventListener('mousemove', on_resize_move);
+			window.removeEventListener('mouseup', end_resize);
+			document.documentElement.style.cursor = 'auto';
+			is_resizing = false;
+		}
+
+		is_resizing = true;
+		window.addEventListener('mousemove', on_resize_move);
+		window.addEventListener('mouseup', end_resize);
+	}
+
+	function toggle_expand() {
+		handle_interaction(); // Ensure we are floated
+		focus();
+		const target = manager?.windows[id] || base_window;
+
+		target.is_expanded = !target.is_expanded;
+	}
+
+	onMount(() => {
+		if (!container) return;
+
+		const target = manager?.windows[id] || base_window;
+		target.container = container;
+
+		if (dialog && container instanceof HTMLDialogElement) {
+			container.showModal();
 		}
 	});
 </script>
 
+{#if is_floating}
+	<div
+		class={[cx, 'bg-red-900-']}
+		style="width: {ghost_size.width}px; height: {ghost_size.height}px;"
+	></div>
+{/if}
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <svelte:element
 	this={dialog ? 'dialog' : 'div'}
-	bind:this={el}
+	bind:this={container}
 	{...dialog_props}
 	onmousedown={focus}
 	class={[
 		cx,
-		'window overflow-y-auto- backdrop-blur-lg- fixed- pointer-events-auto border bg-bg px-2.5 shadow',
-		visible ? '' : 'invisible'
+		'window pointer-events-auto border bg-bg shadow',
+		visible ? '' : 'invisible',
+		is_floating ? 'absolute max-h-[unset]! min-h-[unset]! max-w-[unset]! min-w-[unset]!' : '',
+		is_expanded && 'fixed! inset-0 z-1000! h-full! w-full!',
+		visible && is_expanded && 'expanded'
 	]}
-	style="z-index: {z_index}; transform: translate({translate.x}px, {translate.y}px); {style}; overscroll-behavior: contain;"
+	style="z-index: {z_index}; {style}; 
+	 overscroll-behavior: contain; {is_expanded
+		? ''
+		: `transform: translate(${translate.x}px, ${translate.y}px);`} {is_floating
+		? `width: ${size.width}px; height: ${size.height}px; margin: 0-;`
+		: ''}"
 >
 	<header
 		onmousedown={start_drag}
 		class={[
-			'bg-bg- -mx-gap flex cursor-grab items-center justify-between gap-1 border-b px-gap py-1.5 select-none '
+			'flex cursor-grab items-center justify-between gap-1 border-b px-gap py-1.5 whitespace-nowrap select-none '
 		]}
 	>
-		<div class="">
+		<div class="truncate">
 			{#if header}
 				{@render header()}
 			{:else}
 				{title}
 			{/if}
 		</div>
-		<div class="flex gap-1 max-lg:gap-1.5 max-lg:text-2xl">
+		<div class="-mr-1 flex gap-0.5 text-lg max-lg:gap-1.5 max-lg:text-2xl">
 			{#if manager}
-				<button onclick={minimize} class="hover:bg-text hover:text-bg" type="button">
+				<Button onclick={minimize} variant="icon" class="p-0.5! text-base">
 					<IconSubstract />
-				</button>
+				</Button>
+				<Button onclick={toggle_expand} variant="icon" class="p-0.5! text-base ">
+					{#if is_expanded}
+						<IconRestore />
+					{:else}
+						<IconMaximize />
+					{/if}
+				</Button>
 			{/if}
+			<Button onclick={close} variant="icon" class="p-0.5! text-base ">
+				<IconClose />
+			</Button>
+			<!-- 
+			<button onclick={minimize} class="hover:bg-text hover:text-bg" type="button"> 
+				<IconSubstract />
+			</button>
 			<button onclick={close} class="hover:bg-text hover:text-bg" type="button">
 				<IconClose />
-			</button>
+			</button> 
+			-->
 		</div>
 	</header>
 
-	{@render children()}
+	<div
+		class="scroll-container relative mb-px h-[calc(100%-2rem-2px)] overflow-x-auto overflow-y-scroll px-2.5 pr-gap"
+	>
+		{@render children()}
+	</div>
+	{#if !dialog}
+		<ResizeHandles {start_resize} />
+	{/if}
 </svelte:element>
 
 <style>

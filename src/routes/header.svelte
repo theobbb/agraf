@@ -47,9 +47,9 @@
 	</div>
 	<div class="grid-12 pointer-events-auto max-lg:hidden!">
 		<div class="col-span-7 flex gap-4">
-			{#each links as { name, href }}
+			{#each links as { name, href, base_href }}
 				{@const active =
-					href == '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(href)}
+					href == '/' ? page.url.pathname === '/' : page.url.pathname.startsWith(base_href || href)}
 				<a {href} class={['link-hover py-1.5', active && !scrolled && 'link-active']}>
 					{name}
 				</a>

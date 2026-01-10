@@ -12,7 +12,8 @@ export const links = [
 	{
 		name: 'Inspirathèque',
 		description: 'Liens à picorer \net à partager',
-		href: '/inspiratheque'
+		href: '/inspiratheque/explorateur',
+		base_href: '/inspiratheque'
 	},
 	{
 		name: 'L’association',

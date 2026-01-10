@@ -8,6 +8,7 @@
 		placeholder,
 		required = false,
 		value = $bindable(),
+		class: cx,
 		...props
 	}: HTMLInputAttributes & {
 		label?: string;
@@ -22,7 +23,8 @@
 	{...props}
 	id={id || name}
 	class={[
-		'min-h-8 w-full border bg-text/5 px-2 py-0.5 text-text outline-none focus:border-transparent! focus:bg-white/10 focus:ring-2'
+		'min-h-8 w-full border bg-text/5 px-2 py-0.5 text-text outline-none focus:border-transparent! focus:bg-white/10 focus:ring-2',
+		cx
 	]}
 	type="text"
 	{placeholder}

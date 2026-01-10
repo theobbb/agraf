@@ -36,7 +36,9 @@ html {
 body:has(dialog[open]) {
 	overflow: hidden;
 }
-
+body:has(.window.expanded) {
+	overflow: hidden;
+}
 .text-2 {
 	color: var(--color-text-2);
 }

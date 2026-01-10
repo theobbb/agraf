@@ -9,7 +9,7 @@
 	const { data } = $props();
 </script>
 
-<div class="grid-12">
+<div class="grid-12 mt-8">
 	{#each data.pagination_bookmarks.items as item}
 		<div class="col-span-3">
 			<a href={item.url} target="_blank">

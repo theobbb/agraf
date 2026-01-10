@@ -1,3 +1,5 @@
+import type { Snippet } from 'svelte';
+
 export type Window<T extends string> = {
 	id: T;
 	title: string;
@@ -5,6 +7,11 @@ export type Window<T extends string> = {
 	minimized: boolean;
 	z_index: number;
 	translate: { x: number; y: number };
+	size: { width: number; height: number };
+	is_floating: boolean;
+	ghost_size: { width: number; height: number };
+	is_expanded: boolean;
+	container: HTMLDialogElement | HTMLDivElement | null;
 };
 
 type Windows<T extends string> = Partial<Record<T, Window<T>>>;
@@ -16,10 +23,12 @@ export type WindowManager<T extends string> = {
 	minimize_window: (id: T) => void;
 	close_window: (id: T) => void;
 	open_window: (id: T) => void;
+	content: Record<string, Snippet>;
 };
 
 function create_window_manager<T extends string>(): WindowManager<T> {
 	const windows: Windows<T> = $state({});
+	const content = $state({});
 
 	function focus_window(id: T) {
 		const arr = Object.values(windows) as Window<T>[];
@@ -53,7 +62,8 @@ function create_window_manager<T extends string>(): WindowManager<T> {
 		focus_window,
 		minimize_window,
 		close_window,
-		open_window
+		open_window,
+		content
 	};
 }
 

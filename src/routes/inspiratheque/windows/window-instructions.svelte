@@ -11,7 +11,7 @@
 	}: { manager: WindowManager<Windows>; open_window_submitter: () => void } = $props();
 </script>
 
-<div class="grid-12- pointer-events-none absolute top-24 left-1/5">
+<div class="grid-12 pointer-events-none absolute top-24 left-1/5">
 	<Window
 		class="col-span-4 col-start-2 mt-24 lg:w-lg"
 		title="Contribution - Instructions"

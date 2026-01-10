@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { auth, login } from '$lib/components/login/auth.svelte';
+	import type { Window } from '$lib/components/windows/window-manager.svelte';
+
 	import { pocketbase } from '$lib/pocketbase';
 	import type { ChatRecord, IsoDateString } from '$lib/pocketbase.types';
 	import Button from '$lib/ui/button.svelte';
@@ -7,6 +9,8 @@
 	import Loader from '$lib/ui/loader.svelte';
 	import { format_date } from '$lib/utils/format-date';
 	import { onMount } from 'svelte';
+
+	const { window }: { window: Window<any> } = $props();
 
 	let chat: ChatRecord[] = $state([]);
 	let loaded = $state(false);
@@ -47,10 +51,7 @@
 
 		pocketbase.collection('chat').subscribe<ChatRecord>('*', function (e) {
 			if (e.action != 'create') return;
-
 			chat.push(e.record);
-			console.log(e.action);
-			console.log(e.record);
 		});
 
 		return () => {
@@ -59,6 +60,9 @@
 	});
 
 	function scroll_bottom() {
+		if (!scroll_container) {
+			scroll_container = window.container?.querySelector('.scroll-container') || null;
+		}
 		if (!scroll_container) return;
 		scroll_container.scrollTop = scroll_container.scrollHeight;
 	}
@@ -72,14 +76,10 @@
 </script>
 
 {#if loaded}
-	<div class="grid h-68 grid-rows-[1fr_auto]">
-		<div
-			class="space-y-1.5 overflow-y-auto py-2"
-			{@attach scroll_bottom}
-			bind:this={scroll_container}
-		>
+	<div class="relative grid grid-rows-[1fr_auto]">
+		<div class=" pb-0.5" {@attach scroll_bottom}>
 			{#each chat as { body, author, created }}
-				<div>
+				<div class="border-b border-dashed py-1.5 last:border-b-0">
 					<div class="inline">[{format_time(created)}]</div>
 					<div class="inline">&lt;{author}&gt;</div>
 					<div class="inline">
@@ -88,7 +88,7 @@
 				</div>
 			{/each}
 		</div>
-		<form {onsubmit} class="mb-1.5">
+		<form {onsubmit} class="sticky bottom-0 bg-bg pb-1.5">
 			<div class="flex items-center gap-1.5">
 				<Input name="body" required />
 				<div class="shrink-0"><Button type="submit">Envoyer</Button></div>

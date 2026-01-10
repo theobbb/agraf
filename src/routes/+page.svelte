@@ -11,13 +11,17 @@
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
 	import Footer from './footer.svelte';
 	import Chat from './+/chat.svelte';
+	import { onMount } from 'svelte';
+
+	import WindowLayer from '$lib/components/windows/window-layer.svelte';
+	import Tabs from '$lib/components/tabs.svelte';
 
 	const { data } = $props();
 
 	const { featured, links, related } = $derived(data);
 
 	const window_manager = get_window_manager('agraf');
-	let active_tab = $state(0);
+	let related_active_tab_i = $state(0);
 </script>
 
 <div class="grid-12 relative mb-24 max-lg:-mt-2">
@@ -43,8 +47,8 @@
 		manager={window_manager}
 		id="featured"
 	>
-		<a href="/affichorama/{featured.slug}">
-			<div class="">
+		<a class="block max-w-xl pb-2" href="/affichorama/{featured.slug}">
+			<div class="max-w-xl">
 				<Media
 					autoplay={!dev}
 					src={pocketbase.files.getURL(featured, featured.images[0])}
@@ -55,6 +59,12 @@
 				<div>{featured.title}</div>
 				<div class="text-2">{format_date(featured.date)}</div>
 			</div>
+			{#if featured.body}
+				<br />
+				<div class="line-clamp-4">
+					<Markdown content={featured.body} />
+				</div>
+			{/if}
 		</a>
 	</Window>
 
@@ -68,7 +78,7 @@
 		manager={window_manager}
 		id="desc"
 	>
-		<div class="mt-1 mb-24 font-serif">
+		<div class="mt-1 mb-6 font-serif">
 			Association étudiante du programme de design graphique de l'<span class="italic">UQAM</span>
 		</div>
 	</Window>
@@ -119,7 +129,7 @@
 			'lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-17'
 		]}
 	>
-		<div class="relative -mx-2.5 h-64 lg:h-[calc(100%-2rem)]">
+		<div class="relative -mx-2.5 h-64 lg:h-full">
 			<iframe
 				class="absolute inset-0 object-cover"
 				title="Google Maps - Pavillon de design de l'UQAM"
@@ -139,28 +149,22 @@
 		manager={window_manager}
 		title="Projets reliés"
 		class={[
-			'col-span-full row-span-2 max-h-96',
+			'max-h-96- col-span-full row-span-2 min-h-72',
 			'sm:col-span-11',
 			'lg:col-span-7 lg:col-start-4 lg:row-span-5 lg:row-start-12'
 		]}
 	>
 		<div class="pb-24 lg:pb-12">
-			<div class="flex border-b">
-				{#each related as item, i}
-					<button
-						class={[
-							'-mb-px cursor-pointer border-r border-b border-x-transparent bg-bg px-3 py-1.5 text-left first:border-l',
-							active_tab == i && 'border-r-text border-b-transparent first:border-l-text',
-							active_tab == i + 1 && 'border-r-text'
-						]}
-						onclick={() => (active_tab = i)}
-					>
+			<Tabs items={related} active_item_i={related_active_tab_i} class="border-t-0">
+				{#snippet rendered(item: any, i: number)}
+					<button class="cursor-pointer" onclick={() => (related_active_tab_i = i)}>
 						{item.name}
 					</button>
-				{/each}
-			</div>
+				{/snippet}
+			</Tabs>
+
 			<div class="mt-1">
-				<Markdown content={related[active_tab]?.body || ''} />
+				<Markdown content={related[related_active_tab_i]?.body || ''} />
 			</div>
 		</div>
 	</Window>
@@ -169,12 +173,14 @@
 		manager={window_manager}
 		title="Chat"
 		class={[
-			'col-span-8 col-start-2 max-lg:mt-12',
+			'col-span-8 col-start-2 max-h-94 max-lg:mt-12',
 			'sm:row-start-10- sm:col-span-4 sm:col-start-9',
 			'lg:col-span-5 lg:col-start-8 lg:row-span-4 lg:row-start-18'
 		]}
 	>
-		<Chat />
+		{#if window_manager.windows['chat']}
+			<Chat window={window_manager.windows['chat']} />
+		{/if}
 	</Window>
 
 	<Window

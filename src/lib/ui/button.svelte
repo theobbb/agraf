@@ -27,11 +27,11 @@
 
 	const variant_cx: Record<Variant, string> = {
 		pixel: 'font-pixel font-normal ' + pixel_size_cx[size],
-		icon: 'p-1'
+		icon: 'p-1 text-2xl text-black flex items-center justify-center'
 	};
 </script>
 
-<button {onclick} class={['uppercase', variant_cx[variant], cx]} {type}>
+<button {onclick} class={['uppercase', variant, variant_cx[variant], cx]} {type}>
 	{@render children?.()}
 </button>
 
@@ -51,7 +51,9 @@
 			inset 1px 1px #fff,
 			inset -2px -2px grey,
 			inset 2px 2px #dfdfdf;
+	}
 
+	button.pixel {
 		color: transparent;
 		text-shadow: 0 0 #222;
 
@@ -66,7 +68,9 @@
 			inset 1px 1px #0a0a0a,
 			inset -2px -2px #dfdfdf,
 			inset 2px 2px grey;
+	}
 
+	button.pixel:not(:disabled):active {
 		text-shadow: 1px 1px #222;
 	}
 

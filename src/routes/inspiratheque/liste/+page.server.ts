@@ -12,7 +12,7 @@ export async function load({ url }) {
 	const search = url.searchParams.get('search');
 	const tag = url.searchParams.get('tag');
 
-	if (search) options.filter = `title ~ '${search}'`;
+	if (search) options.filter = `title ~ '${search}' || url ~ '${search}'`;
 	else if (tag) options.filter = `tags.id ?= '${tag}'`;
 	//const sort = url.searchParams.get('sort') || '-created';
 	//options.sort = sort;
