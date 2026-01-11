@@ -70,6 +70,9 @@
 		{onclose}
 	>
 		<div class="mb-2.5">
+			<div>Filtrer par ❤️</div>
+			<div>catégories</div>
+			<div>Rechercher un auteur</div>
 			<div class="overflow-y-auto- relative max-h-96 space-y-0.5 border-b py-2 pb-3">
 				{#each grouped as group}
 					<div class="">{group.name} ({group.tag_count})</div>

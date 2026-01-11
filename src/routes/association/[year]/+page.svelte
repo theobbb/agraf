@@ -90,7 +90,7 @@
 	</div>
 	<div class="grid-12 pointer-events-none top-0 -mt-112 mb-32">
 		<Window
-			class={['col-span-11', 'sm:', 'lg:col-span-4 lg:col-start-8']}
+			class={['col-span-11', 'lg:col-span-4 lg:col-start-8']}
 			id="comite"
 			manager={window_manager}
 			title="Comité exécutif"

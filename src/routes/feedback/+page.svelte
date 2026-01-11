@@ -105,7 +105,7 @@
 		id="intro"
 		class={[
 			'col-span-full row-span-4 row-start-1 max-lg:order-1',
-			'lg:col-span-5 lg:col-start-1 lg:row-span-4 lg:row-start-1'
+			'lg:col-span-5 lg:col-start-1 lg:row-span-5 lg:row-start-1'
 		]}
 	>
 		<div class="mt-1 mb-24">

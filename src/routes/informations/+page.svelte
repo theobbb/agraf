@@ -12,10 +12,17 @@
 	const window_manager = get_window_manager('informations');
 	const { windows } = $derived(window_manager);
 
+	let opened_windows: Set<string> = $state(new SvelteSet());
+
 	function toggle_window(id: string) {
+		if (opened_windows.has(id)) opened_windows.delete(id);
+		else opened_windows.add(id);
 		if (windows[id]?.closed) window_manager.open_window(id);
 		else window_manager.close_window(id);
 	}
+	import { MediaQuery, SvelteSet } from 'svelte/reactivity';
+
+	const lg = new MediaQuery('min-width: 1000px');
 	const cx = {
 		text: 'text-2xl/6.5'
 	};
@@ -25,7 +32,7 @@
 
 <Emoji>🤓</Emoji>
 <div
-	class="absolute right-gap left-1/3 lg:grid"
+	class="absolute right-gap left-1/3 max-lg:hidden lg:grid"
 	style="grid-template-columns: repeat(auto-fit, 33px); "
 >
 	{#each items as { id, title, body, expand }, i}
@@ -34,12 +41,12 @@
 			style="grid-column: span 16 / span 16; grid-column-start: {i +
 				1}; grid-row-start: 1; margin-top: {i * 33}px;"
 		>
-			<Window class="" title={title || ''} {id} manager={window_manager} hidden>
+			<Window class="relative" title={title || ''} {id} manager={window_manager} hidden>
 				<div class="mt-1.5 mb-12">
 					<div>
 						<Markdown content={body || ''}></Markdown>
 					</div>
-					<div class="mb-2.5 flex justify-end gap-1">
+					<div class="mt-2 mb-2.5 flex justify-end gap-1">
 						{#each expand.tags as tag}
 							<div class="bg-text px-1 text-bg">{tag.title}</div>
 						{/each}
@@ -56,21 +63,35 @@
 	<div class="relative pt-1">
 		<div class="mb-1.5">Ressources pour l'étudiant</div>
 		<div class="text-2xl/7- divide-y border-y">
-			{#each items as { id, title, expand }}
-				<button
-					onclick={() => toggle_window(id)}
-					class="justify-center- flex w-full cursor-pointer gap-2 py-2 text-center hover:italic"
-				>
-					<div class="font-serif">
-						{windows[id]?.closed ? '' : '*'}
-						{title}
+			{#each items as { id, title, expand, body }}
+				<div>
+					<button
+						onclick={() => toggle_window(id)}
+						class="justify-center- flex w-full cursor-pointer gap-2 py-2 text-left hover:italic"
+					>
+						<div class="font-serif">
+							{windows[id]?.closed ? '' : '*'}
+							{title}
+						</div>
+						<!-- <div class="flex gap-1">
+							{#each expand.tags as tag}
+								<div class="bg-text px-1 text-bg">{tag.title}</div>
+							{/each}
+						</div> -->
+					</button>
+					<div class={['lg:hidden', opened_windows.has(id) ? '' : 'hidden']}>
+						<div class=" mb-12">
+							<div>
+								<Markdown content={body || ''}></Markdown>
+							</div>
+							<div class="mt-2 mb-2.5 flex justify-end gap-1">
+								{#each expand.tags as tag}
+									<div class="bg-text px-1 text-bg">{tag.title}</div>
+								{/each}
+							</div>
+						</div>
 					</div>
-					<!-- <div class="flex gap-1">
-						{#each expand.tags as tag}
-							<div class="bg-text px-1 text-bg">{tag.title}</div>
-						{/each}
-					</div> -->
-				</button>
+				</div>
 			{/each}
 		</div>
 	</div>

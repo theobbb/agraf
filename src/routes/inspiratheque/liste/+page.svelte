@@ -2,7 +2,7 @@
 	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import Input from '$lib/ui/input.svelte';
-	import { format_date } from '$lib/utils/format-date';
+	import { format_date, format_time } from '$lib/utils/format-date';
 	import { getContext } from 'svelte';
 	import Breadcrumbs from '../explorateur/breadcrumbs.svelte';
 	import type { Windows } from '../windows/types';
@@ -11,6 +11,7 @@
 	import Pagination from '$lib/components/pagination.svelte';
 	import Description from '../description.svelte';
 	import Comments from '$lib/components/comments/comments.svelte';
+	import Author from '$lib/components/author.svelte';
 
 	const { data } = $props();
 
@@ -80,12 +81,11 @@
 					</Button>
 				</div>
 			</div>
-			<div class="col-span-2">
-				<div>{format_date(item.created)}</div>
-				<div class="">&lt;{item.author || 'anonyme'}&gt;</div>
+			<div class="col-span-3">
+				<div class="text-2 inline">[{format_time(item.created)}]</div>
+				<div class="inline">Ajouté par <Author author={item.author} /></div>
 			</div>
 		</div>
 	{/each}
 </div>
 <Pagination pagination={data.pagination_bookmarks} route="/inspiratheque/liste" />
-<div class="h-96"></div>

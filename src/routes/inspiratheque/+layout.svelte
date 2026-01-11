@@ -92,9 +92,10 @@
 				<Button class="shrink-0" variant="icon" onclick={() => toggle_window('info')}>
 					<img src="/icons/help_book.webp" class="size-6" />
 				</Button>
-				<Button class="aspect-square shrink-0" variant="icon" onclick={() => toggle_window('tags')}>
+				<Button class="shrink-0" onclick={() => toggle_window('tags')}>Filtres</Button>
+				<!-- <Button class="aspect-square shrink-0" variant="icon" onclick={() => toggle_window('tags')}>
 					<div class="flex size-6 items-center justify-center text-lg">#</div>
-				</Button>
+				</Button> -->
 				<!-- <Button class="shrink-0" variant="icon">
 					<img src="/icons/folder-search.webp" class="size-6" />
 				</Button> -->

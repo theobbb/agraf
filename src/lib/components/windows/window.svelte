@@ -54,7 +54,6 @@
 	const visible = $derived(manager?.windows[id] ? !closed && !minimized : !hidden);
 
 	let container: HTMLDialogElement | HTMLDivElement | null = $state(null);
-	let ghost_el: HTMLElement | null = null;
 
 	const start = { cursor: { x: 0, y: 0 }, window: { x: 0, y: 0 } };
 
@@ -62,6 +61,8 @@
 
 	function onmove(ev: MouseEvent) {
 		if (!container || !is_dragging) return;
+
+		if (is_expanded) toggle_expand();
 
 		const target = manager?.windows[id] || base_window;
 
@@ -73,8 +74,6 @@
 		if ((ev.target as HTMLElement).closest('button')) return;
 
 		if (!container) return;
-
-		if (is_expanded) toggle_expand();
 
 		document.documentElement.style.cursor = 'grabbing';
 		document.documentElement.style.userSelect = 'none';
@@ -116,6 +115,11 @@
 	}
 	function close() {
 		if (typeof onclose == 'function') onclose();
+		const target = manager?.windows[id] || base_window;
+		if (target.is_expanded) {
+			history.back();
+			// The popstate listener will fire and set is_expanded to false
+		}
 		if (dialog) {
 			return;
 		}
@@ -205,6 +209,18 @@
 		const target = manager?.windows[id] || base_window;
 
 		target.is_expanded = !target.is_expanded;
+		if (target.is_expanded) {
+			history.pushState({ isDialogContext: true }, '');
+			window.addEventListener('popstate', handle_back_gesture, { once: true });
+		} else {
+			history.back();
+		}
+	}
+	function handle_back_gesture() {
+		const target = manager?.windows[id] || base_window;
+		if (target.is_expanded) {
+			target.is_expanded = false;
+		}
 	}
 
 	onMount(() => {
@@ -243,11 +259,12 @@
 	 overscroll-behavior: contain; {is_expanded
 		? ''
 		: `transform: translate(${translate.x}px, ${translate.y}px);`} {is_floating
-		? `width: ${size.width}px; height: ${size.height}px; margin: 0-;`
+		? `width: ${size.width}px; height: ${size.height}px; margin: 0;`
 		: ''}"
 >
 	<header
 		onmousedown={start_drag}
+		ondblclick={toggle_expand}
 		class={[
 			'flex cursor-grab items-center justify-between gap-1 border-b px-gap py-1.5 whitespace-nowrap select-none '
 		]}
@@ -259,7 +276,7 @@
 				{title}
 			{/if}
 		</div>
-		<div class="-mr-1 flex gap-0.5 text-lg max-lg:gap-1.5 max-lg:text-2xl">
+		<div class="-mr-1 flex gap-0.5 text-lg max-lg:gap-1 max-lg:text-2xl">
 			{#if manager}
 				<Button onclick={minimize} variant="icon" class="p-0.5! text-base">
 					<IconSubstract />

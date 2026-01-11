@@ -24,7 +24,7 @@
 	let related_active_tab_i = $state(0);
 </script>
 
-<div class="grid-12 relative mb-24 max-lg:-mt-2">
+<div class="grid-12 relative mb-24 max-lg:mt-2">
 	<Window
 		title="Logo"
 		class={[
@@ -124,7 +124,8 @@
 		manager={window_manager}
 		title="Adresse"
 		class={[
-			'order-last col-span-full row-span-2 aspect-video',
+			window_manager.windows['map']?.is_expanded ? '' : 'aspect-video',
+			'order-last col-span-full row-span-2 ',
 			'sm:col-span-6 sm:col-start-5',
 			'lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-17'
 		]}
@@ -173,7 +174,7 @@
 		manager={window_manager}
 		title="Chat"
 		class={[
-			'col-span-8 col-start-2 max-h-94 max-lg:mt-12',
+			'col-start-2- col-span-11 max-h-94 max-lg:mt-12',
 			'sm:row-start-10- sm:col-span-4 sm:col-start-9',
 			'lg:col-span-5 lg:col-start-8 lg:row-span-4 lg:row-start-18'
 		]}

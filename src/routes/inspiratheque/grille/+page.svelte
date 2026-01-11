@@ -56,4 +56,3 @@
 	{/each}
 </div>
 <Pagination pagination={data.pagination_bookmarks} route="/inspiratheque/liste" />
-<div class="h-96"></div>

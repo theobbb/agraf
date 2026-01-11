@@ -42,8 +42,8 @@
 <header
 	class={['pointer-events-none sticky top-0 z-400 lg:z-100 lg:bg-bg', scrolled && 'lg:border-b']}
 >
-	<div class="pointer-events-auto mt-1.5 text-right lg:hidden">
-		<Button onclick={() => (menu_mobile_open = true)}>Menu</Button>
+	<div class=" mt-1.5 text-right lg:hidden">
+		<Button class="pointer-events-auto" onclick={() => (menu_mobile_open = true)}>Menu</Button>
 	</div>
 	<div class="grid-12 pointer-events-auto max-lg:hidden!">
 		<div class="col-span-7 flex gap-4">
