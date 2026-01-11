@@ -278,10 +278,10 @@
 		</div>
 		<div class="-mr-1 flex gap-0.5 text-lg max-lg:gap-1 max-lg:text-2xl">
 			{#if manager}
-				<Button onclick={minimize} variant="icon" class="p-0.5! text-base">
+				<Button onclick={minimize} variant="icon" size="sm">
 					<IconSubstract />
 				</Button>
-				<Button onclick={toggle_expand} variant="icon" class="p-0.5! text-base ">
+				<Button onclick={toggle_expand} variant="icon" size="sm">
 					{#if is_expanded}
 						<IconRestore />
 					{:else}
@@ -289,7 +289,7 @@
 					{/if}
 				</Button>
 			{/if}
-			<Button onclick={close} variant="icon" class="p-0.5! text-base ">
+			<Button onclick={close} variant="icon" size="sm">
 				<IconClose />
 			</Button>
 			<!-- 

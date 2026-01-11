@@ -9,7 +9,7 @@
 	import { dev } from '$app/environment';
 	import Taskbar from '$lib/components/windows/taskbar.svelte';
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
-	import Footer from './footer.svelte';
+	import Footer from './+/footer/footer.svelte';
 
 	const { data } = $props();
 

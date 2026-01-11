@@ -1,6 +1,4 @@
 <script lang="ts">
-	import Footer from '../footer.svelte';
-
 	const { data } = $props();
 
 	const { links } = $derived(data);
@@ -11,7 +9,7 @@
 		<div class="col-span-6 sm:col-span-4 lg:col-span-3">
 			<a class="group flex flex-col items-center" href={link.url} target="_blank">
 				<div class="relative w-fit">
-					<img src="/icons/folder_closed.webp" />
+					<img src="/icons/folder_closed.webp" alt="folder-icon" />
 					<div class="absolute inset-0 flex items-center justify-end text-2xl">
 						{link.icon}
 					</div>
@@ -26,8 +24,6 @@
 		</div>
 	{/each}
 </div>
-
-<Footer />
 
 <svelte:head>
 	<style>

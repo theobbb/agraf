@@ -1,6 +1,8 @@
 <script lang="ts">
 	import IconLinkedin from '$lib/ui/icons/apps/icon-linkedin.svelte';
 
+	let { on_explode = $bindable() }: { on_explode: () => void } = $props();
+
 	const FRAME_COUNT = 20;
 	const FPS = 24;
 
@@ -45,20 +47,20 @@
 		raf_id = null;
 	}
 
-	function on_button_click() {
+	on_explode = () => {
 		pressed_count++;
 		rotation = (pressed_count % 4) * 90;
 
 		current_frame = 0;
 		last_frame_time = performance.now();
 		start_sprite_loop();
-	}
+	};
 </script>
 
 <!-- <button class="flex cursor-pointer text-left text-3xl" onclick={on_button_click}>
 	<IconLinkedin />
 </button> -->
-<button class="cursor-pointer text-left" onclick={on_button_click}> Linkedin </button>
+<!-- <button class="cursor-pointer text-left" onclick={on_button_click}> Linkedin </button> -->
 <div class="pointer-events-none fixed inset-0 z-2000" style="image-rendering: pixelated-;">
 	<div class="absolute inset-0 flex items-center justify-center overflow-hidden">
 		<div

@@ -3,7 +3,7 @@
 	import type { Windows } from '$lib/types';
 	import Window from '$lib/components/windows/window.svelte';
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
-	import Footer from '../footer.svelte';
+	import Footer from '../+/footer/footer.svelte';
 
 	const data = {
 		ressources: [

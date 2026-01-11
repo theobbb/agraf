@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { comments_cache } from '$lib/cache/cache-comments.svelte';
+	import { use_comments } from '$lib/cache/cache-comments.svelte';
+
 	import type { CommentsRecord, TicketsRecord } from '$lib/pocketbase.types';
 
 	import Button from '$lib/ui/button.svelte';
@@ -20,10 +21,12 @@
 		replying_to: { comment: CommentsRecord | null };
 	} = $props();
 
+	const comments_service = use_comments();
+
 	const system_event = $derived(comment.type == 'system');
 
 	const children = $derived(
-		comments_cache[comment.parent]?.filter((c) => c.parent_comment == comment.id) || []
+		comments_service.cache[comment.parent]?.filter((c) => c.parent_comment == comment.id) || []
 	);
 
 	const ticket_moved_expanded = $derived.by(() => {

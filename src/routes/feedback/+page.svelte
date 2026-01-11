@@ -4,16 +4,16 @@
 
 	import Button from '$lib/ui/button.svelte';
 	import Window from '$lib/components/windows/window.svelte';
-	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
 
-	import Footer from '../footer.svelte';
+	import Footer from '../+/footer/footer.svelte';
 	import Input from '$lib/ui/input.svelte';
 	import Textarea from '$lib/ui/textarea.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import Dialog from '$lib/ui/skeleton/dialog.svelte';
 	import { onMount } from 'svelte';
+	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
 
-	const window_manager = get_window_manager('feedback');
+	const window_manager = use_window_manager('feedback');
 
 	let loading = $state(false);
 	let onsubmit_response: { type: 'success' | 'error'; message: string } | null = $state(null);
@@ -23,7 +23,8 @@
 		loading = true;
 		onsubmit_response = null;
 
-		const form_data = new FormData(event.currentTarget, event.submitter);
+		const form = event.currentTarget;
+		const form_data = new FormData(form, event.submitter);
 
 		if (!form_data.get('body')) {
 			onsubmit_response = {
@@ -40,6 +41,7 @@
 				type: 'success',
 				message: ``
 			};
+			form.reset();
 		} catch (error) {
 			console.error(error);
 			onsubmit_response = {
@@ -140,7 +142,7 @@
 
 <!-- <Desktop manager={window_manager} /> -->
 <!-- <Taskbar manager={window_manager} /> -->
-<Footer {window_manager} />
+<!-- <Footer {window_manager} /> -->
 <svelte:head>
 	<title>AGRAF 🦋 Feedback</title>
 	<style>

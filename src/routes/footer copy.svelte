@@ -9,6 +9,8 @@
 
 	const minimized = $derived(windows_array.filter((window) => window.minimized));
 
+	const current_year = new Date().getFullYear();
+
 	let time: string = $state(get_time());
 	function get_time() {
 		const now = new Date();
@@ -39,15 +41,16 @@
 		// Automatic cleanup
 		return () => clearTimeout(timeout_id);
 	});
+
+	const cx = {
+		item: 'pt-1.5 pb-2'
+	};
 </script>
 
 <footer class="fixed right-gap bottom-0 left-gap z-500 border-t bg-bg">
 	<div class="grid-12 max-lg:text-sm">
-		<div
-			class="col-span-4 py-1.5 font-normal max-lg:hidden"
-			style="font-family: 'Comic', sans-serif;"
-		>
-			<div>© 2025 AGRAF ❤️ Tous droits réservés 😡🤬</div>
+		<div class="col-span-4 font-normal max-lg:hidden" style="font-family: 'Comic', sans-serif;">
+			<div class={[cx.item]}>© {current_year} AGRAF ❤️ Tous droits réservés 😡🤬</div>
 		</div>
 		<div class="col-span-2 flex items-center gap-2 max-lg:hidden">
 			{#each minimized as window}
@@ -61,26 +64,28 @@
 		</div>
 
 		<div class="col-span-6 flex items-center lg:col-span-2">
-			<a class="" href="mailto:agraf.uqam@gmail.com" target="_blank">agraf.uqam@gmail.com</a>
+			<a class={[cx.item]} href="mailto:agraf.uqam@gmail.com" target="_blank"
+				>agraf.uqam@gmail.com</a
+			>
 		</div>
 
-		<div class="col-span-6 flex items-center gap-4 py-1 lg:col-span-3">
+		<div class="col-span-6 flex items-center gap-4 lg:col-span-3">
 			<a
-				class="col-span-4 max-lg:col-start-8 max-lg:row-start-1 lg:col-span-1"
+				class={[cx.item, 'col-span-4 max-lg:col-start-8 max-lg:row-start-1 lg:col-span-1']}
 				target="_blank"
 				href="https://www.instagram.com/agraf.uqam/">Instagram</a
 			>
 			<a
-				class="col-span-4 max-lg:col-start-8 max-lg:row-start-2 lg:col-span-1"
+				class={[cx.item, 'col-span-4 max-lg:col-start-8 max-lg:row-start-2 lg:col-span-1']}
 				target="_blank"
 				href="https://www.facebook.com/agraf.uqam/">Facebook</a
 			>
 
-			<div class="col-span-4 max-lg:col-start-8 max-lg:row-start-3 lg:col-span-1">
+			<div class={[cx.item, 'col-span-4 max-lg:col-start-8 max-lg:row-start-3 lg:col-span-1']}>
 				<Explosion />
 			</div>
 		</div>
-		<div class="flex items-center justify-end max-lg:hidden">
+		<div class={[cx.item, 'flex items-center justify-end max-lg:hidden']}>
 			{time}
 		</div>
 	</div>

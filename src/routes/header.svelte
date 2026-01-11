@@ -42,7 +42,7 @@
 <header
 	class={['pointer-events-none sticky top-0 z-400 lg:z-100 lg:bg-bg', scrolled && 'lg:border-b']}
 >
-	<div class=" mt-1.5 text-right lg:hidden">
+	<div class="mt-1.5 text-right lg:hidden">
 		<Button class="pointer-events-auto" onclick={() => (menu_mobile_open = true)}>Menu</Button>
 	</div>
 	<div class="grid-12 pointer-events-auto max-lg:hidden!">
@@ -55,18 +55,19 @@
 				</a>
 			{/each}
 		</div>
-		{#if auth.user}
+		<!-- {#if auth.user}
 			<div class="col-span- col-start-11 flex items-center gap-2">
 				<button class="py-1.5" onclick={open_auth}>
 					{auth.user}
 				</button>
-				<!-- <div>
+				
+			</div>
+		{/if} -->
+		<!-- <div>
 					<Button onclick={open_auth} variant="icon">
 						<img src="/icons/keys.webp" alt="icon-keys" class="size-6" />
 					</Button>
 				</div> -->
-			</div>
-		{/if}
 		<!-- <div class="flex gap-4">
 			<div class="pt-1.5 pb-0.5 underline-offset-6 hover:underline">Préférences</div>
 			<div class="pt-1.5 pb-0.5 underline-offset-6 hover:underline">Paramètres</div>

@@ -8,8 +8,8 @@
 	import Window from '$lib/components/windows/window.svelte';
 	import { objectives } from './static';
 	import type { MemberEntriesRecordExpanded } from './types.js';
-	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
-	import Footer from '../../footer.svelte';
+	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
+	import Footer from '../../+/footer/footer.svelte';
 
 	const { data } = $props();
 
@@ -36,7 +36,7 @@
 		return Object.values(map).sort((a, b) => (a.role?.level || 0) - (b.role.level || 0));
 	});
 
-	const window_manager = get_window_manager('association');
+	const window_manager = use_window_manager('association');
 
 	type Dialog = 'assemblee' | 'comite';
 
@@ -177,8 +177,6 @@
 		{/if}
 	</Dialog>
 {/if}
-
-<Footer {window_manager} />
 
 <svelte:head>
 	<title>AGRAF 🦖 L'association</title>

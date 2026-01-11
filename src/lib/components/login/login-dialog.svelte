@@ -28,7 +28,7 @@
 			<span class="text-2xl">🗿</span>
 			(Pas besoin de compte )
 		</div> -->
-		<Input name="name" label="Nom d'utilisateur" bind:value={username} />
+		<Input name="name" required maxlength={24} label="Nom d'utilisateur" bind:value={username} />
 		<div class="text-right"><Button type="submit">S'identifier</Button></div>
 	</form>
 </Dialog>

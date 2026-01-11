@@ -8,19 +8,21 @@
 	import Weather from './weather.svelte';
 	import { dev } from '$app/environment';
 	import Taskbar from '$lib/components/windows/taskbar.svelte';
-	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
-	import Footer from './footer.svelte';
+
+	import Footer from './+/footer/footer.svelte';
 	import Chat from './+/chat.svelte';
 	import { onMount } from 'svelte';
 
 	import WindowLayer from '$lib/components/windows/window-layer.svelte';
 	import Tabs from '$lib/components/tabs.svelte';
+	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
 
 	const { data } = $props();
 
 	const { featured, links, related } = $derived(data);
 
-	const window_manager = get_window_manager('agraf');
+	const window_manager = use_window_manager('agraf');
+	//const window_manager = get_window_manager('agraf');
 	let related_active_tab_i = $state(0);
 </script>
 
@@ -30,7 +32,7 @@
 		class={[
 			'col-span-full',
 			'sm:col-span-5 sm:col-start-1 sm:row-span-3 sm:row-start-1',
-			'lg:col-span-4 lg:col-start-1 lg:row-span-4 lg:row-start-2'
+			'lg:col-span-4 lg:col-start-1 lg:row-span-3 lg:row-start-2'
 		]}
 		manager={window_manager}
 		id="logo"
@@ -42,7 +44,7 @@
 		class={[
 			'col-span-9 max-lg:-ml-3 max-sm:-mt-12',
 			'sm:col-span-4 sm:col-start-9 sm:row-span-4 sm:row-start-2',
-			'lg:col-span-3 lg:col-start-9 lg:row-span-6 lg:row-start-1'
+			'lg:col-span-3 lg:col-start-9 lg:row-span-7 lg:row-start-1'
 		]}
 		manager={window_manager}
 		id="featured"
@@ -73,7 +75,7 @@
 		class={[
 			'col-span-full col-start-1 max-sm:mt-12',
 			'sm:col-span-7 sm:col-start-1 sm:row-span-3 sm:row-start-3',
-			'lg:col-span-5 lg:col-start-3 lg:row-span-3 lg:row-start-5'
+			'lg:col-span-5 lg:col-start-3 lg:row-span-3 lg:row-start-4'
 		]}
 		manager={window_manager}
 		id="desc"
@@ -113,7 +115,7 @@
 		<div class="py-1 pb-24 lg:pb-12">
 			{#each links as link}
 				<div>
-					<a href={link.url} class="og-link">{link.icon} {link.name}</a>
+					<a href={link.url} class="og-link" target="_blank">{link.icon} {link.name}</a>
 				</div>
 			{/each}
 		</div>
@@ -205,7 +207,7 @@
 	<div></div>
 </div> -->
 
-<Footer {window_manager} />
+<!-- <Footer {window_manager} /> -->
 <!-- <Taskbar manager={window_manager} /> -->
 
 <!-- <div class="grid-12 fixed right-gap bottom-8 left-gap z-200">

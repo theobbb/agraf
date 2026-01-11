@@ -7,7 +7,7 @@
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
 	import Taskbar from '$lib/components/windows/taskbar.svelte';
 	import Desktop from '$lib/components/windows/desktop.svelte';
-	import Footer from '../../footer.svelte';
+	import Footer from '../../+/footer/footer.svelte';
 
 	const form: {
 		sucess: boolean;

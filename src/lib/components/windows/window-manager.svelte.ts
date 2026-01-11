@@ -1,4 +1,6 @@
-import type { Snippet } from 'svelte';
+import { getContext, setContext, type Snippet } from 'svelte';
+
+// --- Types (Kept from your original) ---
 
 export type Window<T extends string> = {
 	id: T;
@@ -16,79 +18,85 @@ export type Window<T extends string> = {
 
 type Windows<T extends string> = Partial<Record<T, Window<T>>>;
 
-export type WindowManager<T extends string> = {
-	windows: Windows<T>;
-	windows_array: Window<T>[];
-	focus_window: (id: T) => void;
-	minimize_window: (id: T) => void;
-	close_window: (id: T) => void;
-	open_window: (id: T) => void;
-	content: Record<string, Snippet>;
-};
+// --- Window Manager Class ---
 
-function create_window_manager<T extends string>(): WindowManager<T> {
-	const windows: Windows<T> = $state({});
-	const content = $state({});
+export class WindowManager<T extends string> {
+	windows = $state<Windows<T>>({});
+	content = $state<Record<string, Snippet>>({});
+	windows_array = $derived(Object.values(this.windows) as Window<T>[]);
 
-	function focus_window(id: T) {
-		const arr = Object.values(windows) as Window<T>[];
-		const max_z_index = Math.max(...arr.map((window) => Number(window.z_index)));
-		if (!windows[id]) return;
-		windows[id].z_index = max_z_index + 1;
-	}
-	function minimize_window(id: T) {
-		if (!windows[id]) return;
-		windows[id].minimized = true;
-	}
-	function close_window(id: T) {
-		if (!windows[id]) return;
-		windows[id].closed = true;
+	focus_window(id: T) {
+		if (!this.windows[id]) return;
+		const max_z = Math.max(0, ...this.windows_array.map((w) => Number(w.z_index)));
+		this.windows[id]!.z_index = max_z + 1;
 	}
 
-	function open_window(id: T) {
-		if (!windows[id]) return;
-		focus_window(id);
-		windows[id].closed = false;
-		windows[id].minimized = false;
+	minimize_window(id: T) {
+		if (this.windows[id]) this.windows[id]!.minimized = true;
 	}
 
-	return {
-		get windows() {
-			return windows;
-		},
-		get windows_array() {
-			return Object.values(windows) as Window<T>[];
-		},
-		focus_window,
-		minimize_window,
-		close_window,
-		open_window,
-		content
-	};
+	close_window(id: T) {
+		if (this.windows[id]) this.windows[id]!.closed = true;
+	}
+
+	open_window(id: T) {
+		if (!this.windows[id]) return;
+		this.focus_window(id);
+		this.windows[id]!.closed = false;
+		this.windows[id]!.minimized = false;
+	}
 }
 
-export const current_manager: {
-	value: WindowManager<any> | null;
-} = $state({
-	value: null
-});
+// --- The Persistent Registry ---
+// This class holds the Map and is shared via Context.
+// Since this is created inside setWindowManager in the root layout,
+// it is unique per user/session, but stays alive across client-side navigations.
 
-const managers = new Map<string, WindowManager<any>>();
+class WindowRegistry {
+	private managers = new Map<string, WindowManager<any>>();
 
-export function get_window_manager<T extends string>(key: string): WindowManager<T> {
-	// Check if it already exists
-	if (managers.has(key)) {
-		const manager = managers.get(key) as WindowManager<T>;
-		current_manager.value = manager;
+	// We keep track of the "active" manager reactively
+	current = $state<{ value: WindowManager<any> | null }>({ value: null });
+
+	get_manager<T extends string>(key: string): WindowManager<T> {
+		if (!this.managers.has(key)) {
+			this.managers.set(key, new WindowManager<T>());
+		}
+
+		const manager = this.managers.get(key) as WindowManager<T>;
+		this.current.value = manager; // Updates the "global" current reference
 		return manager;
 	}
+}
 
-	// If not, create a new one using your existing function
-	const new_manager = create_window_manager<T>();
+// --- SSR Safe Context Setup ---
 
-	// Store it
-	managers.set(key, new_manager);
+const REGISTRY_KEY = Symbol('WINDOW_REGISTRY');
 
-	current_manager.value = new_manager;
-	return new_manager;
+/**
+ * Call this ONCE in your root +layout.svelte
+ */
+export function init_window_registry() {
+	const registry = new WindowRegistry();
+	return setContext(REGISTRY_KEY, registry);
+}
+
+/**
+ * Use this in pages to get or create a specific manager
+ */
+export function use_window_manager<T extends string>(key: string) {
+	const registry = getContext<WindowRegistry>(REGISTRY_KEY);
+	if (!registry) throw new Error('Registry not initialized in root layout.');
+
+	return registry.get_manager<T>(key);
+}
+
+/**
+ * Use this if you need to react to the "currently active" manager
+ * (e.g. for a global taskbar that shows windows of the current page)
+ */
+export function use_current_manager() {
+	const registry = getContext<WindowRegistry>(REGISTRY_KEY);
+	if (!registry) throw new Error('Registry not initialized in root layout.');
+	return registry.current;
 }

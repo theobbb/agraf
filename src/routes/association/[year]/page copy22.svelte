@@ -9,7 +9,7 @@
 	import { objectives } from './static';
 	import type { MemberEntriesRecordExpanded } from './types.js';
 	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
-	import Footer from '../../footer.svelte';
+	import Footer from '../../+/footer/footer.svelte';
 
 	const { data } = $props();
 

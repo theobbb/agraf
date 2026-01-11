@@ -7,6 +7,7 @@
 		variant = 'pixel',
 		type = 'button',
 		size = 'md',
+		uppercase = true,
 		class: cx,
 		onclick,
 		children
@@ -14,24 +15,31 @@
 		variant?: Variant;
 		type?: 'button' | 'submit';
 		size?: Size;
+		uppercase?: boolean;
 		class?: string;
 		onclick?: () => void;
 		children: Snippet;
 	} = $props();
 
 	const pixel_size_cx: Record<Size, string> = {
-		sm: 'min-w-19 min-h-5.5 px-4 text-xs',
+		sm: 'min-w-19 min-h-5.5 px-4 text-base ',
 		md: 'min-w-28 min-h-8 px-8 text-lg',
 		lg: 'min-w-44 min-h-10 px-16 text-2xl'
 	};
 
+	const icon_size_cx: Record<Size, string> = {
+		sm: 'p-0.5 text-base',
+		md: 'p-1 text-2xl',
+		lg: 'p-1.5 text-4xl'
+	};
+
 	const variant_cx: Record<Variant, string> = {
-		pixel: 'font-pixel font-normal ' + pixel_size_cx[size],
-		icon: 'p-1 text-2xl text-black flex items-center justify-center'
+		pixel: ['font-pixel font-normal', pixel_size_cx[size]].join(' '),
+		icon: ['text-black flex items-center justify-center', icon_size_cx[size]].join(' ')
 	};
 </script>
 
-<button {onclick} class={['uppercase', variant, variant_cx[variant], cx]} {type}>
+<button {onclick} class={[uppercase && 'uppercase', variant, variant_cx[variant], cx]} {type}>
 	{@render children?.()}
 </button>
 

@@ -2,20 +2,14 @@
 	import Author from '$lib/components/author.svelte';
 	import Comment from '$lib/components/comments/comment.svelte';
 	import Comments from '$lib/components/comments/comments.svelte';
-	import Markdown from '$lib/markdown.svelte';
 	import { pocketbase } from '$lib/pocketbase';
 	import type { CommentsRecord } from '$lib/pocketbase.types';
 	import IconCopy from '$lib/ui/icons/icon-copy.svelte';
 	import IconExternalLink from '$lib/ui/icons/icon-external-link.svelte';
-	import IconLike from '$lib/ui/icons/icon-like.svelte';
-	import IconLink from '$lib/ui/icons/icon-link.svelte';
-	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
-	import IconFolderOpen from '$lib/ui/icons/static/icon-folder-open.svelte';
-
-	import { format_date, format_time } from '$lib/utils/format-date';
+	import { format_time } from '$lib/utils/format-date';
 	import { onDestroy } from 'svelte';
 	import Description from '../description.svelte';
-	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
+	import type { ExpandedBookmarksRecord } from '../types';
 
 	const {
 		item

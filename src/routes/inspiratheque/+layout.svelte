@@ -4,24 +4,23 @@
 	import Emoji from '$lib/emoji.svelte';
 
 	import type { Windows } from './windows/types';
-	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
+	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
 	import WindowInfo from './windows/window-info.svelte';
 	import WindowInstructions from './windows/window-instructions.svelte';
 	import WindowSubmitter from './windows/window-submitter.svelte';
 
-	import Footer from '../footer.svelte';
+	import Footer from '../+/footer/footer.svelte';
 	import WindowTags from './windows/window-tags.svelte';
 	import { onMount, setContext } from 'svelte';
 	import { page } from '$app/state';
-	import {
-		realtime_comments_subscribe,
-		realtime_comments_unsubscribe
-	} from '$lib/cache/cache-comments.svelte';
+	import { use_comments } from '$lib/cache/cache-comments.svelte';
 	import Input from '$lib/ui/input.svelte';
 	import Tabs from '$lib/components/tabs.svelte';
 	import Search from '$lib/components/search.svelte';
 
 	const { data, children } = $props();
+
+	const comments_service = use_comments();
 
 	type EditorType = 'folder' | 'bookmark';
 
@@ -40,9 +39,9 @@
 		dialog_create.open = true;
 	}
 
-	const window_manager = get_window_manager<Windows>('inspiratheque');
+	const window_manager = use_window_manager<Windows>('inspiratheque');
 
-	setContext('window_manager', window_manager);
+	// setContext('window_manager', window_manager);
 
 	const views = ['explorateur', 'liste', 'grille'];
 	const current_view_i = $derived(views.indexOf(page.url.pathname.split('/')[2]));
@@ -53,9 +52,9 @@
 	}
 
 	onMount(() => {
-		realtime_comments_subscribe('bookmarks');
+		comments_service.subscribe('bookmarks');
 		return () => {
-			realtime_comments_unsubscribe('bookmarks');
+			comments_service.unsubscribe();
 		};
 	});
 </script>
@@ -92,7 +91,7 @@
 				<Button class="shrink-0" variant="icon" onclick={() => toggle_window('info')}>
 					<img src="/icons/help_book.webp" class="size-6" />
 				</Button>
-				<Button class="shrink-0" onclick={() => toggle_window('tags')}>Filtres</Button>
+				<Button size="sm" class="shrink-0" onclick={() => toggle_window('tags')}>Filtres</Button>
 				<!-- <Button class="aspect-square shrink-0" variant="icon" onclick={() => toggle_window('tags')}>
 					<div class="flex size-6 items-center justify-center text-lg">#</div>
 				</Button> -->
@@ -149,8 +148,6 @@
 	/>
 	<WindowTags {tags} {tag_groups} manager={window_manager} />
 </div>
-
-<Footer {window_manager} />
 
 <svelte:head>
 	<title>AGRAF 🕺 Inspirathèque</title>

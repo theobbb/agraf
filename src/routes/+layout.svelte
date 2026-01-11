@@ -10,12 +10,18 @@
 	import Login from '$lib/components/login/login-dialog.svelte';
 	import LoginDialog from '$lib/components/login/login-dialog.svelte';
 	import { auth } from '$lib/components/login/auth.svelte';
+	import Footer from './+/footer/footer.svelte';
+	import { init_window_registry } from '$lib/components/windows/window-manager.svelte';
+	import { init_comments_service } from '$lib/cache/cache-comments.svelte';
 
 	let { children } = $props();
 
 	//mx-auto my-24 max-w-2xl px-4
 
 	const clean_ui = $derived(page.params.slug);
+
+	init_window_registry();
+	init_comments_service();
 </script>
 
 <svelte:head>
@@ -36,6 +42,7 @@
 	<!-- {#if !clean_ui}
 		<Footer />
 	{/if} -->
+	<Footer />
 </div>
 
 {#if auth.dialog_open}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, setContext } from 'svelte';
 	import Comment from './comment.svelte';
-	import { comments_cache, get_comments } from '$lib/cache/cache-comments.svelte';
+
 	import type { CommentsRecord, IsoAutoDateString } from '$lib/pocketbase.types';
 	import CommentEditor from './comment-editor.svelte';
 
@@ -10,6 +10,7 @@
 	import type { CommentsCollectionOptions } from '$lib/types';
 	import Loader from '$lib/ui/loader.svelte';
 	import IconMessage from '$lib/ui/icons/icon-message.svelte';
+	import { use_comments } from '$lib/cache/cache-comments.svelte';
 
 	const {
 		parent,
@@ -26,8 +27,10 @@
 
 	setContext('collection', collection);
 
+	const comments_service = use_comments();
+
 	const comments = $derived(
-		comments_cache[parent]?.filter((comment) => !comment.parent_comment) || []
+		comments_service.cache[parent]?.filter((comment) => !comment.parent_comment) || []
 	);
 
 	let commenting = $state(false);
@@ -36,7 +39,7 @@
 
 	let loaded = $state(false);
 	async function load_comments() {
-		await get_comments(parent, collection);
+		await comments_service.get_comments(parent, collection);
 		loaded = true;
 	}
 

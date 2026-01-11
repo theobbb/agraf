@@ -2,14 +2,15 @@
 	import Emoji from '$lib/emoji.svelte';
 
 	import Window from '$lib/components/windows/window.svelte';
-	import { get_window_manager } from '$lib/components/windows/window-manager.svelte';
-	import Footer from '../footer.svelte';
+	import { SvelteSet } from 'svelte/reactivity';
+	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
+	import Footer from '../+/footer/footer.svelte';
 	import Markdown from '$lib/markdown.svelte';
 
 	const { data } = $props();
 	const { infos: items } = $derived(data);
 
-	const window_manager = get_window_manager('informations');
+	const window_manager = use_window_manager('informations');
 	const { windows } = $derived(window_manager);
 
 	let opened_windows: Set<string> = $state(new SvelteSet());
@@ -20,12 +21,6 @@
 		if (windows[id]?.closed) window_manager.open_window(id);
 		else window_manager.close_window(id);
 	}
-	import { MediaQuery, SvelteSet } from 'svelte/reactivity';
-
-	const lg = new MediaQuery('min-width: 1000px');
-	const cx = {
-		text: 'text-2xl/6.5'
-	};
 
 	//top: {i * 33}px; left: {i * 33}px;
 </script>
@@ -147,7 +142,7 @@
 		</div>
 	</Window>
 </div> -->
-<Footer {window_manager} />
+
 <svelte:head>
 	<title>AGRAF 🤓 Informations</title>
 	<style>

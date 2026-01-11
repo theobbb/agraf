@@ -1,37 +1,60 @@
-import type { CommentsCollectionOptions } from '$lib/types';
+// comments-service.svelte.ts
+import { getContext, setContext } from 'svelte';
 import { pocketbase } from '../pocketbase';
-import type { CollectionRecords, CommentsRecord } from '../pocketbase.types';
+import type { CommentsCollectionOptions } from '$lib/types';
+import type { CommentsRecord } from '../pocketbase.types';
 
-export const comments_cache: Record<string, CommentsRecord[]> = $state({});
+export class CommentsService {
+	// This cache is now instance-specific (unique per user session)
+	cache = $state<Record<string, CommentsRecord[]>>({});
 
-export async function get_comments(parent: string, collection: CommentsCollectionOptions) {
-	const exists = comments_cache[parent];
-	if (exists) return exists;
+	async get_comments(parent: string, collection: CommentsCollectionOptions) {
+		const exists = this.cache[parent];
+		if (exists) return exists;
 
-	const records: CommentsRecord[] = await pocketbase.collection('comments').getFullList({
-		filter: `parent="${parent}" && collection="${collection}"`
-	});
+		const records = await pocketbase.collection('comments').getFullList<CommentsRecord>({
+			filter: `parent="${parent}" && collection="${collection}"`
+		});
 
-	comments_cache[parent] = records;
-	if (!records?.length) return [];
+		this.cache[parent] = records;
+		return records;
+	}
 
-	return records;
+	subscribe(collection: CommentsCollectionOptions) {
+		return pocketbase.collection('comments').subscribe<CommentsRecord>(
+			'*',
+			(e) => {
+				const comment = e.record;
+				const exists = this.cache[comment.parent];
+
+				if (e.action === 'create') {
+					if (exists) {
+						// Using Svelte 5 reactivity:
+						// If you want the UI to update, ensure the array trigger works
+						this.cache[comment.parent] = [...exists, comment];
+					} else {
+						this.cache[comment.parent] = [comment];
+					}
+				}
+				// You might also want to handle 'delete' or 'update' actions here
+			},
+			{ filter: `collection = "${collection}"` }
+		);
+	}
+
+	unsubscribe() {
+		pocketbase.collection('comments').unsubscribe();
+	}
 }
 
-export function realtime_comments_subscribe(collection: CommentsCollectionOptions) {
-	pocketbase.collection('comments').subscribe<CommentsRecord>(
-		'*',
-		function (e) {
-			const comment = e.record;
-			const exists = comments_cache[comment.parent];
-			if (e.action == 'create') {
-				if (exists) exists.push(comment);
-				else comments_cache[comment.parent] = [comment];
-			}
-		},
-		{ filter: `collection = "${collection}"` }
-	);
+const COMMENTS_KEY = Symbol('COMMENTS_SERVICE');
+
+export function init_comments_service() {
+	return setContext(COMMENTS_KEY, new CommentsService());
 }
-export function realtime_comments_unsubscribe(collection: keyof CollectionRecords) {
-	pocketbase.collection('comments').unsubscribe();
+
+export function use_comments() {
+	const service = getContext<CommentsService>(COMMENTS_KEY);
+	if (!service) throw new Error('CommentsService not initialized');
+	return service;
 }

@@ -1,11 +1,12 @@
 <script lang="ts">
+	import Footer from '../+/footer/footer.svelte';
 	import type { LayoutProps } from './$types';
 
 	const { data, children }: LayoutProps = $props();
 </script>
 
 {@render children()}
-
+<Footer />
 <svelte:head>
 	<style>
 		html {
