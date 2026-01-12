@@ -58,7 +58,7 @@
 	};
 </script>
 
-<footer class="fixed right-gap bottom-2.5 left-gap z-500 bg-bg lg:bottom-0 lg:border-t">
+<footer class="fixed right-gap bottom-2.5 left-gap z-500 lg:bottom-0 lg:border-t lg:bg-bg">
 	<div class="grid-12 max-lg:text-sm">
 		<div class="relative col-span-2">
 			{#if menu_open}

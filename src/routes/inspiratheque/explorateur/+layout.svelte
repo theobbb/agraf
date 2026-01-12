@@ -5,17 +5,20 @@
 	import Breadcrumbs from './breadcrumbs.svelte';
 	import InspectorBookmark from './inspector-bookmark.svelte';
 	import InspectorFolder from './inspector-folder.svelte';
+	import { page } from '$app/state';
 
 	const { data } = $props();
 
-	const { bookmarks, folders, tags } = data;
+	const { bookmarks, folders, tags } = $derived(data);
 
-	const items: (ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord)[] = [
+	const items: (ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord)[] = $derived([
 		...folders,
 		...bookmarks
-	];
-
-	const explorer = create_explorer<ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord>(items);
+	]);
+	$inspect(bookmarks);
+	const explorer = $derived(
+		create_explorer<ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord>(items)
+	);
 
 	const { breadcrumbs, inspecting } = $derived(explorer);
 

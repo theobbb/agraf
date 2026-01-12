@@ -19,14 +19,14 @@
 <div class="grid-12 pointer-events-none absolute top-68">
 	<Window
 		class="col-span-full lg:col-span-4 lg:col-start-5"
-		title="Inspirathèque"
+		title="Inspirathèque - Introduction"
 		id="info"
 		{hidden}
 		{manager}
 		{onclose}
 	>
-		<div class="mt-1.5 mb-2.5">
-			<img src="/icons/help_book.webp" class="size-6" />
+		<div class="mt-1 mb-2.5">
+			<!-- <img src="/icons/help_book.webp" class="size-6" /> -->
 			<div class="mt-1">
 				L’Inspirathèque est une librairie communautaire d’adresses URL, entretenue par les
 				étudiant·es du programme.

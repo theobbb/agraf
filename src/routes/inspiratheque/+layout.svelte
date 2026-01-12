@@ -47,8 +47,7 @@
 	const current_view_i = $derived(views.indexOf(page.url.pathname.split('/')[2]));
 
 	function toggle_window(window_id: Windows) {
-		if (window_manager.windows[window_id]?.closed) window_manager.open_window(window_id);
-		else window_manager.close_window(window_id);
+		window_manager.toggle_window(window_id);
 	}
 
 	onMount(() => {
@@ -63,10 +62,10 @@
 	<Emoji>🕺</Emoji>
 
 	<div class="grid-12 mb-gap -ml-gap pb-gap pl-gap">
-		<div class="col-span-3 -mt-0.5">
+		<div class="col-span-full -mt-0.5 lg:col-span-3">
 			<Tabs items={['explorateur', 'liste', 'grille']} active_item_i={current_view_i} border_t>
 				{#snippet rendered(item, i)}
-					<a class="capitalize" href="/inspiratheque/{item}"> {item}</a>
+					<a class="capitalize" href="/inspiratheque/{item}{page.url.search}"> {item}</a>
 				{/snippet}
 			</Tabs>
 		</div>
@@ -83,15 +82,18 @@
 				>
 			{/each}
 		</div> -->
-		<div class="col-span-4">
+		<div
+			class="col-span-full flex flex-col-reverse items-end gap-1.5 whitespace-nowrap lg:col-span-6 lg:flex-row lg:items-center"
+		>
+			<div><Button class="shrink-0" onclick={() => toggle_window('tags')}>Filtres</Button></div>
 			<Search id="s" />
 		</div>
-		<div class="col-span-2 flex">
+		<div class="flex- col-span-2 hidden">
 			<div class="flex shrink-0 items-center gap-2">
-				<Button class="shrink-0" variant="icon" onclick={() => toggle_window('info')}>
+				<!-- <Button class="shrink-0" variant="icon" onclick={() => toggle_window('info')}>
 					<img src="/icons/help_book.webp" class="size-6" />
-				</Button>
-				<Button size="sm" class="shrink-0" onclick={() => toggle_window('tags')}>Filtres</Button>
+				</Button> -->
+
 				<!-- <Button class="aspect-square shrink-0" variant="icon" onclick={() => toggle_window('tags')}>
 					<div class="flex size-6 items-center justify-center text-lg">#</div>
 				</Button> -->
@@ -117,16 +119,16 @@
 				<Button class="shrink-0">Ré</Button>
 			</div>
 		</div> -->
-		<div class="col-span-3 text-right">
+		<div
+			class="col-span-full flex items-center justify-end gap-0.5 text-right whitespace-nowrap max-lg:-order-1 max-lg:-mt-11 lg:col-span-3 lg:col-start-10"
+		>
+			<Button class="shrink-0" variant="icon" onclick={() => toggle_window('info')}>
+				<img src="/icons/help_book.webp" class="size-6" />
+			</Button>
 			<Button size="md" onclick={open_submitter}>Soumettre un lien</Button>
 		</div>
 	</div>
-	<!-- <a href="/inspiratheque/explorateur">explorateur</a>
-	<a href="/inspiratheque/liste">liste</a> -->
 
-	<!-- <div class="lg:col-start-10- col-span-full flex items-center justify-end lg:col-span-2">
-		<Button size="md" onclick={open_submitter}>Soumettre un lien</Button>
-	</div> -->
 	{@render children?.()}
 </div>
 <!-- <div class=" fixed top-2 right-96 z-200">

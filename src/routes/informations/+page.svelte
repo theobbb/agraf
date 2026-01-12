@@ -32,9 +32,9 @@
 >
 	{#each items as { id, title, body, expand }, i}
 		<div
-			class=" w-lg- row-span-4- col-span-12 max-lg:mt-gap!"
+			class="row-span-4- relative col-span-12 max-lg:mt-gap!"
 			style="grid-column: span 16 / span 16; grid-column-start: {i +
-				1}; grid-row-start: 1; margin-top: {i * 33}px;"
+				1}; grid-row-start: 1; margin-top-: {i * 33}px;"
 		>
 			<Window class="relative" title={title || ''} {id} manager={window_manager} hidden>
 				<div class="mt-1.5 mb-12">

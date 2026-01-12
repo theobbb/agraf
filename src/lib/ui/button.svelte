@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import type { HTMLButtonAttributes } from 'svelte/elements';
 
 	type Variant = 'pixel' | 'icon';
 	type Size = 'sm' | 'md' | 'lg';
@@ -9,15 +10,13 @@
 		size = 'md',
 		uppercase = true,
 		class: cx,
-		onclick,
-		children
-	}: {
+		children,
+		...props
+	}: HTMLButtonAttributes & {
 		variant?: Variant;
-		type?: 'button' | 'submit';
 		size?: Size;
 		uppercase?: boolean;
 		class?: string;
-		onclick?: () => void;
 		children: Snippet;
 	} = $props();
 
@@ -39,7 +38,7 @@
 	};
 </script>
 
-<button {onclick} class={[uppercase && 'uppercase', variant, variant_cx[variant], cx]} {type}>
+<button {...props} class={[uppercase && 'uppercase', variant, variant_cx[variant], cx]} {type}>
 	{@render children?.()}
 </button>
 

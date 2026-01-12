@@ -6,25 +6,13 @@
 
 	import { links } from '../../static';
 
-	import type { ButtonItem, LinkItem, RoadmapItem } from './footer-roadmap';
+	import type { LinkItem, RoadmapItem } from './footer-roadmap';
 	import Button from '$lib/ui/button.svelte';
 	import Author from '$lib/components/author.svelte';
 	import Explosion from '$lib/components/explosion.svelte';
-	import { use_current_manager } from '$lib/components/windows/window-manager.svelte';
-	import ShutDown from './shut-down.svelte';
-	import { goto, pushState, replaceState } from '$app/navigation';
-	import { page } from '$app/state';
-	import { url_query_param } from '$lib/utils/url';
 	const { onclose } = $props();
 
-	const window_manager_ctx = use_current_manager();
-	const window_manager = $derived(window_manager_ctx.value);
-
-	const windows_array = $derived(window_manager ? window_manager.windows_array : []);
-
 	const current_year = new Date().getFullYear();
-
-	let is_shut_down = $state(false);
 
 	let on_explode: () => void = $state(() => {});
 
@@ -36,13 +24,8 @@
 		return path.every((segment, i) => active_path[i] === segment);
 	}
 
-	function on_hover(path: string[], on_hover?: () => void) {
+	function on_hover(path: string[]) {
 		active_path = path;
-		if (on_hover) on_hover();
-	}
-
-	function on_page_hover() {
-		console.log('page hover');
 	}
 
 	function handleMouseLeaveMenu() {
@@ -55,48 +38,13 @@
 	async function open_auth() {
 		await login();
 	}
-	$inspect(page);
 
 	onMount(() => {
 		get_user();
 	});
 
-	const window_links: ButtonItem[] = $derived(
-		[...windows_array].map(({ id, title }) => ({
-			name: title,
-			type: 'button',
-			onclick: () => window_manager?.open_window(id)
-		}))
-	);
-
-	const pages = links.map(({ name, href }) => ({
-		name,
-		href,
-		type: 'link'
-	})) as LinkItem[];
-
-	const roadmap: RoadmapItem[] = $derived([
-		{
-			name: 'Programmes',
-			icon: 'windows',
-			type: 'parent',
-			children: window_links
-		},
-
-		{
-			name: 'Pages',
-			icon: 'globe',
-			type: 'parent',
-			children: pages
-		},
-		{
-			name: 'Liens',
-			type: 'link',
-			icon: 'email',
-			href: '/liens'
-		},
-
-		{ type: 'divider' },
+	const pages = links.map(({ name, href }) => ({ name, href, type: 'link' })) as LinkItem[];
+	const roadmap: RoadmapItem[] = [
 		{
 			name: 'Email',
 			type: 'link',
@@ -124,7 +72,20 @@
 			}
 		},
 		{ type: 'divider' },
+		{
+			name: 'Liens',
+			type: 'link',
+			icon: 'email',
+			href: '/liens'
+		},
+		{
+			name: 'Pages',
+			icon: 'window',
+			type: 'parent',
+			children: pages
+		},
 
+		{ type: 'divider' },
 		{
 			name: 'Corbeille',
 			icon: 'recycle-bin',
@@ -142,10 +103,13 @@
 			icon: 'shut-down',
 			type: 'button',
 			onclick: () => {
-				is_shut_down = true;
+				console.log('fermer');
+				window.close();
+
+				// goto('https://www.youtube.com/watch?v=xvFZjo5PgG0&list=RDxvFZjo5PgG0');
 			}
 		}
-	]);
+	];
 </script>
 
 <div class="absolute top-0 left-0 -z-10 -translate-y-full">
@@ -198,7 +162,7 @@
 
 		<div
 			class="group relative m-0.5 flex flex-col px-gap py-1 pr-8 hover:bg-text hover:text-bg"
-			onmouseenter={() => on_hover(path, item.on_hover)}
+			onmouseenter={() => on_hover(path)}
 		>
 			<div class="flex items-center gap-2">
 				{#if item.icon}
@@ -224,7 +188,7 @@
 				{/if}
 			</div>
 			{#if item.type === 'parent' && item.children && is_visible}
-				<div class="min-w-full- absolute top-0 left-full w-fit bg-bg shadow">
+				<div class="absolute top-0 left-full min-w-full bg-bg shadow">
 					{@render group(item.children, path)}
 				</div>
 			{/if}
@@ -243,7 +207,3 @@
 {/snippet}
 
 <Explosion bind:on_explode />
-
-{#if is_shut_down}
-	<ShutDown />
-{/if}

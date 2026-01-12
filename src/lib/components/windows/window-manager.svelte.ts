@@ -39,11 +39,51 @@ export class WindowManager<T extends string> {
 		if (this.windows[id]) this.windows[id]!.closed = true;
 	}
 
-	open_window(id: T) {
-		if (!this.windows[id]) return;
+	async open_window(id: T) {
+		const win = this.windows[id];
+		if (!win) return;
+
+		// 1. Reveal the window first
 		this.focus_window(id);
-		this.windows[id]!.closed = false;
-		this.windows[id]!.minimized = false;
+		win.closed = false;
+		win.minimized = false;
+
+		// 2. Wait for Svelte to flush the DOM changes (making the element visible)
+		// We use a tick-like delay to ensure the container ref is available and visible
+		await Promise.resolve();
+
+		if (win.container) {
+			this.ensure_in_view(win.container);
+		}
+	}
+
+	toggle_window(id: T) {
+		const win = this.windows[id];
+		if (!win) return;
+		if (win.closed || win.minimized) {
+			this.open_window(id);
+		} else {
+			this.close_window(id);
+		}
+	}
+
+	private ensure_in_view(el: HTMLElement) {
+		const rect = el.getBoundingClientRect();
+
+		// Check if the window is outside the viewport
+		const isVisible =
+			rect.top >= 0 &&
+			rect.left >= 0 &&
+			rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+			rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+
+		if (!isVisible) {
+			el.scrollIntoView({
+				behavior: 'smooth',
+				block: 'center', // Centers the window vertically in view
+				inline: 'nearest'
+			});
+		}
 	}
 }
 

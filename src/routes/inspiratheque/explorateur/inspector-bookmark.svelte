@@ -69,7 +69,7 @@
 		<Description {item} />
 	</div>
 
-	<div class="mb-4">
+	<div class="mb-1.5">
 		<div class="flex items-center justify-between pb-1">
 			<a href={item.url}>
 				{item.url}
@@ -88,7 +88,7 @@
 				</a>
 			</div>
 		</div>
-		<div class=" bg-black/10 max-lg:hidden" style="aspect-ratio: 128/80">
+		<div class="bg-black/10 max-lg:hidden" style="aspect-ratio: 128/80">
 			{#if item.screenshot}
 				<img src={pocketbase.files.getURL(item, item.screenshot)} alt="screenshot" />
 			{/if}

@@ -37,7 +37,7 @@
 <div class="mt-8 space-y-2.5">
 	{#each data.pagination_bookmarks.items as item}
 		<div class="grid-12">
-			<div class="col-span-3 text-balance">
+			<div class="col-span-full text-balance lg:col-span-3">
 				<Description {item} />
 				<!-- <div>{item.title}</div>
 				<div class="text-2">{item.description}</div>
@@ -45,7 +45,7 @@
 				<div></div> -->
 			</div>
 
-			<a class="col-span-2" style="aspect-ratio: 128/80" href={item.url} target="_blank">
+			<a class="col-span-full aspect-128/80 lg:col-span-2" style="" href={item.url} target="_blank">
 				{#if item.screenshot}
 					<img
 						class="max-h-48 object-contain"
@@ -57,7 +57,7 @@
 					<div class="h-full w-full bg-black/10"></div>
 				{/if}
 			</a>
-			<div class="col-span-4">
+			<div class="col-span-full lg:col-span-4">
 				<a href={item.url}>{item.url}</a>
 				<div>{item.expand.parent?.path}</div>
 
@@ -81,7 +81,7 @@
 					</Button>
 				</div>
 			</div>
-			<div class="col-span-3">
+			<div class="col-span-full lg:col-span-3">
 				<div class="text-2 inline">[{format_time(item.created)}]</div>
 				<div class="inline">Ajouté par <Author author={item.author} /></div>
 			</div>

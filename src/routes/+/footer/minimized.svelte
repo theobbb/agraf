@@ -1,13 +1,5 @@
 <script lang="ts">
-	import Explosion from '$lib/components/explosion.svelte';
-	import {
-		use_current_manager,
-		type WindowManager
-	} from '$lib/components/windows/window-manager.svelte';
-	import Button from '$lib/ui/button.svelte';
-	import Inset from '$lib/ui/inset.svelte';
-	import { onMount } from 'svelte';
-	import FooterMenu from './footer-menu.svelte';
+	import { use_current_manager } from '$lib/components/windows/window-manager.svelte';
 
 	//const { window_manager }: { window_manager?: WindowManager<T> } = $props();
 
@@ -23,7 +15,9 @@
 	{#each minimized as window}
 		<button
 			class="relative w-42 cursor-pointer border-x px-gap py-1.5 text-left"
-			onclick={() => (window.minimized = false)}
+			onclick={() => {
+				if (window_manager) window_manager.open_window(window.id);
+			}}
 		>
 			<div class="-translate-y-px overflow-hidden text-ellipsis">{window.title}</div>
 		</button>

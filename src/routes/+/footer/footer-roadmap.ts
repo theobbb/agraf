@@ -2,13 +2,14 @@ export type BaseItem = {
 	name: string;
 	icon?: string;
 	emoji?: string;
+	on_hover?: () => void;
 };
 export type LinkItem = BaseItem & {
 	type: 'link';
 	href: string;
 };
 
-type ButtonItem = BaseItem & {
+export type ButtonItem = BaseItem & {
 	type: 'button';
 	onclick: () => void;
 };

@@ -1,14 +1,24 @@
 import { pocketbase } from '$lib/pocketbase';
 import type { BookmarkTagGroupsRecord, BookmarkTagsRecord } from '$lib/pocketbase.types';
+import type { ExpandedBookmarkFoldersRecord } from './types';
 
 export async function load() {
-	const tags: BookmarkTagsRecord[] = await pocketbase
-		.collection('bookmark_tags')
-		.getFullList({ sort: '-bookmark_count', filter: `bookmark_count > 0` });
+	const [tags, tag_groups, folders]: [
+		BookmarkTagsRecord[],
+		BookmarkTagGroupsRecord[],
+		ExpandedBookmarkFoldersRecord[]
+	] = await Promise.all([
+		pocketbase
+			.collection('bookmark_tags')
+			.getFullList<BookmarkTagsRecord>({ sort: '-bookmark_count', filter: `bookmark_count > 0` }),
+		pocketbase
+			.collection('bookmark_tag_groups')
+			.getFullList<BookmarkTagGroupsRecord>({ sort: '-tag_count', filter: `tag_count > 0` }),
+		pocketbase.collection('bookmark_folders').getFullList<ExpandedBookmarkFoldersRecord>({
+			sort: 'title',
+			fields: 'id,parent,title,description'
+		})
+	]);
 
-	const tag_groups: BookmarkTagGroupsRecord[] = await pocketbase
-		.collection('bookmark_tag_groups')
-		.getFullList({ sort: '-tag_count', filter: `tag_count > 0` });
-
-	return { tags, tag_groups };
+	return { tags, tag_groups, folders };
 }

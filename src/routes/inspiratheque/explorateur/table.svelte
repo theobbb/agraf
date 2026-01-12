@@ -11,6 +11,7 @@
 	import type { Explorer } from './explorer.svelte';
 
 	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
+	import { page } from '$app/state';
 
 	const {
 		explorer,
@@ -30,7 +31,7 @@
 
 	function inspect(id: string) {
 		if (!id) goto('/inspiratheque/explorateur');
-		goto('/inspiratheque/explorateur/' + id, { replaceState: true });
+		goto('/inspiratheque/explorateur/' + id + page.url.search, { replaceState: true });
 	}
 
 	// 	function new_item(folder_i: number) {
@@ -50,7 +51,7 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 
 <div
-	class="grid auto-cols-[14%] grid-flow-col-dense divide-x overflow-x-auto whitespace-nowrap select-none md:auto-cols-[10%] xl:auto-cols-[7.5%]"
+	class="divide-x- grid auto-cols-[14%] grid-flow-col-dense overflow-x-auto whitespace-nowrap select-none md:auto-cols-[10%] xl:auto-cols-[7.5%]"
 >
 	{#each navigation as col, i}
 		<!-- svelte-ignore a11y_no_static_element_interactions -->

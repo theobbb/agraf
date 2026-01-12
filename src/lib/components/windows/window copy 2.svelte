@@ -32,24 +32,7 @@
 		children: Snippet;
 	} = $props();
 
-	if (manager && !manager.windows[id]) {
-		manager.windows[id] = {
-			id,
-			title,
-			z_index: 100,
-			minimized: false,
-			closed: hidden,
-			translate: { x: 0, y: 0 },
-			size: { width: 0, height: 0 },
-			is_floating: false,
-			ghost_size: { width: 0, height: 0 },
-			is_expanded: false,
-			container: null
-		};
-	}
-
-	// We use a fallback to a local object so the UI doesn't crash if manager is missing
-	const local_fallback = $state({
+	const base_window = $state({
 		id,
 		title,
 		z_index: 100,
@@ -62,18 +45,16 @@
 		is_expanded: false,
 		container: null
 	});
-	const target = $derived(manager?.windows[id] ?? local_fallback);
-
-	// Derived visibility - access target properties directly to ensure reactivity
-	const is_visible = $derived(!target.closed && !target.minimized);
-
-	let container: HTMLDialogElement | HTMLDivElement | null = $state(null);
-	$effect(() => {
-		if (container) target.container = container;
-	});
+	if (manager) {
+		manager.windows[id] = manager?.windows?.[id] || base_window;
+	}
+	const target = $derived(manager?.windows[id] || base_window);
 
 	const { z_index, closed, minimized, translate, size, is_floating, ghost_size, is_expanded } =
-		$derived(target);
+		$derived(manager?.windows?.[id] || base_window);
+	const visible = $derived(manager?.windows[id] ? !closed && !minimized : !hidden);
+
+	let container: HTMLDialogElement | HTMLDivElement | null = $state(null);
 
 	const start = { cursor: { x: 0, y: 0 }, window: { x: 0, y: 0 } };
 
@@ -236,8 +217,8 @@
 	}
 
 	onMount(() => {
-		//if (!container) return;
-		//target.container = container;
+		if (!container) return;
+		target.container = container;
 
 		if (dialog && container instanceof HTMLDialogElement) {
 			container.showModal();
@@ -260,10 +241,10 @@
 	class={[
 		cx,
 		'window pointer-events-auto border bg-bg shadow',
-		is_visible ? '' : 'invisible',
+		visible ? '' : 'invisible',
 		is_floating ? 'absolute! max-h-[unset]! min-h-[unset]! max-w-[unset]! min-w-[unset]!' : '',
 		is_expanded && 'fixed! inset-0 z-1000! h-full! w-full!',
-		is_visible && is_expanded && 'expanded'
+		visible && is_expanded && 'expanded'
 	]}
 	style="z-index: {z_index}; {style}; 
 	 overscroll-behavior: contain; {is_expanded

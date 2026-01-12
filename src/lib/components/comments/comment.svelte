@@ -6,7 +6,7 @@
 
 	import Button from '$lib/ui/button.svelte';
 	import IconMessage from '$lib/ui/icons/icon-message.svelte';
-	import { format_date, format_time } from '$lib/utils/format-date';
+	import { format_time } from '$lib/utils/format-date';
 	import Author from '../author.svelte';
 	import CommentEditor from './comment-editor.svelte';
 	import Comment from './comment.svelte';
@@ -41,7 +41,7 @@
 <div
 	class={[
 		'pb-1.5- group flex items-start justify-between gap-x-4 border-dashed border-text py-1 pb-1.5 last:border-b',
-		system_event ? '' : 'border-t'
+		system_event ? '' : 'border-b'
 	]}
 >
 	<div class="">

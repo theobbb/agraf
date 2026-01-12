@@ -74,23 +74,23 @@
 		<div class={['grid-12 mb-24 gap-y-0!']}>
 			{#each grouped as { role, entries }}
 				<div
-					class="py-1- col-span-6 border-t lg:col-span-4"
+					class="py-1- col-span-6 border-t border-dashed lg:col-span-4"
 					style="grid-row: span {entries.length} / span {entries.length};"
 				>
 					{role.name}
 				</div>
 
 				{#each entries as member, i}
-					<div class={['whitespace-nowrap- py-1- col-span-6', i == 0 && 'border-t']}>
+					<div class={['whitespace-nowrap- py-1- col-span-6', i == 0 && 'border-t border-dashed']}>
 						{member.expand?.member?.name}
 					</div>
 				{/each}
 			{/each}
 		</div>
 	</div>
-	<div class="grid-12 pointer-events-none top-0 -mt-112 mb-32">
+	<div class="grid-12 pointer-events-none relative top-0 -mt-112 mb-32">
 		<Window
-			class={['col-span-11', 'lg:col-span-4 lg:col-start-8']}
+			class={['col-span-11', 'lg:col-span-4 lg:col-start-9']}
 			id="comite"
 			manager={window_manager}
 			title="Comité exécutif"
@@ -109,7 +109,7 @@
 			</div>
 		</Window>
 		<Window
-			class="col-span-11 lg:col-span-4 lg:col-start-8"
+			class="col-span-11 lg:col-span-4 lg:col-start-9"
 			id="assemblee"
 			manager={window_manager}
 			title="Assemblée générale (AG)"

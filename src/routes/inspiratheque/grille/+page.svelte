@@ -1,8 +1,5 @@
 <script lang="ts">
 	import { pocketbase } from '$lib/pocketbase';
-	import { format_date } from '$lib/utils/format-date';
-	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
-	import Button from '$lib/ui/button.svelte';
 	import Pagination from '$lib/components/pagination.svelte';
 	import Description from '../description.svelte';
 
@@ -11,7 +8,7 @@
 
 <div class="grid-12 mt-8">
 	{#each data.pagination_bookmarks.items as item}
-		<div class="col-span-3">
+		<div class="col-span-6 sm:col-span-6 lg:col-span-4 xl:col-span-3">
 			<a href={item.url} target="_blank">
 				<div class="" style="aspect-ratio: 128/80">
 					{#if item.screenshot}

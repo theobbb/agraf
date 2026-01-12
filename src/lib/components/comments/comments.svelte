@@ -14,15 +14,10 @@
 
 	const {
 		parent,
-		collection,
-		system_ctx_comment
+		collection
 	}: {
 		parent: string;
 		collection: CommentsCollectionOptions;
-		system_ctx_comment?: {
-			body: string;
-			created: IsoAutoDateString;
-		};
 	} = $props();
 
 	setContext('collection', collection);
