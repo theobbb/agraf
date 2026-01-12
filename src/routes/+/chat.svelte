@@ -7,7 +7,6 @@
 	import Button from '$lib/ui/button.svelte';
 	import Input from '$lib/ui/input.svelte';
 	import Loader from '$lib/ui/loader.svelte';
-	import { format_date } from '$lib/utils/format-date';
 	import { onMount } from 'svelte';
 
 	const { window }: { window: Window<any> } = $props();
@@ -40,8 +39,8 @@
 	async function load_chat() {
 		const list = await pocketbase
 			.collection('chat')
-			.getList<ChatRecord>(1, 50, { sort: 'created' });
-		chat = list.items;
+			.getList<ChatRecord>(1, 64, { sort: '-created' });
+		chat = list.items.reverse();
 
 		loaded = true;
 	}

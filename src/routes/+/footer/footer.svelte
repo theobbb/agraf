@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte';
 	import FooterMenu from './footer-menu.svelte';
 	import Minimized from './minimized.svelte';
+	import type { Attachment } from 'svelte/attachments';
 
 	//const { window_manager }: { window_manager?: WindowManager<T> } = $props();
 
@@ -16,8 +17,6 @@
 	const window_manager = $derived(window_manager_ctx.value);
 
 	const windows_array = $derived(window_manager ? window_manager.windows_array : []);
-
-	const minimized = $derived(windows_array.filter((window) => window.minimized));
 
 	const current_year = new Date().getFullYear();
 
@@ -58,7 +57,9 @@
 	};
 </script>
 
-<footer class="fixed right-gap bottom-2.5 left-gap z-500 lg:bottom-0 lg:border-t lg:bg-bg">
+<footer
+	class="fixed right-gap bottom-2.5 left-gap z-500 max-lg:hidden lg:bottom-0 lg:border-t lg:bg-bg"
+>
 	<div class="grid-12 max-lg:text-sm">
 		<div class="relative col-span-2">
 			{#if menu_open}

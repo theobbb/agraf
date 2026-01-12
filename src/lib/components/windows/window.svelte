@@ -245,12 +245,6 @@
 	});
 </script>
 
-{#if is_floating}
-	<div
-		class={[cx, 'bg-red-900-']}
-		style="width: {ghost_size.width}px; height: {ghost_size.height}px;"
-	></div>
-{/if}
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <svelte:element
 	this={dialog ? 'dialog' : 'div'}
@@ -322,6 +316,12 @@
 		<ResizeHandles {start_resize} />
 	{/if}
 </svelte:element>
+{#if is_floating}
+	<div
+		class={[cx, 'bg-red-900-']}
+		style="width: {ghost_size.width}px; height: {ghost_size.height}px;"
+	></div>
+{/if}
 
 <style>
 	dialog::backdrop {

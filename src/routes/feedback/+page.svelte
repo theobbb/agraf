@@ -12,6 +12,7 @@
 	import Dialog from '$lib/ui/skeleton/dialog.svelte';
 	import { onMount } from 'svelte';
 	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
+	import Chat from '../+/chat.svelte';
 
 	const window_manager = use_window_manager('feedback');
 
@@ -65,7 +66,7 @@
 
 <Emoji>🦋</Emoji>
 
-<div class={['grid-12 pointer-events-none relative']}>
+<div class={['grid-12 pointer-events-none relative mb-24']}>
 	<Window
 		title="Boîte de commentaires - Formulaire"
 		manager={window_manager}
@@ -122,6 +123,22 @@
 				tolérée, et les réponses de cette nature ne seront pas prises en compte.
 			</div>
 		</div>
+	</Window>
+
+	<Window
+		title="Chat (accueil)"
+		manager={window_manager}
+		id="chat"
+		class={[
+			'mt-24-',
+			'col-start-2- col-span-11 max-h-94 max-lg:mt-12',
+			'sm:row-start-10- sm:col-span-4 sm:col-start-9',
+			'lg:col-span-5 lg:col-start-7 lg:row-span-4 lg:row-start-8'
+		]}
+	>
+		{#if window_manager.windows['chat']}
+			<Chat window={window_manager.windows['chat']} />
+		{/if}
 	</Window>
 </div>
 {#if onsubmit_response}

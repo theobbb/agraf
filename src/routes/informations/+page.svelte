@@ -4,7 +4,6 @@
 	import Window from '$lib/components/windows/window.svelte';
 	import { SvelteSet } from 'svelte/reactivity';
 	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
-	import Footer from '../+/footer/footer.svelte';
 	import Markdown from '$lib/markdown.svelte';
 
 	const { data } = $props();
@@ -16,13 +15,10 @@
 	let opened_windows: Set<string> = $state(new SvelteSet());
 
 	function toggle_window(id: string) {
+		window_manager.toggle_window(id);
 		if (opened_windows.has(id)) opened_windows.delete(id);
 		else opened_windows.add(id);
-		if (windows[id]?.closed) window_manager.open_window(id);
-		else window_manager.close_window(id);
 	}
-
-	//top: {i * 33}px; left: {i * 33}px;
 </script>
 
 <Emoji>🤓</Emoji>
@@ -34,14 +30,14 @@
 		<div
 			class="row-span-4- relative col-span-12 max-lg:mt-gap!"
 			style="grid-column: span 16 / span 16; grid-column-start: {i +
-				1}; grid-row-start: 1; margin-top-: {i * 33}px;"
+				1}; grid-row-start: 1; margin-top: {i * 33}px;"
 		>
-			<Window class="relative" title={title || ''} {id} manager={window_manager} hidden>
+			<Window class="relative" title={title || ''} {id} manager={window_manager}>
 				<div class="mt-1.5 mb-12">
 					<div>
 						<Markdown content={body || ''}></Markdown>
 					</div>
-					<div class="mt-2 mb-2.5 flex justify-end gap-1">
+					<div class="mt-2 mb-2.5 flex flex-wrap justify-end gap-1 whitespace-nowrap">
 						{#each expand.tags as tag}
 							<div class="bg-text px-1 text-bg">{tag.title}</div>
 						{/each}
@@ -65,7 +61,7 @@
 						class="justify-center- flex w-full cursor-pointer gap-2 py-2 text-left hover:italic"
 					>
 						<div class="font-serif">
-							{windows[id]?.closed ? '' : '*'}
+							{windows[id]?.closed || windows[id]?.minimized ? '' : '*'}
 							{title}
 						</div>
 						<!-- <div class="flex gap-1">

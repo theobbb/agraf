@@ -14,7 +14,7 @@ export type ButtonItem = BaseItem & {
 	onclick: () => void;
 };
 
-type ParentItem = BaseItem & {
+export type ParentItem = BaseItem & {
 	type: 'parent';
 	children: RoadmapItem[];
 };

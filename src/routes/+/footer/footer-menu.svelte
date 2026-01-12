@@ -6,15 +6,17 @@
 
 	import { links } from '../../static';
 
-	import type { ButtonItem, LinkItem, RoadmapItem } from './footer-roadmap';
+	import type { ButtonItem, LinkItem, ParentItem, RoadmapItem } from './footer-roadmap';
 	import Button from '$lib/ui/button.svelte';
 	import Author from '$lib/components/author.svelte';
 	import Explosion from '$lib/components/explosion.svelte';
 	import { use_current_manager } from '$lib/components/windows/window-manager.svelte';
 	import ShutDown from './shut-down.svelte';
-	import { goto, pushState, replaceState } from '$app/navigation';
 	import { page } from '$app/state';
-	import { url_query_param } from '$lib/utils/url';
+	import WindowTrash from './window-trash.svelte';
+	import WindowSettings from './window-settings.svelte';
+	import type { Attachment } from 'svelte/attachments';
+
 	const { onclose } = $props();
 
 	const window_manager_ctx = use_current_manager();
@@ -24,6 +26,8 @@
 
 	const current_year = new Date().getFullYear();
 
+	let window_trash_open = $state(false);
+	let window_settings_open = $state(false);
 	let is_shut_down = $state(false);
 
 	let on_explode: () => void = $state(() => {});
@@ -55,7 +59,6 @@
 	async function open_auth() {
 		await login();
 	}
-	$inspect(page);
 
 	onMount(() => {
 		get_user();
@@ -67,6 +70,10 @@
 			type: 'button',
 			onclick: () => window_manager?.open_window(id)
 		}))
+	);
+
+	const linktree: LinkItem[] = $derived(
+		[...page.data.links].map(({ name, url }) => ({ name, href: url, type: 'link' }))
 	);
 
 	const pages = links.map(({ name, href }) => ({
@@ -90,10 +97,22 @@
 			children: pages
 		},
 		{
-			name: 'Liens',
-			type: 'link',
+			name: 'Linktree',
+			type: 'parent',
 			icon: 'email',
-			href: '/liens'
+			children: [
+				{
+					name: 'Linktree (page)',
+					type: 'link',
+					icon: 'email',
+					href: '/liens'
+				},
+				{
+					name: 'Linktree (liens)',
+					type: 'parent',
+					children: linktree
+				}
+			]
 		},
 
 		{ type: 'divider' },
@@ -129,13 +148,17 @@
 			name: 'Corbeille',
 			icon: 'recycle-bin',
 			type: 'button',
-			onclick: () => {}
+			onclick: () => {
+				window_trash_open = true;
+			}
 		},
 		{
 			name: 'Paramètres',
 			icon: 'settings',
 			type: 'button',
-			onclick: () => {}
+			onclick: () => {
+				window_settings_open = true;
+			}
 		},
 		{
 			name: 'Arrêter',
@@ -146,9 +169,24 @@
 			}
 		}
 	]);
+
+	const blur: Attachment = (element) => {
+		const handle_click = (event: MouseEvent) => {
+			// If the click is NOT on the menu and NOT inside the menu
+			if (element && !element.contains(event.target as Node) && !event.defaultPrevented) {
+				onclose();
+			}
+		};
+
+		document.addEventListener('click', handle_click, true);
+
+		return () => {
+			document.removeEventListener('click', handle_click, true);
+		};
+	};
 </script>
 
-<div class="absolute top-0 left-0 -z-10 -translate-y-full">
+<div class="absolute top-0 left-0 -z-10 -translate-y-full" {@attach blur}>
 	<div class="grid w-lg border bg-bg pl-gap shadow sm:grid-cols-[3fr_2fr]">
 		<div class="flex flex-col justify-between border-r pr-gap">
 			<div class=" py-gap-">
@@ -156,7 +194,7 @@
 					<div class="">
 						<img
 							class="-my-2 inline aspect-square size-6"
-							src="/icons/edit-user.webp"
+							src="/icons/keys.webp"
 							alt="edit-user-icon"
 						/>
 					</div>
@@ -190,6 +228,35 @@
 		</div>
 	</div>
 </div>
+
+{#snippet item_content(item: LinkItem | ButtonItem | ParentItem)}
+	<div
+		class="group m-0.5- relative flex cursor-pointer flex-col px-gap py-1.5 pr-8 hover:bg-text hover:text-bg"
+	>
+		<div class="flex items-center justify-between gap-2">
+			<div class="flex items-center gap-2">
+				<!-- {#if item.icon}
+					<img
+						class="-my-2 -ml-1.5 inline size-6"
+						src="/icons/{item.icon}.webp"
+						alt="icon-{item.name}"
+					/>
+				{/if} -->
+				{item.name}
+				<!-- {#if item.type == 'link'}
+					<div class=" inline-flex items-center justify-between gap-x-2">
+						<IconExternalLink />
+					</div>
+				{/if} -->
+			</div>
+			{#if item.type === 'parent'}
+				<div class="-mr-7.5 inline-flex items-center justify-between gap-x-2">
+					<IconChevronRight />
+				</div>
+			{/if}
+		</div>
+	</div>
+{/snippet}
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 {#snippet item_node(item: RoadmapItem, parent_path: string[])}
 	{#if item.type != 'divider'}
@@ -197,53 +264,58 @@
 		{@const is_visible = check_visible(path)}
 
 		<div
-			class="group relative m-0.5 flex flex-col px-gap py-1 pr-8 hover:bg-text hover:text-bg"
+			class="border-b- relative flex flex-col border-dashed"
 			onmouseenter={() => on_hover(path, item.on_hover)}
 		>
-			<div class="flex items-center gap-2">
-				{#if item.icon}
-					<img
-						class="-my-2 -ml-1.5 inline size-6"
-						src="/icons/{item.icon}.webp"
-						alt="icon-{item.name}"
-					/>
-				{/if}
-				{#if item.type === 'link'}
-					<a href={item.href} class="hover:underline">
-						{item.name}
-					</a>
-				{:else if item.type === 'button'}
-					<button onclick={item.onclick} class="text-left">
-						{item.name}
-					</button>
-				{:else if item.type === 'parent'}
-					<div class="-mr-8 inline-flex items-center justify-between gap-x-2">
-						<div class="pr-8">{item.name}</div>
-						<IconChevronRight />
-					</div>
-				{/if}
-			</div>
+			{#if item.type === 'link'}
+				<a href={item.href}>
+					{@render item_content(item)}
+				</a>
+			{:else if item.type === 'button'}
+				<button onclick={item.onclick} class="text-left">
+					{@render item_content(item)}
+				</button>
+			{:else if item.type === 'parent'}
+				<div>
+					{@render item_content(item)}
+				</div>
+			{/if}
+
 			{#if item.type === 'parent' && item.children && is_visible}
-				<div class="min-w-full- absolute top-0 left-full w-fit bg-bg shadow">
+				<div class="min-w-full- absolute -bottom-px left-full w-fit bg-bg shadow">
 					{@render group(item.children, path)}
 				</div>
 			{/if}
 		</div>
 	{:else}
-		<div class="mx-0.5 border-b border-double"></div>
+		<div class="mx-0.5- border-y py-0.5"></div>
 	{/if}
 {/snippet}
 
 {#snippet group(items: RoadmapItem[], path: string[])}
 	<div class={['w-64- flex  flex-col  text-text', path.length == 0 ? 'w-full' : 'w-fit border']}>
 		{#each items as item, i}
-			{@render item_node(item, path)}
+			<div
+				class={[
+					item.type != 'divider' &&
+						i < items.length - 1 &&
+						items[i + 1]?.type != 'divider' &&
+						'border-b border-dashed'
+				]}
+			>
+				{@render item_node(item, path)}
+			</div>
 		{/each}
 	</div>
 {/snippet}
 
 <Explosion bind:on_explode />
-
+{#if window_settings_open}
+	<WindowSettings onclose={() => (window_settings_open = false)} />
+{/if}
+{#if window_trash_open}
+	<WindowTrash onclose={() => (window_trash_open = false)} />
+{/if}
 {#if is_shut_down}
 	<ShutDown />
 {/if}

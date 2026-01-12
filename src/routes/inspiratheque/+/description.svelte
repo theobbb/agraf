@@ -7,7 +7,7 @@
 		is_bookmark,
 		type ExpandedBookmarkFoldersRecord,
 		type ExpandedBookmarksRecord
-	} from './types';
+	} from '../types';
 
 	const { item }: { item: ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord } = $props();
 </script>

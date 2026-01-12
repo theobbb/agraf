@@ -9,9 +9,11 @@
 	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
 	import Button from '$lib/ui/button.svelte';
 	import Pagination from '$lib/components/pagination.svelte';
-	import Description from '../description.svelte';
+	import Description from '../+/description.svelte';
 	import Comments from '$lib/components/comments/comments.svelte';
 	import Author from '$lib/components/author.svelte';
+	import Buttons from '../+/buttons.svelte';
+	import Likes from '../+/likes.svelte';
 
 	const { data } = $props();
 
@@ -57,10 +59,14 @@
 					<div class="h-full w-full bg-black/10"></div>
 				{/if}
 			</a>
-			<div class="col-span-full lg:col-span-4">
-				<a href={item.url}>{item.url}</a>
+			<div>
+				<Buttons {item} />
+			</div>
+			<div class="col-span-full lg:col-span-3">
 				<div>{item.expand.parent?.path}</div>
-
+				<div>
+					<Likes {item} />
+				</div>
 				<div class="flex items-center gap-2">
 					<IconFolderClosed />
 					<a href="/inspiratheque/explorateur/{item.parent || ''}" class="hover:underline">

@@ -29,7 +29,7 @@
 
 <div class="grid-12 mb-24">
 	{#each posters.items as poster}
-		<div class="col-span-6 md:col-span-4 lg:col-span-3">
+		<div class="col-span-full md:col-span-4 lg:col-span-3">
 			{#if poster.images?.length > 1}
 				<button
 					class="-translate-y-0.5 cursor-pointer"

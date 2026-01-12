@@ -69,7 +69,7 @@
 		/>
 	{/if}
 {:else}
-	<div class="flex items-center gap-2 text-white/50">
+	<div class="text-2 flex items-center gap-2">
 		<Loader /> Chargement des commentaires...
 	</div>
 {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { pocketbase } from '$lib/pocketbase';
 	import Pagination from '$lib/components/pagination.svelte';
-	import Description from '../description.svelte';
+	import Description from '../+/description.svelte';
 
 	const { data } = $props();
 </script>
