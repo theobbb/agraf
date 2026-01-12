@@ -39,7 +39,7 @@
 
 <div class="relative">
 	<div class="">
-		<div class="mb-10 flex max-w-lg flex-wrap gap-x-1 gap-y-1">
+		<div class="mb-5 flex max-w-lg flex-wrap gap-x-1 gap-y-1 lg:mb-10">
 			{#each years as year, i}
 				<a
 					class={[
@@ -54,24 +54,32 @@
 				</a>
 			{/each}
 		</div>
-		<div class={['grid-12 mb-24 gap-y-0! font-serif']}>
+		<div class={['grid-12 mb-24 gap-y-0! ']}>
 			{#each grouped as { role, entries }}
 				<div
-					class="py-1- col-span-6 border-t border-dashed lg:col-span-4"
+					class="py-1- col-span-full border-t border-dashed lg:col-span-4"
 					style="grid-row: span {entries.length} / span {entries.length};"
 				>
-					{role.name}
+					<div class="font-serif max-lg:hidden">{role.name}</div>
+					<div class="mt-0.5 mb-0.5 lg:hidden">{role.name}</div>
 				</div>
 
 				{#each entries as member, i}
-					<div class={['whitespace-nowrap- col-span-6 py-px', i == 0 && 'border-t border-dashed']}>
+					<div
+						class={[
+							'whitespace-nowrap- col-span-full flex items-start gap-x-4 py-px font-serif lg:col-span-6',
+							i == 0 && 'border-dashed lg:border-t'
+						]}
+					>
+						<span class="mt-3.5 inline-flex size-6 shrink-0 rounded-full border-2 max-lg:-mr-1.5"
+						></span>
 						{member.expand?.member?.name}
 					</div>
 				{/each}
 			{/each}
 		</div>
 	</div>
-	<div class="grid-12 -mt-112- pointer-events-none relative top-0 mb-32 lg:absolute">
+	<div class="grid-12 -mt-112- pointer-events-none relative top-0 mb-16 lg:absolute lg:mb-32">
 		<Window
 			class={['col-span-11', 'lg:col-span-4 lg:col-start-9']}
 			id="comite"
@@ -109,7 +117,7 @@
 </div>
 <div class="grid-12 relative mb-32">
 	<Window
-		class="col-span-6 col-start-2"
+		class="col-span-11 col-start-2 lg:col-span-6 lg:col-start-2"
 		title="Objectifs de l'association"
 		id="objectifs"
 		manager={window_manager}
@@ -117,7 +125,7 @@
 		<div class="text-balance- mt-1 mb-12">
 			{#each objectives as objective, i}
 				<span
-					class="rounded-full- inline-flex w-[1.3em] items-center justify-center bg-text px-1.5 text-bg"
+					class="mr-0.5 inline-flex w-[1.3em] items-center justify-center bg-text px-1.5 text-bg"
 				>
 					<div>{i + 1}</div>
 				</span>

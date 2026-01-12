@@ -44,7 +44,7 @@
 		class={[
 			'col-span-9 max-lg:-ml-3 max-sm:-mt-12',
 			'sm:col-span-4 sm:col-start-9 sm:row-span-4 sm:row-start-2',
-			'lg:col-span-3 lg:col-start-9 lg:row-span-7 lg:row-start-1'
+			'lg:col-span-3 lg:col-start-9 lg:row-span-8 lg:row-start-1'
 		]}
 		manager={window_manager}
 		id="featured"
@@ -75,7 +75,7 @@
 		class={[
 			'col-span-full col-start-1 max-sm:mt-12',
 			'sm:col-span-7 sm:col-start-1 sm:row-span-3 sm:row-start-3',
-			'lg:col-span-5 lg:col-start-3 lg:row-span-3 lg:row-start-4'
+			'lg:col-span-5 lg:col-start-3 lg:row-span-2 lg:row-start-4'
 		]}
 		manager={window_manager}
 		id="desc"
@@ -92,7 +92,7 @@
 		class={[
 			'col-span-10 max-sm:-mt-12 max-sm:translate-x-3',
 			'sm:col-span-7 sm:col-start-5 sm:row-start-6',
-			' lg:col-span-4 lg:col-start-2 lg:row-span-3 lg:row-start-7'
+			' lg:col-span-4 lg:col-start-2 lg:row-span-2 lg:row-start-6'
 		]}
 	>
 		<div class="mb-32 pt-1">

@@ -52,7 +52,7 @@
 		]}
 	>
 		<div class="pointer-events-auto">
-			<Button disabled={value == ''} type="submit">Rechercher</Button>
+			<Button type="submit">Rechercher</Button>
 		</div>
 		<!-- <div class="pointer-events-auto">
 			<Button disabled={value == ''} type="submit" variant="icon">
@@ -60,12 +60,7 @@
 			</Button>
 		</div> -->
 		<div class="pointer-events-auto">
-			<Button
-				disabled={!page.url.searchParams.get(query_param)}
-				onclick={reset}
-				variant="icon"
-				class="p-1!"
-			>
+			<Button onclick={reset} variant="icon" class="p-1!">
 				<IconReset />
 			</Button>
 		</div>

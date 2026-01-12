@@ -25,7 +25,7 @@
 		class?: string | string[];
 		style?: string;
 		dialog?: boolean;
-		manager: WindowManager<any>;
+		manager?: WindowManager<any>;
 		hidden?: boolean;
 		header?: Snippet;
 		onclose?: () => void;

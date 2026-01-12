@@ -1,26 +1,11 @@
 <script lang="ts">
-	import Explosion from '$lib/components/explosion.svelte';
-	import {
-		use_current_manager,
-		type WindowManager
-	} from '$lib/components/windows/window-manager.svelte';
 	import Button from '$lib/ui/button.svelte';
 	import Inset from '$lib/ui/inset.svelte';
-	import { onMount } from 'svelte';
 	import FooterMenu from './footer-menu.svelte';
 	import Minimized from './minimized.svelte';
-	import type { Attachment } from 'svelte/attachments';
+	import { auth } from '$lib/components/login/auth.svelte';
 
-	//const { window_manager }: { window_manager?: WindowManager<T> } = $props();
-
-	const window_manager_ctx = use_current_manager();
-	const window_manager = $derived(window_manager_ctx.value);
-
-	const windows_array = $derived(window_manager ? window_manager.windows_array : []);
-
-	const current_year = new Date().getFullYear();
-
-	let menu_open = $state(false);
+	let menu_open = $state(true);
 
 	let time: string = $state(get_time());
 	function get_time() {
@@ -66,7 +51,7 @@
 				<FooterMenu onclose={() => (menu_open = false)} />
 			{/if}
 
-			<Button variant="icon" onclick={() => (menu_open = !menu_open)}>
+			<Button id="footer-menu-toggle" variant="icon" onclick={() => (menu_open = !menu_open)}>
 				<img class="size-6" src="/icons/computer.webp" alt="icon-computer" />
 			</Button>
 		</div>

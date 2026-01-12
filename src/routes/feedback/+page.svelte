@@ -131,8 +131,8 @@
 		id="chat"
 		class={[
 			'mt-24-',
-			'col-start-2- col-span-11 max-h-94 max-lg:mt-12',
-			'sm:row-start-10- sm:col-span-4 sm:col-start-9',
+			'col-start-2- col-span-11 row-start-8 max-h-94 max-lg:mt-12',
+
 			'lg:col-span-5 lg:col-start-7 lg:row-span-4 lg:row-start-8'
 		]}
 	>

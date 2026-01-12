@@ -59,14 +59,11 @@
 					<div class="h-full w-full bg-black/10"></div>
 				{/if}
 			</a>
-			<div>
+
+			<div class="col-span-full lg:col-span-4">
 				<Buttons {item} />
-			</div>
-			<div class="col-span-full lg:col-span-3">
 				<div>{item.expand.parent?.path}</div>
-				<div>
-					<Likes {item} />
-				</div>
+
 				<div class="flex items-center gap-2">
 					<IconFolderClosed />
 					<a href="/inspiratheque/explorateur/{item.parent || ''}" class="hover:underline">
@@ -88,8 +85,8 @@
 				</div>
 			</div>
 			<div class="col-span-full lg:col-span-3">
-				<div class="text-2 inline">[{format_time(item.created)}]</div>
-				<div class="inline">Ajouté par <Author author={item.author} /></div>
+				<div class="text-2 inline-">[{format_time(item.created)}]</div>
+				<div class="inline-">Ajouté par <Author author={item.author} /></div>
 			</div>
 		</div>
 	{/each}

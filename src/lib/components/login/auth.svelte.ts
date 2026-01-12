@@ -1,5 +1,4 @@
 import { browser } from '$app/environment';
-import { onMount } from 'svelte';
 
 export type LoginState = {
 	user: string | null;
@@ -27,7 +26,6 @@ export async function get_user() {
 }
 
 export async function set_user(user: string) {
-	console.log('setting user');
 	if (!browser) return;
 	auth.user = user;
 	localStorage.setItem('user', user);

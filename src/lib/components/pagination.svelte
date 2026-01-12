@@ -24,44 +24,41 @@
 	});
 </script>
 
-<div class="min-w-72- grid w-fit grid-cols-7 gap-x-1.5 font-serif">
-	<div class="flex items-center justify-center gap-1 text-xl">
-		{#if page > 1}
-			<!-- <a href="{route}?page=1" class="link-hover ">
-				<IconChevronLeftDouble />
-			</a> -->
-			<a href="{route}?page={page - 1}" class="link-hover py-0.5">
-				<IconChevronLeft />
-			</a>
-		{:else}
-			<!-- <div class="text-2"><IconChevronLeftDouble /></div> -->
-			<div class="text-2"><IconChevronLeft /></div>
-		{/if}
-	</div>
+<div class="mt-8 mb-12 flex flex-wrap items-end justify-between">
+	<div class="font-serif">total: {totalItems}</div>
+	{#if totalItems > perPage}
+		<div class="min-w-72- flex w-fit items-center gap-1.5">
+			<div class="flex items-center justify-center gap-1 text-xl">
+				{#if page > 1}
+					<a href="{route}?page={page - 1}" class="border py-1.5 hover:bg-text hover:text-bg">
+						<IconChevronLeft />
+					</a>
+				{:else}
+					<div class="text-2"><IconChevronLeft /></div>
+				{/if}
+			</div>
 
-	{#each range as p}
-		<a
-			class={[
-				'border- px-1.5- link-hover w-fit py-0.5 text-center',
-				page == p ? 'link-active' : 'text-2'
-			]}
-			href="{route}?page={p}"
-		>
-			{p}
-		</a>
-	{/each}
+			{#each range as p}
+				<a
+					class={[
+						'flex border px-gap py-1.5 text-center hover:bg-text hover:text-bg',
+						page == p ? 'bg-text text-bg' : ''
+					]}
+					href="{route}?page={p}"
+				>
+					{p}
+				</a>
+			{/each}
 
-	<div class="flex items-center justify-center gap-1 text-xl">
-		{#if page < totalPages}
-			<a href="{route}?page={page + 1}" class="link-hover">
-				<IconChevronRight />
-			</a>
-			<!-- <a href="{route}?page={totalPages}" class="link-hover">
-				<IconChevronRightDouble />
-			</a> -->
-		{:else}
-			<div class="text-2"><IconChevronRight /></div>
-			<!-- <div class="text-2"><IconChevronRightDouble /></div> -->
-		{/if}
-	</div>
+			<div class="flex h-full items-center justify-center gap-1 text-xl">
+				{#if page < totalPages}
+					<a href="{route}?page={page + 1}" class="border py-1.5 hover:bg-text hover:text-bg">
+						<IconChevronRight />
+					</a>
+				{:else}
+					<div class="text-2"><IconChevronRight /></div>
+				{/if}
+			</div>
+		</div>
+	{/if}
 </div>

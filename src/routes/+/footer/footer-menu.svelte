@@ -172,8 +172,17 @@
 
 	const blur: Attachment = (element) => {
 		const handle_click = (event: MouseEvent) => {
-			// If the click is NOT on the menu and NOT inside the menu
-			if (element && !element.contains(event.target as Node) && !event.defaultPrevented) {
+			const target = event.target as HTMLElement;
+			const is_inside_dialog = target.closest('dialog');
+			const is_toggle = target.closest('button[id="footer-menu-toggle"]');
+
+			if (
+				element &&
+				!element.contains(target) &&
+				!is_inside_dialog &&
+				!is_toggle &&
+				!event.defaultPrevented
+			) {
 				onclose();
 			}
 		};
@@ -212,15 +221,15 @@
 						</Button>
 					</div> -->
 			</div>
-			<div class="flex flex-col justify-end border-t py-2 pt-1">
-				<a class="mb-1.5" href="https://3xw.ca/" target="_blank">Site web par 3xw</a>
-				<div class="mb-1.5 max-w-50">
-					<Logo />
-				</div>
-
+			<div class="flex flex-col justify-end border-t pt-1">
 				<div class="text-base/4 font-normal" style="font-family: 'Comic', sans-serif;">
 					<div>© {current_year} AGRAF ❤️ <br /> Tous droits réservés 😡🤬</div>
 				</div>
+				<div class="max-w-50- mt-2">
+					<Logo />
+				</div>
+
+				<a class="text-2 pt-1 pb-1.5" href="https://3xw.ca/" target="_blank">Site web par 3xw</a>
 			</div>
 		</div>
 		<div class=" whitespace-nowrap">

@@ -6,7 +6,7 @@
 </script>
 
 <Dialog title="Paramètres" {onclose}>
-	<div class="mb-12">
+	<div class="mt-1 mb-12">
 		<div>Pas encore fait!</div>
 		<div>Plein de paramètres stylés à venir...</div>
 	</div>

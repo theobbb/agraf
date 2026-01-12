@@ -6,7 +6,7 @@
 </script>
 
 {@render children()}
-<Footer />
+
 <svelte:head>
 	<style>
 		html {
