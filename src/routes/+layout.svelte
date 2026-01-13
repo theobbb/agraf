@@ -13,6 +13,7 @@
 	import Footer from './+/footer/footer.svelte';
 	import { init_window_registry } from '$lib/components/windows/window-manager.svelte';
 	import { init_comments_service } from '$lib/cache/cache-comments.svelte';
+	import Analytics from '$lib/analytics.svelte';
 
 	let { children } = $props();
 
@@ -48,3 +49,5 @@
 {#if auth.dialog_open}
 	<LoginDialog />
 {/if}
+
+<Analytics />
