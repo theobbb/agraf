@@ -35,10 +35,10 @@
 	</div>
 </div> -->
 <!-- <div class="font-serif">{data.pagination_bookmarks.totalItems} liens</div> -->
-<div class="mt-8 space-y-2.5 divide-y divide-dashed">
+<div class="mt-8 space-y-2.5">
 	{#each list.items as item}
 		<div class="grid-12">
-			<div class="col-span-full text-balance lg:col-span-3">
+			<div class="col-span-full border-b border-dashed text-balance lg:col-span-3">
 				<Description {item} />
 				<!-- <div>{item.title}</div>
 				<div class="text-2">{item.description}</div>
@@ -59,7 +59,7 @@
 				{/if}
 			</a>
 
-			<div class="col-span-full lg:col-span-4">
+			<div class="col-span-full border-b border-dashed lg:col-span-4">
 				<Buttons {item} />
 				<!-- <div>{item.expand.parent?.path}</div>
 
@@ -83,7 +83,7 @@
 					</Button>
 				</div>
 			</div>
-			<div class="col-span-full lg:col-span-3">
+			<div class="col-span-full border-b border-dashed lg:col-span-3">
 				<div class="text-2 inline-">[{format_time(item.created)}]</div>
 				<div class="inline-">Ajouté par <Author author={item.author} /></div>
 			</div>
