@@ -1,8 +1,10 @@
 import { pocketbase } from '$lib/pocketbase';
+import type { RelatedRecord } from '$lib/pocketbase.types';
 
 export async function load() {
-	const settings_related = await pocketbase.collection('settings').getOne('related');
-	const related = settings_related.value;
+	const related: RelatedRecord[] = await pocketbase
+		.collection('related')
+		.getFullList({ sort: 'order' });
 
 	return { related };
 }

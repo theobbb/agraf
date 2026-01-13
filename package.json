@@ -7,7 +7,7 @@
 		"node": ">= 22"
 	},
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vite dev --port 5173",
 		"host": "vite --host",
 		"build": "vite build",
 		"preview": "vite preview",

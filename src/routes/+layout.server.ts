@@ -1,12 +1,12 @@
 import { pocketbase } from '$lib/pocketbase';
-import type { LinksRecord } from '$lib/pocketbase.types';
+import type { LinksRecord, PostersRecord, SettingsRecord } from '$lib/pocketbase.types';
 
 export async function load() {
-	const settings_featured = await pocketbase.collection('settings').getOne('featured');
+	const settings: SettingsRecord & { expand: { featured: PostersRecord } } = await pocketbase
+		.collection('settings')
+		.getOne('settings', { expand: 'featured', fields: 'featured,expand' });
 
-	const { collection, id } = settings_featured.value;
-
-	const featured = await pocketbase.collection(collection).getOne(id);
+	const featured = settings.expand.featured;
 
 	const links: LinksRecord[] = await pocketbase
 		.collection('links')
