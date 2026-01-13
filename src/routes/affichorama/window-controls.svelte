@@ -1,4 +1,7 @@
 <script lang="ts">
+	const toggles = ['body', 'date', 'media'];
 </script>
 
-<div>s</div>
+<div>
+	<div>Afficher:</div>
+</div>
