@@ -24,6 +24,7 @@ html {
 	color: var(--color-text);
 	font-size: 16px;
 	font-weight: 600;
+
 	font-family: 'Manrope', sans-serif;
 	line-height: var(--spacing-line-height);
 

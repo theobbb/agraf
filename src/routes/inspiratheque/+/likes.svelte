@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-
-	import type { ExpandedBookmarksRecord } from '../types';
 	import { pocketbase } from '$lib/pocketbase';
+	import type { BookmarksRecord } from '$lib/pocketbase.types';
 
-	const { item }: { item: ExpandedBookmarksRecord } = $props();
+	const { item }: { item: BookmarksRecord } = $props();
 
 	// 2. Tracking variables for debouncing
 	let accumulatedIncrement = 0;

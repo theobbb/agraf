@@ -1,55 +1,33 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { pocketbase } from '$lib/pocketbase';
 	import type { BookmarkTagsRecord } from '$lib/pocketbase.types';
 	import IconExternalLink from '$lib/ui/icons/icon-external-link.svelte';
-	import IconFolder from '$lib/ui/icons/icon-folder.svelte';
 	import IconLink from '$lib/ui/icons/icon-link.svelte';
 	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
 	import IconFolderOpen from '$lib/ui/icons/static/icon-folder-open.svelte';
-	import Breadcrumbs from './breadcrumbs.svelte';
-	import type { Explorer } from './explorer.svelte';
-
-	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
 	import { page } from '$app/state';
+	import { is_bookmark } from '../ctx.svelte';
+	import type { Explorer } from './ctx.svelte';
 
 	const {
 		explorer,
 		tags
 	}: {
-		explorer: Explorer<ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord>;
+		explorer: Explorer;
 		tags: BookmarkTagsRecord[];
 	} = $props();
 
-	const { navigation, breadcrumbs, inspecting, params, children_count } = $derived(explorer);
+	const { navigation, breadcrumbs, folder_count } = $derived(explorer);
 
-	function is_bookmark(
-		item: ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord
-	): item is ExpandedBookmarksRecord {
-		return 'url' in item;
-	}
+	const params = $derived([...breadcrumbs].map((b) => b.id));
 
 	function inspect(id: string) {
 		if (!id) goto('/inspiratheque/explorateur');
 		goto('/inspiratheque/explorateur/' + id + page.url.search, { replaceState: true });
 	}
-
-	// 	function new_item(folder_i: number) {
-	// 	let parent: ExpandedBookmarkFoldersRecord | null = null;
-
-	// 	if (folder_i > 0) {
-	// 		const parent_id = breadcrumbs[folder_i - 1]?.id;
-	// 		parent = folders.find((t) => t.id === parent_id) ?? null;
-	// 	}
-	// 	dialog_create = {
-	// 		open: true,
-	// 		parent
-	// 	};
-	// }
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
-
 <div
 	class="divide-x- grid auto-cols-[14%] grid-flow-col-dense overflow-x-auto whitespace-nowrap select-none md:auto-cols-[10%] xl:auto-cols-[7.5%]"
 >
@@ -81,7 +59,7 @@
 										<img
 											alt="favicon"
 											class="size-4"
-											src={pocketbase.files.getURL(item, item.favicon)}
+											src="https://api.agraf.xyz/api/files/bookmarks/{item.id}/{item.favicon}"
 										/>
 									</div>
 								{:else}
@@ -104,8 +82,8 @@
 										<IconExternalLink />
 									</a>
 								</div>
-							{:else if children_count.get(item.id)}
-								+{children_count.get(item.id)}
+							{:else if folder_count.get(item.id)}
+								+{folder_count.get(item.id)}
 							{/if}
 						</div>
 					</div>

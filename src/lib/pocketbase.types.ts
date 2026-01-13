@@ -11,6 +11,7 @@ export enum Collections {
 	Mfas = "_mfas",
 	Otps = "_otps",
 	Superusers = "_superusers",
+	BookmarkFolderCount = "bookmark_folder_count",
 	BookmarkFolders = "bookmark_folders",
 	BookmarkTagCounts = "bookmark_tag_counts",
 	BookmarkTagGroups = "bookmark_tag_groups",
@@ -111,6 +112,11 @@ export type SuperusersRecord = {
 	tokenKey: string
 	updated: IsoAutoDateString
 	verified?: boolean
+}
+
+export type BookmarkFolderCountRecord = {
+	id: string
+	total_children?: number
 }
 
 export type BookmarkFoldersRecord = {
@@ -373,6 +379,7 @@ export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRec
 export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemFields<Texpand>
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
+export type BookmarkFolderCountResponse<Texpand = unknown> = Required<BookmarkFolderCountRecord> & BaseSystemFields<Texpand>
 export type BookmarkFoldersResponse<Texpand = unknown> = Required<BookmarkFoldersRecord> & BaseSystemFields<Texpand>
 export type BookmarkTagCountsResponse<Texpand = unknown> = Required<BookmarkTagCountsRecord> & BaseSystemFields<Texpand>
 export type BookmarkTagGroupsResponse<Texpand = unknown> = Required<BookmarkTagGroupsRecord> & BaseSystemFields<Texpand>
@@ -404,6 +411,7 @@ export type CollectionRecords = {
 	_mfas: MfasRecord
 	_otps: OtpsRecord
 	_superusers: SuperusersRecord
+	bookmark_folder_count: BookmarkFolderCountRecord
 	bookmark_folders: BookmarkFoldersRecord
 	bookmark_tag_counts: BookmarkTagCountsRecord
 	bookmark_tag_groups: BookmarkTagGroupsRecord
@@ -434,6 +442,7 @@ export type CollectionResponses = {
 	_mfas: MfasResponse
 	_otps: OtpsResponse
 	_superusers: SuperusersResponse
+	bookmark_folder_count: BookmarkFolderCountResponse
 	bookmark_folders: BookmarkFoldersResponse
 	bookmark_tag_counts: BookmarkTagCountsResponse
 	bookmark_tag_groups: BookmarkTagGroupsResponse

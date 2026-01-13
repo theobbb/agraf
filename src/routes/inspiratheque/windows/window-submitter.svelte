@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { auth, login } from '$lib/components/login/auth.svelte';
 	import { pocketbase } from '$lib/pocketbase';
+	import type { BookmarkFoldersRecord } from '$lib/pocketbase.types';
 	import Button from '$lib/ui/button.svelte';
 	import IconError from '$lib/ui/icons/icon-error.svelte';
 	import IconInfo from '$lib/ui/icons/icon-info.svelte';
@@ -11,14 +12,13 @@
 	import Loader from '$lib/ui/loader.svelte';
 	import Dialog from '$lib/ui/skeleton/dialog.svelte';
 	import Textarea from '$lib/ui/textarea.svelte';
-	import type { ExpandedBookmarkFoldersRecord } from '../types';
 
 	const {
 		onclose,
 		parent
 	}: {
 		onclose: () => void;
-		parent: ExpandedBookmarkFoldersRecord | 'root';
+		parent: BookmarkFoldersRecord | 'root';
 	} = $props();
 
 	let url: string = $state('');

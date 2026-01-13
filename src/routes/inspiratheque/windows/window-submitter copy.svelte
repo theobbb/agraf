@@ -1,15 +1,15 @@
 <script lang="ts">
+	import type { BookmarkFoldersRecord } from '$lib/pocketbase.types';
 	import Button from '$lib/ui/button.svelte';
 	import IconLink from '$lib/ui/icons/icon-link.svelte';
 	import Dialog from '$lib/ui/skeleton/dialog.svelte';
-	import type { ExpandedBookmarkFoldersRecord } from '../types';
 
 	const {
 		onclose,
 		parent
 	}: {
 		onclose: () => void;
-		parent: ExpandedBookmarkFoldersRecord | null;
+		parent: BookmarkFoldersRecord | null;
 	} = $props();
 
 	let url: string = $state('');

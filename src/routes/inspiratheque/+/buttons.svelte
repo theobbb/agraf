@@ -1,9 +1,9 @@
 <script lang="ts">
+	import type { BookmarksRecord } from '$lib/pocketbase.types';
 	import IconCopy from '$lib/ui/icons/icon-copy.svelte';
 	import IconExternalLink from '$lib/ui/icons/icon-external-link.svelte';
-	import type { ExpandedBookmarksRecord } from '../types';
 
-	const { item }: { item: ExpandedBookmarksRecord } = $props();
+	const { item }: { item: BookmarksRecord } = $props();
 </script>
 
 <div class="flex gap-1 text-2xl">

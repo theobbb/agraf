@@ -1,21 +1,14 @@
 <script lang="ts">
+	import type { BookmarkFoldersRecord, BookmarksRecord } from '$lib/pocketbase.types';
 	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
 	import IconFolderOpen from '$lib/ui/icons/static/icon-folder-open.svelte';
-	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
+	import { is_bookmark } from '../ctx.svelte';
 
-	const {
-		breadcrumbs
-	}: { breadcrumbs: (ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord)[] } = $props();
+	const { breadcrumbs }: { breadcrumbs: (BookmarksRecord | BookmarkFoldersRecord)[] } = $props();
 
-	const folders: ExpandedBookmarkFoldersRecord[] = $derived(
+	const folders: BookmarkFoldersRecord[] = $derived(
 		breadcrumbs.filter((item) => !is_bookmark(item))
 	);
-
-	function is_bookmark(
-		item: ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord
-	): item is ExpandedBookmarksRecord {
-		return 'url' in item;
-	}
 </script>
 
 <nav class="flex items-center gap-2">

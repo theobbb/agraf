@@ -222,7 +222,7 @@
 					</div> -->
 			</div>
 			<div class="flex flex-col justify-end border-t pt-1">
-				<div class="text-base/4 font-normal" style="font-family: 'Comic', sans-serif;">
+				<div class="text-base/4 font-normal" style="font-family: 'Comic Sans MS', sans-serif;">
 					<div>© {current_year} AGRAF ❤️ <br /> Tous droits réservés 😡🤬</div>
 				</div>
 				<div class="max-w-50- mt-2">

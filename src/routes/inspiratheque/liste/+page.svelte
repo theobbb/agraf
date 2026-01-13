@@ -1,21 +1,20 @@
 <script lang="ts">
-	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
-	import { pocketbase } from '$lib/pocketbase';
-	import Input from '$lib/ui/input.svelte';
-	import { format_date, format_time } from '$lib/utils/format-date';
-	import { getContext } from 'svelte';
-	import Breadcrumbs from '../explorateur/breadcrumbs.svelte';
-	import type { Windows } from '../windows/types';
-	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
+	import { format_time } from '$lib/utils/format-date';
 	import Button from '$lib/ui/button.svelte';
 	import Pagination from '$lib/components/pagination.svelte';
 	import Description from '../+/description.svelte';
-	import Comments from '$lib/components/comments/comments.svelte';
 	import Author from '$lib/components/author.svelte';
 	import Buttons from '../+/buttons.svelte';
-	import Likes from '../+/likes.svelte';
+	import { use_flat_list } from '../ctx.svelte';
+	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
 
 	const { data } = $props();
+	const { bookmarks, tags_map } = data;
+
+	const list_ctx = use_flat_list();
+	if (!list_ctx.initialized) list_ctx.init(bookmarks);
+
+	const { list } = $derived(list_ctx);
 
 	// const window_manager: WindowManager<Windows> = getContext('window_manager');
 	// window_manager.close_window('info');
@@ -36,8 +35,8 @@
 	</div>
 </div> -->
 <!-- <div class="font-serif">{data.pagination_bookmarks.totalItems} liens</div> -->
-<div class="mt-8 space-y-2.5">
-	{#each data.pagination_bookmarks.items as item}
+<div class="mt-8 space-y-2.5 divide-y divide-dashed">
+	{#each list.items as item}
 		<div class="grid-12">
 			<div class="col-span-full text-balance lg:col-span-3">
 				<Description {item} />
@@ -51,7 +50,7 @@
 				{#if item.screenshot}
 					<img
 						class="max-h-48 object-contain"
-						src={pocketbase.files.getURL(item, item.screenshot)}
+						src="https://api.agraf.xyz/api/files/bookmarks/{item.id}/{item.screenshot}"
 						loading="lazy"
 						alt="screenshot-{item.title}"
 					/>
@@ -62,18 +61,18 @@
 
 			<div class="col-span-full lg:col-span-4">
 				<Buttons {item} />
-				<div>{item.expand.parent?.path}</div>
+				<!-- <div>{item.expand.parent?.path}</div>
 
 				<div class="flex items-center gap-2">
 					<IconFolderClosed />
 					<a href="/inspiratheque/explorateur/{item.parent || ''}" class="hover:underline">
 						{item.expand.parent?.title || 'root'}
 					</a>
-				</div>
+				</div> -->
 
 				<div>
-					{#each item.expand.tags as tag}
-						<a href="/inspiratheque/liste?tag={tag.id}">#{tag.name}</a>
+					{#each item.tags as tag_id}
+						<a href="/inspiratheque/liste?tag={tag_id}">#{tags_map.get(tag_id)?.name}</a>
 					{/each}
 				</div>
 
@@ -91,4 +90,4 @@
 		</div>
 	{/each}
 </div>
-<Pagination pagination={data.pagination_bookmarks} route="/inspiratheque/liste" />
+<Pagination pagination={list} route="/inspiratheque/liste" />

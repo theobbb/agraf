@@ -3,26 +3,18 @@
 	import { pocketbase } from '$lib/pocketbase';
 	import IconLink from '$lib/ui/icons/icon-link.svelte';
 	import IconFolderOpen from '$lib/ui/icons/static/icon-folder-open.svelte';
-	import {
-		is_bookmark,
-		type ExpandedBookmarkFoldersRecord,
-		type ExpandedBookmarksRecord
-	} from '../types';
+	import { is_bookmark, type Item } from '../ctx.svelte';
 
-	const { item }: { item: ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord } = $props();
+	import Favicon from './favicon.svelte';
+
+	const { item }: { item: Item } = $props();
 </script>
 
 {#if is_bookmark(item)}
 	<div>
 		<div class="justify-between- flex items-start gap-2.5">
 			<div class="mt-0.5 shrink-0">
-				{#if item.favicon}
-					<div>
-						<img alt="favicon" class="size-4" src={pocketbase.files.getURL(item, item.favicon)} />
-					</div>
-				{:else}
-					<div class="opacity-60"><IconLink /></div>
-				{/if}
+				<Favicon bookmark={item} />
 			</div>
 			<div>{item.title}</div>
 		</div>

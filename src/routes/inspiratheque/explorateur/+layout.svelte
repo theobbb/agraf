@@ -1,32 +1,24 @@
 <script lang="ts">
-	import { create_explorer } from './explorer.svelte';
-	import type { ExpandedBookmarkFoldersRecord, ExpandedBookmarksRecord } from '../types';
 	import Table from './table.svelte';
-	import Breadcrumbs from './breadcrumbs.svelte';
 	import InspectorBookmark from './inspector-bookmark.svelte';
 	import InspectorFolder from './inspector-folder.svelte';
-	import { page } from '$app/state';
+	import type { BookmarksRecord } from '$lib/pocketbase.types';
+	import { use_explorer } from './ctx.svelte';
+	import { is_bookmark } from '../ctx.svelte';
+	import Breadcrumbs from './breadcrumbs.svelte';
 
 	const { data } = $props();
+	const { bookmarks, folders, folder_count, tags } = data;
 
-	const { bookmarks, folders, tags } = $derived(data);
+	// const items: (ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord)[] = $derived([
+	// 	...folders,
+	// 	...bookmarks
+	// ]);
 
-	const items: (ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord)[] = $derived([
-		...folders,
-		...bookmarks
-	]);
-	$inspect(bookmarks);
-	const explorer = $derived(
-		create_explorer<ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord>(items)
-	);
+	const explorer = use_explorer();
+	if (!explorer.initialized) explorer.init({ bookmarks, folders, folder_count });
 
-	const { breadcrumbs, inspecting } = $derived(explorer);
-
-	function is_bookmark(
-		item: ExpandedBookmarksRecord | ExpandedBookmarkFoldersRecord
-	): item is ExpandedBookmarksRecord {
-		return 'url' in item;
-	}
+	const { inspecting, breadcrumbs } = $derived(explorer);
 </script>
 
 <div

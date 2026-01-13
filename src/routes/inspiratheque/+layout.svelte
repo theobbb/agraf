@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ExpandedBookmarkFoldersRecord } from './types';
 	import Button from '$lib/ui/button.svelte';
 	import Emoji from '$lib/emoji.svelte';
 
@@ -10,29 +9,33 @@
 	import WindowSubmitter from './windows/window-submitter.svelte';
 
 	import Footer from '../+/footer/footer.svelte';
-	import WindowTags from './windows/window-tags.svelte';
+	import WindowTags from './windows/window-filters.svelte';
 	import { onMount, setContext } from 'svelte';
 	import { page } from '$app/state';
 	import { use_comments } from '$lib/cache/cache-comments.svelte';
 	import Input from '$lib/ui/input.svelte';
 	import Tabs from '$lib/components/tabs.svelte';
 	import Search from '$lib/components/search.svelte';
+	import type { BookmarkFoldersRecord } from '$lib/pocketbase.types';
+	import { init_flat_list } from './ctx.svelte';
+	import { init_explorer } from './explorateur/ctx.svelte';
+	import IconFilter from '$lib/ui/icons/icon-filter.svelte';
 
 	const { data, children } = $props();
+	const { tags, tag_groups, tags_map } = data;
+
+	init_explorer();
+	init_flat_list();
 
 	const comments_service = use_comments();
 
-	type EditorType = 'folder' | 'bookmark';
-
 	let dialog_create: {
 		open: boolean;
-		parent: ExpandedBookmarkFoldersRecord | 'root';
+		parent: BookmarkFoldersRecord | 'root';
 	} = $state({
 		open: false,
 		parent: 'root'
 	});
-
-	const { tags, tag_groups } = $derived(data);
 
 	function open_submitter() {
 		dialog_create.parent = 'root';
@@ -49,6 +52,14 @@
 	function toggle_window(window_id: Windows) {
 		window_manager.toggle_window(window_id);
 	}
+
+	const filter_sort = $derived(page.url.searchParams.get('sort-by'));
+	const filter_tag = $derived(page.url.searchParams.get('tag'));
+
+	const filter_sort_name = $derived(filter_sort == '-likes' ? '❤️' : 'plus récent');
+	const filter_tag_name = $derived(filter_tag ? tags_map.get(filter_tag)?.name || '' : '');
+
+	const filters = $derived([filter_sort_name, filter_tag_name].filter((f) => f != ''));
 
 	onMount(() => {
 		comments_service.subscribe('bookmarks');
@@ -85,7 +96,16 @@
 		<div
 			class="col-span-full flex flex-col-reverse items-end gap-1.5 whitespace-nowrap lg:col-span-6 lg:flex-row lg:items-center"
 		>
-			<div><Button class="shrink-0" onclick={() => toggle_window('tags')}>Filtres</Button></div>
+			<div class="flex gap-1.5 whitespace-nowrap">
+				{#each filters as filter}
+					<div class="bg-text px-gap py-1.5 text-bg">{filter}</div>
+				{/each}
+			</div>
+			<div>
+				<Button class=" shrink-0" variant="icon" onclick={() => toggle_window('tags')}>
+					<IconFilter />
+				</Button>
+			</div>
 			<Search id="s" />
 		</div>
 		<div class="flex- col-span-2 hidden">

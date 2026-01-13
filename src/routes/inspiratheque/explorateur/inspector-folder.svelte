@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { pocketbase } from '$lib/pocketbase';
+	import type { BookmarkFoldersRecord } from '$lib/pocketbase.types';
 	import Description from '../+/description.svelte';
-	import type { ExpandedBookmarkFoldersRecord } from '../types';
 
 	const {
 		item
 	}: {
-		item: ExpandedBookmarkFoldersRecord;
+		item: BookmarkFoldersRecord;
 	} = $props();
 </script>
 

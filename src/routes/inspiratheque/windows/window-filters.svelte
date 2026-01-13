@@ -1,19 +1,11 @@
 <script lang="ts">
 	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
 	import Window from '$lib/components/windows/window.svelte';
-	import type {
-		BookmarkTagCountsRecord,
-		BookmarkTagGroupsRecord,
-		BookmarkTagsRecord
-	} from '$lib/pocketbase.types';
+	import type { BookmarkTagGroupsRecord, BookmarkTagsRecord } from '$lib/pocketbase.types';
 	import Button from '$lib/ui/button.svelte';
-	import { onMount } from 'svelte';
-	import type { ExpandedBookmarksRecord } from '../types';
 	import type { Windows } from './types';
 	import { pocketbase } from '$lib/pocketbase';
-	import Search from '$lib/components/search.svelte';
 	import { page } from '$app/state';
-	import Inset from '$lib/ui/inset.svelte';
 	import { url_query_param } from '$lib/utils/url';
 	import { goto } from '$app/navigation';
 	import IconReset from '$lib/ui/icons/icon-reset.svelte';
@@ -92,7 +84,7 @@
 	}
 
 	const sort_by_filters = [
-		{ name: 'Plus récent', value: '-created', is_default: true },
+		{ name: 'plus récent', value: '-created', is_default: true },
 		{ name: `❤️`, value: '-likes' }
 	];
 </script>
@@ -136,14 +128,6 @@
 		{onclose}
 	>
 		<div class="mt-1">
-			<!-- <div class="mb-4 w-fit">
-				<Inset>
-					<div class="px-1">
-						{page.data.bookmarks?.length || page.data.pagination_bookmarks?.totalItems || 0} lien(s)
-					</div>
-				</Inset>
-			</div> -->
-
 			<form class="mb-2.5" {onsubmit}>
 				<div class=" mb-1">Trier par:</div>
 

@@ -1,22 +1,16 @@
 <script lang="ts">
 	import Author from '$lib/components/author.svelte';
-	import Comment from '$lib/components/comments/comment.svelte';
 	import Comments from '$lib/components/comments/comments.svelte';
-	import { pocketbase } from '$lib/pocketbase';
-	import type { CommentsRecord } from '$lib/pocketbase.types';
-	import IconCopy from '$lib/ui/icons/icon-copy.svelte';
-	import IconExternalLink from '$lib/ui/icons/icon-external-link.svelte';
+	import type { BookmarksRecord } from '$lib/pocketbase.types';
 	import { format_time } from '$lib/utils/format-date';
-	import { onDestroy } from 'svelte';
 	import Description from '../+/description.svelte';
-	import type { ExpandedBookmarksRecord } from '../types';
 	import Buttons from '../+/buttons.svelte';
 	import Likes from '../+/likes.svelte';
 
 	const {
 		item
 	}: {
-		item: ExpandedBookmarksRecord;
+		item: BookmarksRecord;
 	} = $props();
 </script>
 
@@ -34,17 +28,22 @@
 			<!-- <a href={bookmark.url} target="_blank">{bookmark.url}</a> -->
 			<Buttons {item} />
 		</div>
+
 		<div class="bg-black/10 max-lg:hidden" style="aspect-ratio: 128/80">
 			{#if item.screenshot}
-				<img src={pocketbase.files.getURL(item, item.screenshot)} alt="screenshot" />
+				<img
+					src="https://api.agraf.xyz/api/files/bookmarks/{item.id}/{item.screenshot}"
+					alt="screenshot"
+				/>
 			{/if}
 		</div>
 	</div>
-	<div class="flex gap-1.5 pb-2">
+	<!-- <div class="flex gap-1.5 pb-2">
 		{#each item.expand?.tags as tag}
 			<div class="w-fit bg-text px-1 py-0.5 text-bg lowercase">#{tag.name}</div>
 		{/each}
-	</div>
+	</div> -->
+	tags
 	<Likes {item} />
 
 	<div class="mt-0.5 max-lg:hidden">

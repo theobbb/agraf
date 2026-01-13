@@ -2,19 +2,25 @@
 	import { pocketbase } from '$lib/pocketbase';
 	import Pagination from '$lib/components/pagination.svelte';
 	import Description from '../+/description.svelte';
+	import { use_flat_list } from '../ctx.svelte';
 
 	const { data } = $props();
+
+	const list_ctx = use_flat_list();
+	if (!list_ctx.initialized) list_ctx.init(data.bookmarks);
+
+	const { list } = $derived(list_ctx);
 </script>
 
 <div class="grid-12 mt-8">
-	{#each data.pagination_bookmarks.items as item}
+	{#each list.items as item}
 		<div class="col-span-6 sm:col-span-6 lg:col-span-4 xl:col-span-3">
 			<a href={item.url} target="_blank">
 				<div class="" style="aspect-ratio: 128/80">
 					{#if item.screenshot}
 						<img
 							class="max-h-48- object-contain"
-							src={pocketbase.files.getURL(item, item.screenshot)}
+							src="https://api.agraf.xyz/api/files/bookmarks/{item.id}/{item.screenshot}"
 							loading="lazy"
 							alt="screenshot-{item.title}"
 						/>
@@ -52,4 +58,4 @@
 		</div> -->
 	{/each}
 </div>
-<Pagination pagination={data.pagination_bookmarks} route="/inspiratheque/liste" />
+<Pagination pagination={list} route="/inspiratheque/liste" />
