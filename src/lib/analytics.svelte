@@ -20,7 +20,7 @@
 	import { onMount } from 'svelte';
 	import { browser, dev } from '$app/environment';
 
-	const DOMAIN = 'domain.xyz';
+	const DOMAIN = 'agraf.xyz';
 
 	const goatcounter_url = `https://stats.${DOMAIN}/count`;
 	onMount(() => {
