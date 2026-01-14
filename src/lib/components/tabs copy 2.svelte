@@ -10,14 +10,14 @@
 	const {
 		tabs,
 		active_tab_i: active_i,
-		border_top = true,
+		border_t = false,
 		class: cx,
 		rendered,
 		...props
 	}: {
 		tabs: Tab[];
 		active_tab_i: number;
-		border_top?: boolean;
+		border_t?: boolean;
 		class?: string | string[];
 		rendered: Snippet<[item: Tab, i: number]>;
 	} = $props();
@@ -26,13 +26,12 @@
 {#snippet tab_content(tab: Tab, i: number)}
 	<div
 		class={[
-			'tab group box-shadow cursor-pointer px-gap py-1.5',
-			i == tabs.length - 1 && '',
-			i == active_i ? 'active' : '',
-			border_top && 'border-top'
+			'cursor-pointer border-l px-gap py-1.5',
+			i == tabs.length - 1 && 'border-r',
+			i == active_i ? '' : 'border-transparent'
 		]}
 	>
-		<div class={[active_i == i ? '' : 'text-2 group-hover:text-text!']}>
+		<div class={[active_i == i ? '' : 'text-2 hover:text-text!']}>
 			{@render rendered(tab, i)}
 		</div>
 	</div>
@@ -51,19 +50,3 @@
 		{/if}
 	{/each}
 </div>
-
-<style>
-	.tab.active {
-		box-shadow:
-			1px 0 0 0 var(--color-text),
-			inset 1px 0 0 0 var(--color-text),
-			0 2px 0 0 var(--color-bg);
-	}
-	.tab.active.border-top {
-		box-shadow:
-			1px 0 0 0 var(--color-text),
-			inset 1px 0 0 0 var(--color-text),
-			0 2px 0 0 var(--color-bg),
-			inset 0 1px 0 0 var(--color-text);
-	}
-</style>

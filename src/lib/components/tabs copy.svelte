@@ -9,15 +9,16 @@
 
 	const {
 		tabs,
-		active_tab_i: active_i,
-		border_top = true,
+		active_tab_i,
+
+		border_t = false,
 		class: cx,
 		rendered,
 		...props
 	}: {
 		tabs: Tab[];
 		active_tab_i: number;
-		border_top?: boolean;
+		border_t?: boolean;
 		class?: string | string[];
 		rendered: Snippet<[item: Tab, i: number]>;
 	} = $props();
@@ -26,13 +27,13 @@
 {#snippet tab_content(tab: Tab, i: number)}
 	<div
 		class={[
-			'tab group box-shadow cursor-pointer px-gap py-1.5',
-			i == tabs.length - 1 && '',
-			i == active_i ? 'active' : '',
-			border_top && 'border-top'
+			'-mb-px cursor-pointer border-t border-r border-b border-x-transparent border-t-transparent bg-bg px-3.5 py-1.5 text-left first:border-l',
+			active_tab_i == i && ' border-r-text border-b-transparent first:border-l-text',
+			active_tab_i == i && border_t && 'border-t-current!',
+			active_tab_i == i + 1 && 'border-r-text'
 		]}
 	>
-		<div class={[active_i == i ? '' : 'text-2 group-hover:text-text!']}>
+		<div class={[active_tab_i == i ? '' : 'text-2 hover:text-text!']}>
 			{@render rendered(tab, i)}
 		</div>
 	</div>
@@ -41,29 +42,13 @@
 <div class={['-ml-gap flex border-b pl-gap whitespace-nowrap', cx]}>
 	{#each tabs as tab, i}
 		{#if tab.type == 'button'}
-			<button onclick={() => tab.onclick(tab, i)} class="flex">
+			<button onclick={() => tab.onclick(tab, i)}>
 				{@render tab_content(tab, i)}
 			</button>
 		{:else}
-			<a href={tab.href} class="flex">
+			<a href={tab.href}>
 				{@render tab_content(tab, i)}
 			</a>
 		{/if}
 	{/each}
 </div>
-
-<style>
-	.tab.active {
-		box-shadow:
-			1px 0 0 0 var(--color-text),
-			inset 1px 0 0 0 var(--color-text),
-			0 2px 0 0 var(--color-bg);
-	}
-	.tab.active.border-top {
-		box-shadow:
-			1px 0 0 0 var(--color-text),
-			inset 1px 0 0 0 var(--color-text),
-			0 2px 0 0 var(--color-bg),
-			inset 0 1px 0 0 var(--color-text);
-	}
-</style>

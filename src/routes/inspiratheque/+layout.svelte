@@ -14,7 +14,7 @@
 	import { page } from '$app/state';
 	import { use_comments } from '$lib/cache/cache-comments.svelte';
 	import Input from '$lib/ui/input.svelte';
-	import Tabs from '$lib/components/tabs.svelte';
+	import Tabs, { type Tab } from '$lib/components/tabs.svelte';
 	import Search from '$lib/components/search.svelte';
 	import type { BookmarkFoldersRecord } from '$lib/pocketbase.types';
 	import { init_flat_list } from './ctx.svelte';
@@ -46,8 +46,13 @@
 
 	// setContext('window_manager', window_manager);
 
-	const views = ['explorateur', 'liste', 'grille'];
-	const current_view_i = $derived(views.indexOf(page.url.pathname.split('/')[2]));
+	const tab_names = ['explorateur', 'liste', 'grille'];
+	const tabs: Tab[] = [...tab_names].map((name) => ({
+		name,
+		href: `/inspiratheque/${name}`,
+		type: 'link'
+	}));
+	const current_tab_i = $derived(tab_names.indexOf(page.url.pathname.split('/')[2]));
 
 	function toggle_window(window_id: Windows) {
 		window_manager.toggle_window(window_id);
@@ -74,9 +79,14 @@
 
 	<div class="grid-12 mb-gap -ml-gap pb-gap pl-gap">
 		<div class="col-span-full -mt-0.5 lg:col-span-3">
-			<Tabs items={['explorateur', 'liste', 'grille']} active_item_i={current_view_i} border_t>
+			<!-- <Tabs items={['explorateur', 'liste', 'grille']} active_item_i={current_view_i} border_t>
 				{#snippet rendered(item, i)}
 					<a class="capitalize" href="/inspiratheque/{item}{page.url.search}"> {item}</a>
+				{/snippet}
+			</Tabs> -->
+			<Tabs {tabs} active_tab_i={current_tab_i}>
+				{#snippet rendered(item: Tab, i: number)}
+					<div class="capitalize">{item.name}</div>
 				{/snippet}
 			</Tabs>
 		</div>

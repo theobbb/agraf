@@ -236,9 +236,6 @@
 	}
 
 	onMount(() => {
-		//if (!container) return;
-		//target.container = container;
-
 		if (dialog && container instanceof HTMLDialogElement) {
 			container.showModal();
 		}
@@ -253,18 +250,16 @@
 	onmousedown={focus}
 	class={[
 		cx,
-		'window pointer-events-auto border bg-bg shadow',
+		'window h-fit- pointer-events-auto flex flex-col border bg-bg shadow',
 		is_visible ? '' : 'invisible',
 		is_floating ? 'absolute! max-h-[unset]! min-h-[unset]! max-w-[unset]! min-w-[unset]!' : '',
 		is_expanded && 'fixed! inset-0 z-1000! h-full! w-full!',
 		is_visible && is_expanded && 'expanded'
 	]}
 	style="z-index: {z_index}; {style}; 
-	 overscroll-behavior: contain; {is_expanded
-		? ''
-		: `transform: translate(${translate.x}px, ${translate.y}px);`} {is_floating
+	  {is_expanded ? '' : `transform: translate(${translate.x}px, ${translate.y}px);`} {is_floating
 		? `width: ${size.width}px; height: ${size.height}px; margin: 0;`
-		: ''}"
+		: ''}; {dialog ? 'display: block;' : ''} "
 >
 	<header
 		onmousedown={start_drag}
@@ -296,19 +291,12 @@
 			<Button onclick={close} variant="icon" size="sm">
 				<IconClose />
 			</Button>
-			<!-- 
-			<button onclick={minimize} class="hover:bg-text hover:text-bg" type="button"> 
-				<IconSubstract />
-			</button>
-			<button onclick={close} class="hover:bg-text hover:text-bg" type="button">
-				<IconClose />
-			</button> 
-			-->
 		</div>
 	</header>
 
 	<div
-		class="scroll-container relative mb-px h-[calc(100%-2rem-2px)] overflow-x-auto overflow-y-scroll px-2.5 pr-gap"
+		class="scroll-container relative mb-px flex flex-1 flex-col overflow-x-auto overflow-y-auto px-2.5 pr-gap"
+		style="overscroll-behavior: contain;"
 	>
 		{@render children()}
 	</div>

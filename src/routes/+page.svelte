@@ -14,16 +14,22 @@
 	import { onMount } from 'svelte';
 
 	import WindowLayer from '$lib/components/windows/window-layer.svelte';
-	import Tabs from '$lib/components/tabs.svelte';
+	import Tabs, { type Tab } from '$lib/components/tabs.svelte';
 	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
 
 	const { data } = $props();
 
-	const { featured, links, related } = $derived(data);
+	const { featured, links, related } = data;
 
 	const window_manager = use_window_manager('agraf');
 	//const window_manager = get_window_manager('agraf');
 	let related_active_tab_i = $state(0);
+
+	const tabs_related: Tab[] = related.map(({ name }) => ({
+		name,
+		type: 'button',
+		onclick: (tab: Tab, i: number) => (related_active_tab_i = i)
+	}));
 </script>
 
 <div class="grid-12 relative mb-24 max-lg:mt-2">
@@ -158,11 +164,9 @@
 		]}
 	>
 		<div class="pb-24 lg:pb-12">
-			<Tabs items={related} active_item_i={related_active_tab_i} class="border-t-0">
-				{#snippet rendered(item: any, i: number)}
-					<button class="cursor-pointer" onclick={() => (related_active_tab_i = i)}>
-						{item.name}
-					</button>
+			<Tabs tabs={tabs_related} active_tab_i={related_active_tab_i} border_top={false}>
+				{#snippet rendered(item: Tab, i: number)}
+					{item.name}
 				{/snippet}
 			</Tabs>
 
