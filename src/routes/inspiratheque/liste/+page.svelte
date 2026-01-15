@@ -7,6 +7,7 @@
 	import Buttons from '../+/buttons.svelte';
 	import { use_flat_list } from '../ctx.svelte';
 	import IconFolderClosed from '$lib/ui/icons/static/icon-folder-closed.svelte';
+	import Tag from '../+/tag.svelte';
 
 	const { data } = $props();
 	const { bookmarks, tags_map } = data;
@@ -70,9 +71,9 @@
 					</a>
 				</div> -->
 
-				<div>
+				<div class="flex flex-wrap gap-x-1 whitespace-nowrap">
 					{#each item.tags as tag_id}
-						<a href="/inspiratheque/liste?tag={tag_id}">#{tags_map.get(tag_id)?.name}</a>
+						<Tag id={tag_id} />
 					{/each}
 				</div>
 

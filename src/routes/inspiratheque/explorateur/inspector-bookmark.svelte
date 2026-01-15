@@ -6,6 +6,7 @@
 	import Description from '../+/description.svelte';
 	import Buttons from '../+/buttons.svelte';
 	import Likes from '../+/likes.svelte';
+	import Tag from '../+/tag.svelte';
 
 	const {
 		item
@@ -38,12 +39,12 @@
 			{/if}
 		</div>
 	</div>
-	<!-- <div class="flex gap-1.5 pb-2">
-		{#each item.expand?.tags as tag}
-			<div class="w-fit bg-text px-1 py-0.5 text-bg lowercase">#{tag.name}</div>
+	<div class="flex flex-wrap gap-1.5 pb-2 whitespace-nowrap">
+		{#each item.tags as tag_id}
+			<Tag id={tag_id} />
 		{/each}
-	</div> -->
-	tags
+	</div>
+
 	<Likes {item} />
 
 	<div class="mt-0.5 max-lg:hidden">

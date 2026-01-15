@@ -26,14 +26,13 @@
 {#snippet tab_content(tab: Tab, i: number)}
 	<div
 		class={[
-			'tab group box-shadow relative -mb-px cursor-pointer border-x px-gap py-1.5 ',
+			'tab group box-shadow cursor-pointer px-gap py-1.5',
 			i == tabs.length - 1 && '',
-			i == active_i ? 'active' : 'border-transparent',
+			i == active_i ? 'active' : '',
 			border_top && 'border-top'
 		]}
-		style=""
 	>
-		<div class={[active_i == i ? '' : 'text-2 pb-px group-hover:text-text!']}>
+		<div class={[active_i == i ? '' : 'text-2 group-hover:text-text!']}>
 			{@render rendered(tab, i)}
 		</div>
 	</div>
@@ -55,10 +54,15 @@
 
 <style>
 	.tab.active {
-		box-shadow: 0 2px 0 0 var(--color-bg);
+		box-shadow:
+			1px 0 0 0 var(--color-text),
+			-1px 0 0 0 var(--color-text),
+			0 2px 0 0 var(--color-bg);
 	}
 	.tab.active.border-top {
 		box-shadow:
+			1px 0 0 0 var(--color-text),
+			inset 1px 0 0 0 var(--color-text),
 			0 2px 0 0 var(--color-bg),
 			inset 0 1px 0 0 var(--color-text);
 	}
