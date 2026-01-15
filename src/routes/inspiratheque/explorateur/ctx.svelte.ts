@@ -3,6 +3,7 @@ import { page } from '$app/state';
 import { getContext, setContext } from 'svelte';
 import type { BookmarkFoldersRecord, BookmarksRecord } from '$lib/pocketbase.types';
 import { apply_filters, type Item, is_bookmark } from '../ctx.svelte';
+import { goto } from '$app/navigation';
 
 export class Explorer {
 	// 1. Raw Data State
@@ -77,6 +78,78 @@ export class Explorer {
 		const column_bookmarks = list.filter((i) => is_bookmark(i)) as BookmarksRecord[];
 
 		return [...column_folders, ...apply_filters(column_bookmarks)];
+	}
+
+	navigate(direction: 'up' | 'down' | 'left' | 'right') {
+		const currentId = page.params.id;
+		const nav = this.navigation;
+
+		// Find which column we are currently in and the index of the selected item
+		let columnIndex = -1;
+		let itemIndex = -1;
+
+		if (!currentId) {
+			// If nothing is selected, ArrowDown starts at the first item of the root column
+			if (direction === 'down') {
+				const firstItem = nav[0]?.[0];
+				if (firstItem) goto(`/explorer/${firstItem.id}`, { replaceState: true });
+			}
+			return;
+		}
+
+		// Locate current selection in the navigation grid
+		for (let i = 0; i < nav.length; i++) {
+			const foundIndex = nav[i].findIndex((item) => item.id === currentId);
+			if (foundIndex !== -1) {
+				columnIndex = i;
+				itemIndex = foundIndex;
+				break;
+			}
+		}
+
+		if (columnIndex === -1) return;
+
+		let targetItem: Item | undefined;
+
+		switch (direction) {
+			case 'up': {
+				const col = nav[columnIndex];
+				// Move up or wrap to bottom
+				const nextIdx = itemIndex <= 0 ? col.length - 1 : itemIndex - 1;
+				targetItem = col[nextIdx];
+				break;
+			}
+			case 'down': {
+				const col = nav[columnIndex];
+				// Move down or wrap to top
+				const nextIdx = itemIndex >= col.length - 1 ? 0 : itemIndex + 1;
+				targetItem = col[nextIdx];
+				break;
+			}
+			case 'left': {
+				// Navigate to the parent folder (the breadcrumb above current column)
+				if (columnIndex > 0) {
+					targetItem = this.breadcrumbs[columnIndex - 1];
+				}
+				break;
+			}
+			case 'right': {
+				// If current item is a folder, enter it by selecting its first child
+				const currentItem = this.#items_by_id.get(currentId);
+				if (currentItem && !is_bookmark(currentItem)) {
+					const children = this.#children_by_parent.get(currentId) || [];
+					if (children.length > 0) {
+						// Use #process_column to respect visual sorting/filters
+						targetItem = this.#process_column(children)[0];
+					}
+				}
+				break;
+			}
+		}
+
+		if (targetItem) {
+			goto(`/inspiratheque/explorateur/${targetItem.id}`, { replaceState: true });
+		}
 	}
 
 	// 5. Hydration

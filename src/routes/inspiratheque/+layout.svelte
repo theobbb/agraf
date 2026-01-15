@@ -44,8 +44,6 @@
 
 	const window_manager = use_window_manager<Windows>('inspiratheque');
 
-	// setContext('window_manager', window_manager);
-
 	const tab_names = ['explorateur', 'liste', 'grille'];
 	const tabs: Tab[] = [...tab_names].map((name) => ({
 		name,

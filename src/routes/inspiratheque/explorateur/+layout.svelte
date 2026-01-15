@@ -19,6 +19,28 @@
 	if (!explorer.initialized) explorer.init({ bookmarks, folders, folder_count });
 
 	const { inspecting, breadcrumbs } = $derived(explorer);
+
+	function onkeydown(event: KeyboardEvent) {
+		const keys = {
+			ArrowUp: 'up',
+			ArrowDown: 'down',
+			ArrowLeft: 'left',
+			ArrowRight: 'right'
+		} as const;
+		const key = event.key as keyof typeof keys;
+
+		if (keys[key]) {
+			event.preventDefault();
+			// 2. keys[key] is now strictly 'top' | 'down' | 'left' | 'right'
+			explorer.navigate(keys[key]);
+		}
+	}
+	$effect(() => {
+		window.addEventListener('keydown', onkeydown);
+		return () => {
+			window.removeEventListener('keydown', onkeydown);
+		};
+	});
 </script>
 
 <div
