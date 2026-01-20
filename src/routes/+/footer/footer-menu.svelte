@@ -3,9 +3,7 @@
 	import Logo from '$lib/logo.svelte';
 	import IconChevronRight from '$lib/ui/icons/icon-chevron-right.svelte';
 	import { onMount } from 'svelte';
-
 	import { links } from '../../static';
-
 	import type { ButtonItem, LinkItem, ParentItem, RoadmapItem } from './footer-roadmap';
 	import Button from '$lib/ui/button.svelte';
 	import Author from '$lib/components/author.svelte';
@@ -45,17 +43,6 @@
 		if (on_hover) on_hover();
 	}
 
-	function on_page_hover() {
-		console.log('page hover');
-	}
-
-	function handleMouseLeaveMenu() {
-		// Delay closing so it doesn't feel clinical/abrupt
-		close_timeout = setTimeout(() => {
-			active_path = [];
-		}, 300);
-	}
-
 	async function open_auth() {
 		await login();
 	}
@@ -85,26 +72,22 @@
 	const roadmap: RoadmapItem[] = $derived([
 		{
 			name: 'Programmes',
-			icon: 'windows',
 			type: 'parent',
 			children: window_links
 		},
 
 		{
 			name: 'Pages',
-			icon: 'globe',
 			type: 'parent',
 			children: pages
 		},
 		{
 			name: 'Linktree',
 			type: 'parent',
-			icon: 'email',
 			children: [
 				{
 					name: 'Linktree (page)',
 					type: 'link',
-					icon: 'email',
 					href: '/liens'
 				},
 				{
@@ -119,19 +102,16 @@
 		{
 			name: 'Email',
 			type: 'link',
-			icon: 'email',
 			href: 'https://www.instagram.com/agraf.uqam/'
 		},
 		{
 			name: 'Instagram',
 			type: 'link',
-			icon: 'instagram',
 			href: 'https://www.instagram.com/agraf.uqam/'
 		},
 		{
 			name: 'Facebook',
 			type: 'link',
-			icon: 'facebook',
 			href: 'https://www.facebook.com/agraf.uqam/'
 		},
 		{
@@ -146,7 +126,6 @@
 
 		{
 			name: 'Corbeille',
-			icon: 'recycle-bin',
 			type: 'button',
 			onclick: () => {
 				window_trash_open = true;
@@ -154,7 +133,6 @@
 		},
 		{
 			name: 'Paramètres',
-			icon: 'settings',
 			type: 'button',
 			onclick: () => {
 				window_settings_open = true;
@@ -162,7 +140,6 @@
 		},
 		{
 			name: 'Arrêter',
-			icon: 'shut-down',
 			type: 'button',
 			onclick: () => {
 				is_shut_down = true;
@@ -214,12 +191,6 @@
 					{/if}
 				</div>
 				<Button onclick={open_auth}>S'identifier</Button>
-
-				<!-- <div>
-						<Button onclick={open_auth} variant="icon">
-							<img src="/icons/keys.webp" alt="icon-keys" class="size-6" />
-						</Button>
-					</div> -->
 			</div>
 			<div class="flex flex-col justify-end border-t pt-1">
 				<div class="text-base/4 font-normal" style="font-family: 'Comic Sans MS', sans-serif;">
@@ -244,19 +215,7 @@
 	>
 		<div class="flex items-center justify-between gap-2">
 			<div class="flex items-center gap-2">
-				<!-- {#if item.icon}
-					<img
-						class="-my-2 -ml-1.5 inline size-6"
-						src="/icons/{item.icon}.webp"
-						alt="icon-{item.name}"
-					/>
-				{/if} -->
 				{item.name}
-				<!-- {#if item.type == 'link'}
-					<div class=" inline-flex items-center justify-between gap-x-2">
-						<IconExternalLink />
-					</div>
-				{/if} -->
 			</div>
 			{#if item.type === 'parent'}
 				<div class="-mr-7.5 inline-flex items-center justify-between gap-x-2">

@@ -26,7 +26,7 @@
 {#snippet tab_content(tab: Tab, i: number)}
 	<div
 		class={[
-			'tab group box-shadow relative -mb-px cursor-pointer border-x px-gap py-1.5 ',
+			'tab group relative -mb-px cursor-pointer border-x px-gap py-1.5 ',
 			i == tabs.length - 1 && '',
 			i == active_i ? 'active' : 'border-transparent',
 			border_top && 'border-top'
@@ -55,11 +55,11 @@
 
 <style>
 	.tab.active {
-		box-shadow: 0 2px 0 0 var(--color-bg);
+		box-shadow: inset 0 -2px 0 0 var(--color-bg);
 	}
 	.tab.active.border-top {
 		box-shadow:
-			0 2px 0 0 var(--color-bg),
+			inset 0 -2px 0 0 var(--color-bg),
 			inset 0 1px 0 0 var(--color-text);
 	}
 </style>
