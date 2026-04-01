@@ -3,7 +3,7 @@
 	import type { Window } from '$lib/components/windows/window-manager.svelte';
 
 	import { pocketbase } from '$lib/pocketbase';
-	import type { ChatRecord, IsoDateString } from '$lib/pocketbase.types';
+	import type { ChatRecord } from '$lib/pocketbase.types';
 	import Button from '$lib/ui/button.svelte';
 	import Input from '$lib/ui/input.svelte';
 	import Loader from '$lib/ui/loader.svelte';

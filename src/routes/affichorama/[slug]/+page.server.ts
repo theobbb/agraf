@@ -9,8 +9,6 @@ export async function load({ params }) {
 
 	if (!poster) error(404, 'Affiche introuvable');
 
-	type PosterPreview = { title: string; slug: string } | null;
-
 	const [prev, next] = await Promise.all([
 		pocketbase.collection('posters').getList(1, 1, {
 			filter: `date > "${poster.date}"`,

@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { use_comments } from '$lib/cache/cache-comments.svelte';
-
 	import type { CommentsRecord, TicketsRecord } from '$lib/pocketbase.types';
-
 	import Button from '$lib/ui/button.svelte';
 	import IconMessage from '$lib/ui/icons/icon-message.svelte';
 	import { format_time } from '$lib/utils/format-date';

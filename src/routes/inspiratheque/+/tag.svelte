@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import type { BookmarkTagsRecord } from '$lib/pocketbase.types';
 
 	const { id }: { id: string } = $props();
 

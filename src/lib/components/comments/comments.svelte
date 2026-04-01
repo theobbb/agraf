@@ -1,12 +1,9 @@
 <script lang="ts">
 	import { onMount, setContext } from 'svelte';
 	import Comment from './comment.svelte';
-
-	import type { CommentsRecord, IsoAutoDateString } from '$lib/pocketbase.types';
+	import type { CommentsRecord } from '$lib/pocketbase.types';
 	import CommentEditor from './comment-editor.svelte';
-
 	import Button from '$lib/ui/button.svelte';
-
 	import type { CommentsCollectionOptions } from '$lib/types';
 	import Loader from '$lib/ui/loader.svelte';
 	import IconMessage from '$lib/ui/icons/icon-message.svelte';

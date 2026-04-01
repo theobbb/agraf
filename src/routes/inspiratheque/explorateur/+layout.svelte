@@ -2,7 +2,6 @@
 	import Table from './table.svelte';
 	import InspectorBookmark from './inspector-bookmark.svelte';
 	import InspectorFolder from './inspector-folder.svelte';
-	import type { BookmarksRecord } from '$lib/pocketbase.types';
 	import { use_explorer } from './ctx.svelte';
 	import { is_bookmark } from '../ctx.svelte';
 	import Breadcrumbs from './breadcrumbs.svelte';

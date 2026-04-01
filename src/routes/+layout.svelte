@@ -2,6 +2,7 @@
 	import '$lib/style/app.css';
 	import '$lib/style/fonts.css';
 	import '$lib/style/markdown.css';
+
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from './header.svelte';
 	import { page } from '$app/state';

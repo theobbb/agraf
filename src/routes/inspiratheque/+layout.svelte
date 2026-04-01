@@ -1,19 +1,15 @@
 <script lang="ts">
 	import Button from '$lib/ui/button.svelte';
 	import Emoji from '$lib/emoji.svelte';
-
 	import type { Windows } from './windows/types';
 	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
 	import WindowInfo from './windows/window-info.svelte';
 	import WindowInstructions from './windows/window-instructions.svelte';
 	import WindowSubmitter from './windows/window-submitter.svelte';
-
-	import Footer from '../+/footer/footer.svelte';
 	import WindowTags from './windows/window-filters.svelte';
-	import { onMount, setContext } from 'svelte';
+	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { use_comments } from '$lib/cache/cache-comments.svelte';
-	import Input from '$lib/ui/input.svelte';
 	import Tabs, { type Tab } from '$lib/components/tabs.svelte';
 	import Search from '$lib/components/search.svelte';
 	import type { BookmarkFoldersRecord } from '$lib/pocketbase.types';

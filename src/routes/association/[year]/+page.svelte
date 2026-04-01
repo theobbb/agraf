@@ -4,7 +4,7 @@
 	import type { RolesRecord } from '$lib/pocketbase.types';
 	import Window from '$lib/components/windows/window.svelte';
 	import { objectives } from './static';
-	import type { MemberEntriesRecordExpanded } from './types.js';
+	import type { MemberEntriesRecordExpanded } from './types';
 	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
 
 	const { data } = $props();

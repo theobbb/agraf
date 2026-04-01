@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import { pocketbase } from '$lib/pocketbase';
-	import type { CollectionRecords, CommentsRecord } from '$lib/pocketbase.types';
+	import type { CommentsRecord } from '$lib/pocketbase.types';
 	import Button from '$lib/ui/button.svelte';
 	import { getContext } from 'svelte';
 	import type { CommentsCollectionOptions } from '$lib/types';
 	import { error } from '@sveltejs/kit';
-	import Input from '$lib/ui/input.svelte';
 	import { auth, login } from '../login/auth.svelte';
 	import Textarea from '$lib/ui/textarea.svelte';
 
