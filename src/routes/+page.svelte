@@ -16,10 +16,11 @@
 	import WindowLayer from '$lib/components/windows/window-layer.svelte';
 	import Tabs, { type Tab } from '$lib/components/tabs.svelte';
 	import { use_window_manager } from '$lib/components/windows/window-manager.svelte';
+	import Calendar from './calendar.svelte';
 
 	const { data } = $props();
 
-	const { featured, links, related } = data;
+	const { featured, links, related, calendar_events } = data;
 
 	const window_manager = use_window_manager('agraf');
 	//const window_manager = get_window_manager('agraf');
@@ -34,6 +35,20 @@
 
 <div class="grid-12 relative mb-24 max-lg:mt-2">
 	<Window
+		id="calendar"
+		manager={window_manager}
+		title="Calendrier"
+		class={[
+			'col-span-10 row-span-5',
+			'sm:col-span-9 sm:col-start-4 sm:row-start-1',
+			'lg:mt-4- lg:col-span-10 lg:col-start-3 lg:row-span-10 lg:row-start-1'
+		]}
+	>
+		<div class="mb-32 pt-1">
+			<Calendar events={calendar_events} />
+		</div>
+	</Window>
+	<Window
 		title="Logo"
 		class={[
 			'col-span-full',
@@ -45,6 +60,7 @@
 	>
 		<div class="my-2"><Logo /></div>
 	</Window>
+
 	<Window
 		title="En vedette!"
 		class={[

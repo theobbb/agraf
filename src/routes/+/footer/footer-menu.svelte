@@ -200,7 +200,9 @@
 					<Logo />
 				</div>
 
-				<a class="text-2 pt-1 pb-1.5" href="https://3xw.ca/" target="_blank">Site web par 3xw</a>
+				<a class="text-2 pt-1 pb-1.5" href="https://3xw.ca/" target="_blank"
+					>Site web fait par écartèlement</a
+				>
 			</div>
 		</div>
 		<div class=" whitespace-nowrap">

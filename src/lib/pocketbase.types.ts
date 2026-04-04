@@ -10,6 +10,8 @@ export enum Collections {
 	Externalauths = "_externalAuths",
 	Mfas = "_mfas",
 	Otps = "_otps",
+	PasskeyInvites = "_passkey_invites",
+	Passkeys = "_passkeys",
 	Superusers = "_superusers",
 	BookmarkFolderCount = "bookmark_folder_count",
 	BookmarkFolders = "bookmark_folders",
@@ -19,14 +21,13 @@ export enum Collections {
 	Bookmarks = "bookmarks",
 	Chat = "chat",
 	Comments = "comments",
-	Documents = "documents",
+	Events = "events",
 	Feedback = "feedback",
 	InfoTags = "info_tags",
 	Infos = "infos",
 	Links = "links",
 	MemberEntries = "member_entries",
 	Members = "members",
-	Notifications = "notifications",
 	Posters = "posters",
 	Related = "related",
 	Roles = "roles",
@@ -103,6 +104,23 @@ export type OtpsRecord = {
 	updated: IsoAutoDateString
 }
 
+export type PasskeyInvitesRecord = {
+	created: IsoAutoDateString
+	id: string
+	updated: IsoAutoDateString
+	user: RecordIdString
+}
+
+export type PasskeysRecord = {
+	algorithm: string
+	created: IsoAutoDateString
+	credential_id: string
+	id: string
+	public_key: string
+	updated: IsoAutoDateString
+	user: RecordIdString
+}
+
 export type SuperusersRecord = {
 	created: IsoAutoDateString
 	email: string
@@ -148,7 +166,7 @@ export type BookmarkTagsRecord = {
 	color?: string
 	created: IsoAutoDateString
 	id: string
-	name?: string
+	name: string
 	parent?: RecordIdString
 	updated: IsoAutoDateString
 }
@@ -205,14 +223,15 @@ export type CommentsRecord = {
 	updated: IsoAutoDateString
 }
 
-export type DocumentsRecord = {
-	body?: string
+export type EventsRecord = {
+	color_background?: string
+	color_foreground?: string
 	created: IsoAutoDateString
-	file?: FileNameString
-	hidden?: boolean
+	description?: string
+	end_time?: IsoDateString
 	id: string
-	order?: number
-	title?: string
+	name: string
+	start_time?: IsoDateString
 	updated: IsoAutoDateString
 }
 
@@ -229,7 +248,7 @@ export type FeedbackRecord = {
 export type InfoTagsRecord = {
 	created: IsoAutoDateString
 	id: string
-	title?: string
+	title: string
 	updated: IsoAutoDateString
 }
 
@@ -273,15 +292,6 @@ export type MembersRecord = {
 	phone?: number
 	role?: RecordIdString
 	updated: IsoAutoDateString
-	user?: RecordIdString
-}
-
-export type NotificationsRecord = {
-	body?: string
-	created: IsoAutoDateString
-	id: string
-	status_code: number
-	title?: string
 	user?: RecordIdString
 }
 
@@ -356,16 +366,15 @@ export type TicketsRecord = {
 }
 
 export type UsersRecord = {
-	avatar?: FileNameString
 	created: IsoAutoDateString
-	email: string
+	email?: string
 	emailVisibility?: boolean
 	id: string
-	name?: string
+	name: string
 	password: string
+	role?: number
 	tokenKey: string
 	updated: IsoAutoDateString
-	username?: string
 	verified?: boolean
 }
 
@@ -378,6 +387,8 @@ export type AuthoriginsResponse<Texpand = unknown> = Required<AuthoriginsRecord>
 export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRecord> & BaseSystemFields<Texpand>
 export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemFields<Texpand>
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
+export type PasskeyInvitesResponse<Texpand = unknown> = Required<PasskeyInvitesRecord> & BaseSystemFields<Texpand>
+export type PasskeysResponse<Texpand = unknown> = Required<PasskeysRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
 export type BookmarkFolderCountResponse<Texpand = unknown> = Required<BookmarkFolderCountRecord> & BaseSystemFields<Texpand>
 export type BookmarkFoldersResponse<Texpand = unknown> = Required<BookmarkFoldersRecord> & BaseSystemFields<Texpand>
@@ -387,14 +398,13 @@ export type BookmarkTagsResponse<Texpand = unknown> = Required<BookmarkTagsRecor
 export type BookmarksResponse<Texpand = unknown> = Required<BookmarksRecord> & BaseSystemFields<Texpand>
 export type ChatResponse<Texpand = unknown> = Required<ChatRecord> & BaseSystemFields<Texpand>
 export type CommentsResponse<Texpand = unknown> = Required<CommentsRecord> & BaseSystemFields<Texpand>
-export type DocumentsResponse<Texpand = unknown> = Required<DocumentsRecord> & BaseSystemFields<Texpand>
+export type EventsResponse<Texpand = unknown> = Required<EventsRecord> & BaseSystemFields<Texpand>
 export type FeedbackResponse<Texpand = unknown> = Required<FeedbackRecord> & BaseSystemFields<Texpand>
 export type InfoTagsResponse<Texpand = unknown> = Required<InfoTagsRecord> & BaseSystemFields<Texpand>
 export type InfosResponse<Texpand = unknown> = Required<InfosRecord> & BaseSystemFields<Texpand>
 export type LinksResponse<Texpand = unknown> = Required<LinksRecord> & BaseSystemFields<Texpand>
 export type MemberEntriesResponse<Texpand = unknown> = Required<MemberEntriesRecord> & BaseSystemFields<Texpand>
 export type MembersResponse<Texpand = unknown> = Required<MembersRecord> & BaseSystemFields<Texpand>
-export type NotificationsResponse<Texpand = unknown> = Required<NotificationsRecord> & BaseSystemFields<Texpand>
 export type PostersResponse<Texpand = unknown> = Required<PostersRecord> & BaseSystemFields<Texpand>
 export type RelatedResponse<Texpand = unknown> = Required<RelatedRecord> & BaseSystemFields<Texpand>
 export type RolesResponse<Texpand = unknown> = Required<RolesRecord> & BaseSystemFields<Texpand>
@@ -410,6 +420,8 @@ export type CollectionRecords = {
 	_externalAuths: ExternalauthsRecord
 	_mfas: MfasRecord
 	_otps: OtpsRecord
+	_passkey_invites: PasskeyInvitesRecord
+	_passkeys: PasskeysRecord
 	_superusers: SuperusersRecord
 	bookmark_folder_count: BookmarkFolderCountRecord
 	bookmark_folders: BookmarkFoldersRecord
@@ -419,14 +431,13 @@ export type CollectionRecords = {
 	bookmarks: BookmarksRecord
 	chat: ChatRecord
 	comments: CommentsRecord
-	documents: DocumentsRecord
+	events: EventsRecord
 	feedback: FeedbackRecord
 	info_tags: InfoTagsRecord
 	infos: InfosRecord
 	links: LinksRecord
 	member_entries: MemberEntriesRecord
 	members: MembersRecord
-	notifications: NotificationsRecord
 	posters: PostersRecord
 	related: RelatedRecord
 	roles: RolesRecord
@@ -441,6 +452,8 @@ export type CollectionResponses = {
 	_externalAuths: ExternalauthsResponse
 	_mfas: MfasResponse
 	_otps: OtpsResponse
+	_passkey_invites: PasskeyInvitesResponse
+	_passkeys: PasskeysResponse
 	_superusers: SuperusersResponse
 	bookmark_folder_count: BookmarkFolderCountResponse
 	bookmark_folders: BookmarkFoldersResponse
@@ -450,14 +463,13 @@ export type CollectionResponses = {
 	bookmarks: BookmarksResponse
 	chat: ChatResponse
 	comments: CommentsResponse
-	documents: DocumentsResponse
+	events: EventsResponse
 	feedback: FeedbackResponse
 	info_tags: InfoTagsResponse
 	infos: InfosResponse
 	links: LinksResponse
 	member_entries: MemberEntriesResponse
 	members: MembersResponse
-	notifications: NotificationsResponse
 	posters: PostersResponse
 	related: RelatedResponse
 	roles: RolesResponse
