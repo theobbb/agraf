@@ -22,7 +22,7 @@
 
 	<div class="mb-1.5">
 		<div class="flex items-center justify-between pb-1">
-			<a href={item.url}>
+			<a href={item.url} class="hover:underline">
 				{item.url}
 			</a>
 

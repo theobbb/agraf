@@ -63,7 +63,6 @@ export class List {
 	// 3. Hydration method
 	init(bookmarks: BookmarksRecord[], perPage?: number) {
 		this.bookmarks = bookmarks;
-		console.log('init list');
 		if (perPage) this.perPage = perPage;
 		this.initialized = true;
 	}

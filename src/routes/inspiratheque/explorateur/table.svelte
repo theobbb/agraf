@@ -34,10 +34,6 @@
 	{#each navigation as col, i}
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
 		<section class="relative col-span-3">
-			<!-- <div class="flex">
-							{@render new_item_button(i)}
-						</div> -->
-
 			<div class="absolute inset-0 overflow-y-auto">
 				{#each col as item}
 					<div

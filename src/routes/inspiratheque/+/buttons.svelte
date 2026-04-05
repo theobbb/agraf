@@ -10,6 +10,7 @@
 	<button
 		onclick={() => navigator.clipboard.writeText(item.url)}
 		class="flex cursor-pointer p-0.5 hover:bg-text hover:text-bg"
+		title="Copier l’url"
 	>
 		<IconCopy />
 	</button>

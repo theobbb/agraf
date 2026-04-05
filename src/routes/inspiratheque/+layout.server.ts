@@ -6,7 +6,7 @@ import type {
 	BookmarkTagsRecord
 } from '$lib/pocketbase.types';
 
-export async function load() {
+export async function load({ cookies }) {
 	const [tags, tag_groups, folders, folder_count_arr, bookmarks]: [
 		BookmarkTagsRecord[],
 		BookmarkTagGroupsRecord[],
@@ -39,5 +39,7 @@ export async function load() {
 	);
 	const tags_map: Map<string, BookmarkTagsRecord> = new Map(tags.map((tag) => [tag.id, tag]));
 
-	return { tags, tags_map, tag_groups, folders, folder_count, bookmarks };
+	const onboarded = cookies.get('inspiratheque-onboarded');
+
+	return { tags, tags_map, tag_groups, folders, folder_count, bookmarks, onboarded };
 }

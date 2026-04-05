@@ -3,17 +3,15 @@
 	import type { WindowManager } from '$lib/components/windows/window-manager.svelte';
 	import Window from '$lib/components/windows/window.svelte';
 	import Button from '$lib/ui/button.svelte';
-	import IconInfo from '$lib/ui/icons/icon-info.svelte';
 	import type { Windows } from './types';
 
 	const { manager }: { manager: WindowManager<Windows> } = $props();
 
 	function onclose() {
-		console.log('close');
+		document.cookie = 'inspiratheque-onboarded=true; path=/; max-age=31536000; SameSite=Lax';
 	}
 
-	const hidden = !page.route.id?.startsWith('/inspiratheque/explorateur');
-	console.log(hidden);
+	const hidden = page.data.onboarded;
 </script>
 
 <div class="grid-12 pointer-events-none absolute top-68">
