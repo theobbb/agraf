@@ -296,7 +296,7 @@
 
 	<div
 		class="scroll-container relative mb-px flex flex-1 flex-col overflow-x-auto overflow-y-auto px-2.5 pr-gap"
-		style="overscroll-behavior: contain;"
+		style=""
 	>
 		{@render children()}
 	</div>
